@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 
+#include "canvas.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,22 +16,23 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+private:
+    const QSize init_size = QSize(500, 500);
 
+public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 
 private slots:
-
     void sockReadyToRead();
     void sockDisconnected();
 
 
 private:
-
     Ui::MainWindow *ui;
 
     QTcpSocket* socket;
+    Canvas canvas;
 };
 #endif // MAINWINDOW_H
