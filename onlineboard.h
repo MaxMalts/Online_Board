@@ -8,11 +8,11 @@
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class OnlineBoard; }
 QT_END_NAMESPACE
 
 
-class MainWindow : public QMainWindow
+class OnlineBoard : public QMainWindow
 {
     Q_OBJECT
 
@@ -20,8 +20,8 @@ private:
     const QSize init_size = QSize(500, 500);
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    OnlineBoard(QWidget *parent = nullptr);
+    ~OnlineBoard();
 
 
 private slots:
@@ -30,7 +30,7 @@ private slots:
 
 
 private:
-    Ui::MainWindow *ui;
+    Ui::OnlineBoard *ui;
 
     QTcpSocket* socket;
     Canvas* canvas;

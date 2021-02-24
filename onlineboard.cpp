@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "onlineboard.h"
 #include "ui_mainwindow.h"
 #include "canvas.h"
 
 #include <QLayout>
 
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+OnlineBoard::OnlineBoard(QWidget* parent)
+    : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {
     ui->setupUi(this);
     canvas = new Canvas(centralWidget(), size());
@@ -19,20 +19,20 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 
-MainWindow::~MainWindow()
+OnlineBoard::~OnlineBoard()
 {
     delete ui;
 }
 
 
-void MainWindow::sockReadyToRead()
+void OnlineBoard::sockReadyToRead()
 {
     QByteArray data = socket->readAll();
     qDebug() << data;
 }
 
 
-void MainWindow::sockDisconnected()
+void OnlineBoard::sockDisconnected()
 {
     socket->deleteLater();
 }

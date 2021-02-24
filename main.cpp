@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "onlineboard.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    OnlineBoard w;
     w.show();
     return a.exec();
 }

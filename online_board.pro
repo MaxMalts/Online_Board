@@ -19,14 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     canvas.cpp \
     main.cpp \
-    mainwindow.cpp
+    onlineboard.cpp
 
 HEADERS += \
     canvas.h \
-    mainwindow.h
+    onlineboard.h
 
 FORMS += \
-    mainwindow.ui
+    onlineboard.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
