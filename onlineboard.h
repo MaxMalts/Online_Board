@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTcpSocket>
 
 #include "canvas.h"
+#include "serverapi.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -20,19 +20,14 @@ private:
     const QSize init_size = QSize(500, 500);
 
 public:
-    OnlineBoard(QWidget *parent = nullptr);
+    OnlineBoard(QWidget* parent = nullptr);
     ~OnlineBoard();
 
-
-private slots:
-    void sockReadyToRead();
-    void sockDisconnected();
-
-
 private:
-    Ui::OnlineBoard *ui;
+    Ui::OnlineBoard* ui;
 
-    QTcpSocket* socket;
     Canvas* canvas;
+
+    ServerApi* server_api;
 };
 #endif // MAINWINDOW_H

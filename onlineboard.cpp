@@ -3,6 +3,7 @@
 #include "canvas.h"
 
 #include <QLayout>
+#include <QString>
 
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
@@ -10,29 +11,15 @@ OnlineBoard::OnlineBoard(QWidget* parent)
     ui->setupUi(this);
     canvas = new Canvas(centralWidget(), size());
 
-//    socket = new QTcpSocket(this);
-//    connect(socket, SIGNAL(readyRead()), this, SLOT(sockReadyToRead()));
-//    connect(socket, SIGNAL(disconnected()), this, SLOT(sockDisconnected()));
-
-//    socket->connectToHost("127.0.0.1", 5555);
-//    socket->waitForConnected(30000);
+    server_api = new ServerApi(this);
+    if (!server_api->connectToServer()) {
+        statusBar()->setStyleSheet("color: red;");
+        statusBar()->showMessage("Error while connecting to server.");
+        qDebug() << "Error while connecting to server: " << server_api->lastError();
+    }
 }
-
 
 OnlineBoard::~OnlineBoard()
 {
     delete ui;
-}
-
-
-void OnlineBoard::sockReadyToRead()
-{
-    QByteArray data = socket->readAll();
-    qDebug() << data;
-}
-
-
-void OnlineBoard::sockDisconnected()
-{
-    socket->deleteLater();
 }

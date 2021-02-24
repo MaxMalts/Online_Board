@@ -19,11 +19,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     canvas.cpp \
     main.cpp \
-    onlineboard.cpp
+    onlineboard.cpp \
+    serverapi.cpp
 
 HEADERS += \
     canvas.h \
-    onlineboard.h
+    onlineboard.h \
+    serverapi.h
 
 FORMS += \
     onlineboard.ui
