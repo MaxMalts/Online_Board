@@ -3,11 +3,16 @@
 #include <QMouseEvent>
 #include <QImage>
 #include <QPainter>
+#include <QColor>
+#include <QDebug>
 
 Canvas::Canvas(QWidget* parent, QSize size)
-    : QWidget(parent), canv_image(size, QImage::Format_ARGB32)
+    : QWidget(parent),
+      background(size, QImage::Format_ARGB32),
+      canv_image(size, QImage::Format_ARGB32)
 {
-
+    resize(size);
+    background.fill(Qt::white);
 }
 
 void Canvas::mousePressEvent(QMouseEvent* event)
@@ -22,6 +27,7 @@ void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
     if (drawing) {
         drawLine(prev_point, event->pos());
+        prev_point = event->pos();
     }
 }
 
@@ -32,8 +38,16 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
+void Canvas::paintEvent(QPaintEvent* event)
+{
+    QPainter painter(this);
+    painter.drawImage(event->rect(), background, event->rect());
+    painter.drawImage(event->rect(), canv_image, event->rect());
+}
+
 void Canvas::drawLine(const QPoint& first, const QPoint& second)
 {
     QPainter painter(&canv_image);
     painter.drawLine(first, second);
+    update();
 }

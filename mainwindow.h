@@ -33,6 +33,6 @@ private:
     Ui::MainWindow *ui;
 
     QTcpSocket* socket;
-    Canvas canvas;
+    Canvas* canvas;
 };
 #endif // MAINWINDOW_H

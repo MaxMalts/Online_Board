@@ -2,12 +2,14 @@
 #include "ui_mainwindow.h"
 #include "canvas.h"
 
+#include <QLayout>
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), canvas(this, init_size)
+    : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    resize(init_size);
+    canvas = new Canvas(centralWidget(), size());
+
 //    socket = new QTcpSocket(this);
 //    connect(socket, SIGNAL(readyRead()), this, SLOT(sockReadyToRead()));
 //    connect(socket, SIGNAL(disconnected()), this, SLOT(sockDisconnected()));
