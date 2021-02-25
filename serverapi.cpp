@@ -25,6 +25,16 @@ bool ServerApi::sendData(const QByteArray& data)
     return socket->write(data) == data.size();
 }
 
+bool ServerApi::sendData(const char* data)
+{
+    return socket->write(data) != -1;
+}
+
+bool ServerApi::sendData(const char* data, qint64 maxSize)
+{
+    return socket->write(data, maxSize) != -1;
+}
+
 QByteArray ServerApi::receiveData()
 {
     return socket->readAll();

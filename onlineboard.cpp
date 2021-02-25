@@ -10,9 +10,14 @@ OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {
     ui->setupUi(this);
-    canvas = new Canvas(centralWidget(), size());
 
-    if (!ServerApi::connectToServer()) {
+    if (ServerApi::connectToServer()) {
+        statusBar()->setStyleSheet("");
+        statusBar()->showMessage("Connected to server.", 3000);
+
+        canvas = new Canvas(centralWidget(), size());
+
+    } else {
         statusBar()->setStyleSheet("color: red;");
         statusBar()->showMessage("Error while connecting to server: " +
                                  ServerApi::lastErrorStr());

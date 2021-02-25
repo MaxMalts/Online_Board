@@ -11,7 +11,6 @@ class Canvas : public QWidget
 public:
     explicit Canvas(QWidget *parent = nullptr, QSize size = QSize(500, 500));
 
-
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -19,13 +18,14 @@ protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
-    void drawLine(const QPoint& first, const QPoint& second);
+    void startDrawing(const QPoint& pos);
+    void drawLineToPoint(const QPoint& point);
+    void stopDrawing();
 
     QImage background;
     QImage canv_image;
     QPoint prev_point;
     bool drawing = false;
-
 };
 
 #endif // CANVAS_H

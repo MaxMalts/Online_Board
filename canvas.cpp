@@ -19,23 +19,21 @@ Canvas::Canvas(QWidget* parent, QSize size)
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
-        prev_point = event->pos();
-        drawing = true;
+        startDrawing(event->pos());
     }
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
     if (drawing) {
-        drawLine(prev_point, event->pos());
-        prev_point = event->pos();
+        drawLineToPoint(event->pos());
     }
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
-        drawing = false;
+        stopDrawing();
     }
 }
 
@@ -46,9 +44,27 @@ void Canvas::paintEvent(QPaintEvent* event)
     painter.drawImage(event->rect(), canv_image, event->rect());
 }
 
-void Canvas::drawLine(const QPoint& first, const QPoint& second)
+void Canvas::startDrawing(const QPoint& pos)
+{
+    prev_point = pos;
+    drawing = true;
+
+    QString sendStr = QString("%1 %2").arg(pos.x()).arg(pos.y());
+    ServerApi::sendData(sendStr.toUtf8());
+}
+
+void Canvas::drawLineToPoint(const QPoint& point)
 {
     QPainter painter(&canv_image);
-    painter.drawLine(first, second);
+    painter.drawLine(prev_point, point);
     update();
+    prev_point = point;
+
+    QString sendStr = QString("%1 %2").arg(point.x()).arg(point.y());
+    ServerApi::sendData(sendStr.toUtf8());
+}
+
+void Canvas::stopDrawing()
+{
+    drawing = false;
 }

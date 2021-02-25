@@ -22,6 +22,8 @@ public:
 
     static bool connectToServer();
     static bool sendData(const QByteArray& data);
+    static bool sendData(const char* data);
+    static bool sendData(const char* data, qint64 maxSize);
     static QByteArray receiveData();
 
     static QTcpSocket::SocketError lastError();
