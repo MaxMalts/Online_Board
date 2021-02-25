@@ -1,5 +1,5 @@
 #include "onlineboard.h"
-#include "ui_mainwindow.h"
+#include "ui_onlineboard.h"
 #include "canvas.h"
 
 #include <QLayout>
