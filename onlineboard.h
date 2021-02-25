@@ -27,7 +27,5 @@ private:
     Ui::OnlineBoard* ui;
 
     Canvas* canvas;
-
-    ServerApi* server_api;
 };
 #endif // MAINWINDOW_H

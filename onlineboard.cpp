@@ -4,6 +4,7 @@
 
 #include <QLayout>
 #include <QString>
+#include <QDebug>
 
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
@@ -11,11 +12,11 @@ OnlineBoard::OnlineBoard(QWidget* parent)
     ui->setupUi(this);
     canvas = new Canvas(centralWidget(), size());
 
-    server_api = new ServerApi(this);
-    if (!server_api->connectToServer()) {
+    if (!ServerApi::connectToServer()) {
         statusBar()->setStyleSheet("color: red;");
-        statusBar()->showMessage("Error while connecting to server.");
-        qDebug() << "Error while connecting to server: " << server_api->lastError();
+        statusBar()->showMessage("Error while connecting to server: " +
+                                 ServerApi::lastErrorStr());
+        qDebug() << "Error while connecting to server: " << ServerApi::lastError();
     }
 }
 

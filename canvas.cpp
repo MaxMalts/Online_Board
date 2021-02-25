@@ -1,4 +1,5 @@
 #include "canvas.h"
+#include "serverapi.h"
 
 #include <QMouseEvent>
 #include <QImage>

@@ -9,25 +9,30 @@ class ServerApi : public QObject
     Q_OBJECT
 
 private:
-    const QString ip_address = "localhost";
-    const quint16 port = 5555;
-    const int connect_timeout = 10000;
+    static struct ServerConfig
+    {
+        const QString ip_address = "localhost";
+        const quint16 port = 5555;
+        const int connect_timeout = 10000;
+    } config;
+
 
 public:
     explicit ServerApi(QObject* parent = nullptr);
 
-    bool connectToServer();
-    bool sendData(const QByteArray& data);
-    QByteArray receiveData();
+    static bool connectToServer();
+    static bool sendData(const QByteArray& data);
+    static QByteArray receiveData();
 
-    QTcpSocket::SocketError lastError();
+    static QTcpSocket::SocketError lastError();
+    static QString lastErrorStr();
 
 private slots:
     void onReadyRead();
     void onDisconnected();
 
 private:
-    QTcpSocket* socket;
+    static QTcpSocket* socket;
 
 };
 
