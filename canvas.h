@@ -21,11 +21,15 @@ private:
     void startDrawing(const QPoint& pos);
     void drawLineToPoint(const QPoint& point);
     void stopDrawing();
+    void drawLine(const QPoint& first, const QPoint& second);
 
     QImage background;
     QImage canv_image;
     QPoint prev_point;
     bool drawing = false;
+
+private slots:
+    void onDataReceived();
 };
 
 #endif // CANVAS_H

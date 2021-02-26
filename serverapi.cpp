@@ -2,16 +2,28 @@
 
 #include <QDebug>
 
-QTcpSocket* ServerApi::socket = nullptr;
 ServerApi::ServerConfig ServerApi::config;
+QTcpSocket* ServerApi::socket = nullptr;
+ServerApi* ServerApi::instance = nullptr;
 
 ServerApi::ServerApi(QObject* parent) : QObject(parent)
 {
-    if (socket == nullptr) {
+    if (instance == nullptr) {
+        Q_ASSERT(socket == nullptr);
         socket = new QTcpSocket(this);
         connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+
+        instance = this;
+
+    } else {
+        Q_ASSERT(socket != nullptr);
     }
+}
+
+ServerApi* ServerApi::getInstance()
+{
+    return instance;
 }
 
 bool ServerApi::connectToServer()
@@ -35,7 +47,7 @@ bool ServerApi::sendData(const char* data, qint64 maxSize)
     return socket->write(data, maxSize) != -1;
 }
 
-QByteArray ServerApi::receiveData()
+QByteArray ServerApi::readData()
 {
     return socket->readAll();
 }
@@ -53,7 +65,8 @@ QString ServerApi::lastErrorStr()
 
 void ServerApi::onReadyRead()
 {
-    qDebug() << "Socket received data: " << socket->readAll();
+    emit dataReceived();
+    //qDebug() << "Socket received data: " << socket->readAll();
 }
 
 void ServerApi::onDisconnected()

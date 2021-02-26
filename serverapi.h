@@ -20,14 +20,19 @@ private:
 public:
     explicit ServerApi(QObject* parent = nullptr);
 
+    static ServerApi* getInstance();
+
     static bool connectToServer();
     static bool sendData(const QByteArray& data);
     static bool sendData(const char* data);
     static bool sendData(const char* data, qint64 maxSize);
-    static QByteArray receiveData();
+    static QByteArray readData();
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
+
+signals:
+    void dataReceived();
 
 private slots:
     void onReadyRead();
@@ -35,7 +40,7 @@ private slots:
 
 private:
     static QTcpSocket* socket;
-
+    static ServerApi* instance;
 };
 
 #endif // SERVERAPI_H
