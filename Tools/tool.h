@@ -13,7 +13,7 @@ class Tool : public QObject
 public:
     explicit Tool(QObject* parent = nullptr);
 
-    void setActive(Canvas* canvas, size_t size = 3, QColor color);
+    void setActive(Canvas* canvas, size_t size = 3, QColor color = QColor());
 
     void setInactive();
 

@@ -1,4 +1,5 @@
 #include <QJsonDocument>
+#include <QJsonObject>
 
 #include "serializers.h"
 
@@ -8,9 +9,9 @@ JsonSerializer::JsonSerializer(const Serializable& object)
     serialize(object);
 }
 
-JsonSerializer::JsonSerializer(const QByteArray& data)
+JsonSerializer::JsonSerializer(const QByteArray& json)
 {
-    set(data);
+    set(json);
 }
 
 JsonSerializer::JsonSerializer(const QJsonObject& json)
@@ -22,26 +23,30 @@ void JsonSerializer::serialize(const Serializable& object)
 {
     QJsonObject jsonObj;
     object.serialize(jsonObj);
-    json.setObject(jsonObj);
+    json_doc.setObject(jsonObj);
 }
 
-void JsonSerializer::deserialize(Serializable& object)
+void JsonSerializer::deserialize(Serializable& object) const
 {
-    object.deserialize(json.object());
+    object.deserialize(json_doc.object());
 }
 
-QByteArray JsonSerializer::getData()
+QByteArray JsonSerializer::getData() const
 {
-    return json.toJson();
+    return json_doc.toJson();
 }
 
-QJsonParseError JsonSerializer::lastError()
+QJsonParseError JsonSerializer::lastError() const
 {
     return last_error;
 }
 
-bool JsonSerializer::set(const QByteArray& json)
+void JsonSerializer::set(const QByteArray& json)
 {
-    json = QJsonDocument::fromJson(json, &last_error);
-    return !json.isNull();
+    json_doc = QJsonDocument::fromJson(json, &last_error);
+}
+
+void JsonSerializer::set(const QJsonObject& json)
+{
+    json_doc.setObject(json);
 }

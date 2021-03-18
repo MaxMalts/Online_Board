@@ -1,5 +1,8 @@
 #include "serverapi.h"
 
+#include <stdint.h>
+#include <QByteArray>
+#include <QJsonDocument>
 #include <QDebug>
 
 ServerApi::ServerConfig ServerApi::config;
@@ -32,28 +35,17 @@ bool ServerApi::connectToServer()
     return socket->waitForConnected(config.connect_timeout);
 }
 
-bool ServerApi::sendData(const QByteArray& data)
+void ServerApi::sAddLayer(const Serializer& argument)
 {
-    int data_size = data.size();
-    QByteArray package = QString::number(data_size).append('\n\r').toUtf8().append(data);
-
-    return socket->write(package) == package.size();
+    sendMethod("s_add_layer", argument);
 }
 
-bool ServerApi::sendData(const char* data)
-{
-    int data_size = qstrlen(data);
-    QByteArray package = QString::number(data_size).toUtf8().append(QString(data).toUtf8());
-
-    return socket->write(package) == package.size();
-}
-
-QByteArray ServerApi::readData()
-{
-    QByteArray package = socket->readAll();
-    int data_size = package.split('\n').at(0).toInt();
-    return socket->readAll();
-}
+//QByteArray ServerApi::readData()
+//{
+//    QByteArray package = socket->readAll();
+//    int data_size = package.split('\n').at(0).toInt();
+//    return socket->readAll();
+//}
 
 QTcpSocket::SocketError ServerApi::lastError()
 {
@@ -68,10 +60,31 @@ QString ServerApi::lastErrorStr()
 
 void ServerApi::onReadyRead()
 {
-    emit dataReceived();
+    //emit dataReceived();
 }
 
 void ServerApi::onDisconnected()
 {
     qDebug() << "Socket disconnected.";
+}
+
+bool ServerApi::sendMethod(const QString& method, const Serializer& argument)
+{
+    QByteArray arg_data = argument.getData();
+    int arg_data_size = arg_data.size();
+
+    QJsonObject header;
+    header["client_id"] = 1;  // To be implemented
+    header["method"] = method;
+    header["argument_size"] = arg_data_size;
+
+    QByteArray header_data = QJsonDocument(header).toJson();
+    uint64_t header_size = header_data.size();
+
+    QByteArray package;
+    package.resize(sizeof(header_size) + header_size + 1 + arg_data_size);
+    package += QByteArray(reinterpret_cast<char*>(&header_size), sizeof(header_size)) +
+            header_data + '\n' + arg_data;
+
+    return socket->write(package) == package.size();
 }

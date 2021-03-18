@@ -60,7 +60,7 @@ void Canvas::drawLineToPoint(const QPoint& point)
 
     QString sendStr = QString("%1 %2 %3 %4").arg(prev_point.x()).
             arg(prev_point.y()).arg(point.x()).arg(point.y());
-    ServerApi::sendData(sendStr.toUtf8());
+    //ServerApi::sendData(sendStr.toUtf8());
 
     prev_point = point;
 }
@@ -80,14 +80,14 @@ void Canvas::stopDrawing()
 
 void Canvas::onDataReceived()
 {
-    QString data = QString::fromUtf8(ServerApi::readData());
-    qDebug() << "Data received: " << data;
+//    QString data = QString::fromUtf8(ServerApi::readData());
+//    qDebug() << "Data received: " << data;
 
-    QStringList data_split = data.split(' ');
-    Q_ASSERT(data_split.size() == 4);
+//    QStringList data_split = data.split(' ');
+//    Q_ASSERT(data_split.size() == 4);
 
-    QPoint first(data_split.at(0).toInt(), data_split.at(1).toInt());
-    QPoint second(data_split.at(2).toInt(), data_split.at(3).toInt());
+//    QPoint first(data_split.at(0).toInt(), data_split.at(1).toInt());
+//    QPoint second(data_split.at(2).toInt(), data_split.at(3).toInt());
 
-    drawLine(first, second);
+//    drawLine(first, second);
 }

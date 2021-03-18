@@ -27,23 +27,23 @@ public:
     static ServerApi* getInstance();
 
     static bool connectToServer();
-    //static bool sendData(const QByteArray& data);
-    //static bool sendData(const char* data);
     //static QByteArray readData();
-    static void sAddLayer(const LayerData& argument);
+    static void sAddLayer(const Serializer& argument);
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
 
 signals:
     //void dataReceived();
-    void cAddLayer(const LayerData& arg);
+    void cAddLayer(const Serializer& argument);
 
 private slots:
     void onReadyRead();
     void onDisconnected();
 
 private:
+    static bool sendMethod(const QString& method, const Serializer& argument);
+
     static QTcpSocket* socket;
     static ServerApi* instance;
 };
