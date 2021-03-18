@@ -3,6 +3,22 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QJsonObject>
+
+class Serializable {
+public:
+    virtual void serialize(QJsonObject& json) const = 0;
+    virtual void deserialize(const QJsonObject& json) = 0;
+};
+
+class Serializer {
+public:
+    virtual void serialize(const Serializable& obj) = 0;
+    virtual void deserialize(Serializable& obj) = 0;
+    virtual QByteArray getData() = 0;
+    virtual void setData(const QByteArray& data) = 0;
+};
+
 
 class ServerApi : public QObject
 {
@@ -23,16 +39,17 @@ public:
     static ServerApi* getInstance();
 
     static bool connectToServer();
-    static bool sendData(const QByteArray& data);
-    static bool sendData(const char* data);
-    static bool sendData(const char* data, qint64 maxSize);
-    static QByteArray readData();
+    //static bool sendData(const QByteArray& data);
+    //static bool sendData(const char* data);
+    //static QByteArray readData();
+    static void sAddLayer(const LayerData& arg);
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
 
 signals:
-    void dataReceived();
+    //void dataReceived();
+    void cAddLayer(const LayerData& arg);
 
 private slots:
     void onReadyRead();

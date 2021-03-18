@@ -2,9 +2,10 @@
 #define CANVAS_H
 
 #include <QWidget>
+#include <QGraphicsScene>
 #include <QDebug>
 
-class Canvas : public QWidget
+class Canvas : public QGraphicsScene
 {
     Q_OBJECT
 
@@ -15,7 +16,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void paintEvent(QPaintEvent* event) override;
+    //void paintEvent(QPaintEvent* event) override;
 
 private:
     void startDrawing(const QPoint& pos);

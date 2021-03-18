@@ -34,21 +34,24 @@ bool ServerApi::connectToServer()
 
 bool ServerApi::sendData(const QByteArray& data)
 {
-    return socket->write(data) == data.size();
+    int data_size = data.size();
+    QByteArray package = QString::number(data_size).append('\n\r').toUtf8().append(data);
+
+    return socket->write(package) == package.size();
 }
 
 bool ServerApi::sendData(const char* data)
 {
-    return socket->write(data) != -1;
-}
+    int data_size = qstrlen(data);
+    QByteArray package = QString::number(data_size).toUtf8().append(QString(data).toUtf8());
 
-bool ServerApi::sendData(const char* data, qint64 maxSize)
-{
-    return socket->write(data, maxSize) != -1;
+    return socket->write(package) == package.size();
 }
 
 QByteArray ServerApi::readData()
 {
+    QByteArray package = socket->readAll();
+    int data_size = package.split('\n').at(0).toInt();
     return socket->readAll();
 }
 
@@ -66,7 +69,6 @@ QString ServerApi::lastErrorStr()
 void ServerApi::onReadyRead()
 {
     emit dataReceived();
-    //qDebug() << "Socket received data: " << socket->readAll();
 }
 
 void ServerApi::onDisconnected()
