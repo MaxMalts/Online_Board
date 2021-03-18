@@ -3,6 +3,21 @@
 #include "serializers.h"
 
 
+JsonSerializer::JsonSerializer(const Serializable& object)
+{
+    serialize(object);
+}
+
+JsonSerializer::JsonSerializer(const QByteArray& data)
+{
+    set(data);
+}
+
+JsonSerializer::JsonSerializer(const QJsonObject& json)
+{
+    set(json);
+}
+
 void JsonSerializer::serialize(const Serializable& object)
 {
     QJsonObject jsonObj;

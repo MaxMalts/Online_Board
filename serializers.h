@@ -22,10 +22,14 @@ public:
 
 class JsonSerializer : public Serializer{
 public:
-    void serialize(const Serializable& object) override;
-    void deserialize(Serializable& object) override;
-    QByteArray getData() override;
-    void set(const QByteArray& data) override;
+    JsonSerializer(const Serializable& object);
+    JsonSerializer(const QByteArray& data);
+    JsonSerializer(const QJsonObject& json);
+
+    virtual void serialize(const Serializable& object) override;
+    virtual void deserialize(Serializable& object) override;
+    virtual QByteArray getData() override;
+    virtual void set(const QByteArray& data) override;
 
     QJsonDocument getJson();
     void set(const QJsonObject& json);
