@@ -5,8 +5,8 @@
 #include <QTimer>
 #include <QEventLoop>
 
-template<typename QObject_T>
-bool waitForSignal(QObject_T* object, void (QObject_T::*signal), int ms_timeout)
+template<typename QObject_T, typename... Args>
+bool waitForSignal(QObject_T* object, void (QObject_T::*signal)(Args... args), int ms_timeout)
 {
     QTimer timer;
     timer.setSingleShot(true);

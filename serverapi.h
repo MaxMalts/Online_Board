@@ -22,13 +22,13 @@ private:
 
     class ClientProps : public Serializable {
     public:
-        int id() const;
+        int clientId() const;
 
-        virtual bool serialize(QJsonObject& json) override;
+        virtual bool serialize(QJsonObject& json) const override;
         virtual bool deserialize(const QJsonObject& json) override;
 
     private:
-        int id;
+        int client_id;
     };
 
 public:
@@ -62,7 +62,7 @@ private:
 
     static ServerApi* instance;
 
-    QTcpSocket* socket;
+    QTcpSocket* socket = nullptr;
     ClientProps props;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {

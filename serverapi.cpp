@@ -12,24 +12,24 @@
 
 /* ClientProps */
 
-int ClientProps::id() const
+int ServerApi::ClientProps::clientId() const
 {
-    return id;
+    return client_id;
 }
 
-bool ClientProps::serialize(QJsonObject& json)
+bool ServerApi::ClientProps::serialize(QJsonObject& json) const
 {
-    json["client_id"] = id;
+    json["client_id"] = client_id;
     return true;
 }
 
-bool ClientProps::deserialize(const QJsonObject& json)
+bool ServerApi::ClientProps::deserialize(const QJsonObject& json)
 {
-    if (!json.contains["client_id"]) {
+    if (!json.contains("client_id")) {
         return false;
     }
 
-    id = json["client_id"];
+    client_id = json["client_id"].toInt();
     return true;;
 }
 
@@ -37,7 +37,6 @@ bool ClientProps::deserialize(const QJsonObject& json)
 /* ServerApi */
 
 ServerApi::ServerConfig ServerApi::config;
-QTcpSocket* ServerApi::socket = nullptr;
 ServerApi* ServerApi::instance = nullptr;
 
 ServerApi::ServerApi(QObject* parent) : QObject(parent)
@@ -48,7 +47,7 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
         connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
 
-        connect(this, SIGNAL(cOnConnect(const Serializer&)),
+        connect(this, SIGNAL(cInitClient(const Serializer&)),
                 this, SLOT(onInitClient(const Serializer&)));
 
         instance = this;
@@ -67,7 +66,7 @@ bool ServerApi::connectToServer()
         return false;
     }
 
-    return waitForSignal(this, cInitClient, config.connect_timeout);
+    return waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout);
 }
 
 void ServerApi::sAddLayer(const Serializer& argument)
@@ -87,8 +86,8 @@ QString ServerApi::lastErrorStr()
 
 void ServerApi::onInitClient(const Serializer& argument)
 {
-    Serializer.deserialize(props);
-    Q_ASSERT(props.id > 0);
+    argument.deserialize(props);
+    Q_ASSERT(props.clientId() > 0);
 }
 
 
@@ -100,7 +99,7 @@ void ServerApi::onReadyRead()
         Q_ASSERT(header_size > 0);
 
         QByteArray data = socket->read(header_size);
-        Q_ASSERT(data.size() == header_size);
+        Q_ASSERT(static_cast<uint64_t>(data.size()) == header_size);
 
         QJsonObject header = QJsonDocument::fromJson(data).object();
         int arg_size = header["argument_size"].toInt();
@@ -116,7 +115,6 @@ void ServerApi::onReadyRead()
 #endif
 
         Q_ASSERT(str_to_signal.contains(header["method"].toString()));
-        void (ServerApi::*test)(const Serializer&) = &ServerApi::cAddLayer;
         emit (this->*str_to_signal[header["mehtod"].toString()])(serial_arg);
     }
 }
