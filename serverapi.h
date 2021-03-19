@@ -20,9 +20,23 @@ private:
         const int connect_timeout = 10000;
     } config;
 
+    class ClientProps : public Serializable {
+    public:
+        int id() const;
+
+        virtual bool serialize(QJsonObject& json) override;
+        virtual bool deserialize(const QJsonObject& json) override;
+
+    private:
+        int id;
+    };
 
 public:
     explicit ServerApi(QObject* parent = nullptr);
+
+    ServerApi(ServerApi&& other) = delete;
+    ServerApi(const ServerApi& other) = delete;
+    ServerApi& operator=(const ServerApi& other) = delete;
 
     static ServerApi* getInstance();
 
@@ -35,17 +49,21 @@ public:
 
 signals:
     //void dataReceived();
+    void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);
 
 private slots:
     void onReadyRead();
+    void onInitClient(const Serializer &argument);
     void onDisconnected();
 
 private:
-    static bool sendMethod(const QString& method, const Serializer& argument);
+    bool sendMethod(const QString& method, const Serializer& argument);
 
-    static QTcpSocket* socket;
     static ServerApi* instance;
+
+    QTcpSocket* socket;
+    ClientProps props;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
         { "c_add_layer", &ServerApi::cAddLayer }

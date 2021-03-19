@@ -3,7 +3,38 @@
 #include <stdint.h>
 #include <QByteArray>
 #include <QJsonDocument>
+#include <QTimer>
+#include <QEventLoop>
 #include <QDebug>
+
+#include "common.h"
+
+
+/* ClientProps */
+
+int ClientProps::id() const
+{
+    return id;
+}
+
+bool ClientProps::serialize(QJsonObject& json)
+{
+    json["client_id"] = id;
+    return true;
+}
+
+bool ClientProps::deserialize(const QJsonObject& json)
+{
+    if (!json.contains["client_id"]) {
+        return false;
+    }
+
+    id = json["client_id"];
+    return true;;
+}
+
+
+/* ServerApi */
 
 ServerApi::ServerConfig ServerApi::config;
 QTcpSocket* ServerApi::socket = nullptr;
@@ -17,10 +48,10 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
         connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
 
-        instance = this;
+        connect(this, SIGNAL(cOnConnect(const Serializer&)),
+                this, SLOT(onInitClient(const Serializer&)));
 
-    } else {
-        Q_ASSERT(socket != nullptr);
+        instance = this;
     }
 }
 
@@ -31,30 +62,33 @@ ServerApi* ServerApi::getInstance()
 
 bool ServerApi::connectToServer()
 {
-    socket->connectToHost(config.ip_address, config.port);
-    return socket->waitForConnected(config.connect_timeout);
+    instance->socket->connectToHost(config.ip_address, config.port);
+    if (!instance->socket->waitForConnected(config.connect_timeout)) {
+        return false;
+    }
+
+    return waitForSignal(this, cInitClient, config.connect_timeout);
 }
 
 void ServerApi::sAddLayer(const Serializer& argument)
 {
-    sendMethod("s_add_layer", argument);
+    instance->sendMethod("s_add_layer", argument);
 }
-
-//QByteArray ServerApi::readData()
-//{
-//    QByteArray package = socket->readAll();
-//    int data_size = package.split('\n').at(0).toInt();
-//    return socket->readAll();
-//}
 
 QTcpSocket::SocketError ServerApi::lastError()
 {
-    return socket->error();
+    return instance->socket->error();
 }
 
 QString ServerApi::lastErrorStr()
 {
-    return socket->errorString();
+    return instance->socket->errorString();
+}
+
+void ServerApi::onInitClient(const Serializer& argument)
+{
+    Serializer.deserialize(props);
+    Q_ASSERT(props.id > 0);
 }
 
 
@@ -77,6 +111,8 @@ void ServerApi::onReadyRead()
 
 #ifdef JSON_SERIALIZER
         JsonSerializer serial_arg(data);
+#else
+        Q_ASSERT(false);
 #endif
 
         Q_ASSERT(str_to_signal.contains(header["method"].toString()));

@@ -27,6 +27,7 @@ SOURCES += \
 HEADERS += \
     Tools/tool.h \
     canvas.h \
+    common.h \
     onlineboard.h \
     serializers.h \
     serverapi.h

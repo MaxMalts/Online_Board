@@ -7,8 +7,8 @@
 
 class Serializable {
 public:
-    virtual void serialize(QJsonObject& json) const = 0;
-    virtual void deserialize(const QJsonObject& json) = 0;
+    virtual bool serialize(QJsonObject& json) const = 0;
+    virtual bool deserialize(const QJsonObject& json) = 0;
 };
 
 
