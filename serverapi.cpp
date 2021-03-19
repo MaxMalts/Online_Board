@@ -60,7 +60,29 @@ QString ServerApi::lastErrorStr()
 
 void ServerApi::onReadyRead()
 {
-    //emit dataReceived();
+    uint64_t header_size = 0;
+    while (socket->read(reinterpret_cast<char*>(&header_size), sizeof(header_size)) ==
+           sizeof(header_size)) {
+        Q_ASSERT(header_size > 0);
+
+        QByteArray data = socket->read(header_size);
+        Q_ASSERT(data.size() == header_size);
+
+        QJsonObject header = QJsonDocument::fromJson(data).object();
+        int arg_size = header["argument_size"].toInt();
+        Q_ASSERT(arg_size > 0);
+
+        data = socket->read(arg_size);
+        Q_ASSERT(data.size() == arg_size);
+
+#ifdef JSON_SERIALIZER
+        JsonSerializer serial_arg(data);
+#endif
+
+        Q_ASSERT(str_to_signal.contains(header["method"].toString()));
+        void (ServerApi::*test)(const Serializer&) = &ServerApi::cAddLayer;
+        emit (this->*str_to_signal[header["mehtod"].toString()])(serial_arg);
+    }
 }
 
 void ServerApi::onDisconnected()

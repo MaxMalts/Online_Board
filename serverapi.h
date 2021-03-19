@@ -46,6 +46,10 @@ private:
 
     static QTcpSocket* socket;
     static ServerApi* instance;
+
+    const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
+        { "c_add_layer", &ServerApi::cAddLayer }
+    };
 };
 
 #endif // SERVERAPI_H
