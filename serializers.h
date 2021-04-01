@@ -9,6 +9,8 @@ class Serializable {
 public:
     virtual bool serialize(QJsonObject& json) const = 0;
     virtual bool deserialize(const QJsonObject& json) = 0;
+
+    virtual ~Serializable();
 };
 
 
@@ -21,6 +23,8 @@ public:
     virtual bool set(const QByteArray& data) = 0;
 
     virtual bool isNull() const = 0;
+
+    virtual ~Serializer();
 };
 
 
