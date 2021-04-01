@@ -13,7 +13,7 @@ class Tool : public QObject
     friend class Canvas;
 
 public:
-    explicit Tool(Canvas* canvas, QObject* parent = nullptr);
+    Tool(Canvas* canvas, QObject* parent = nullptr);
 
     void activate();
     void inactivate();
@@ -21,15 +21,21 @@ public:
     virtual ~Tool();
 
 private slots:
-    virtual void toolDown(const QVector2D& pos) = 0;
-    virtual void toolMoved(const QVector2D& pos) = 0;
-    virtual void toolUp(const QVector2D& pos) = 0;
+    void onMouseDown(const QVector2D& pos);
+    void onMouseMoved(const QVector2D& pos);
+    void onMouseUp(const QVector2D& pos);
 
 private:
-    virtual void toolActivated() = 0;
-    virtual void toolInactivated() = 0;
+    virtual void toolActivated();
+    virtual void toolDown(const QVector2D& pos);
+    virtual void toolDragged(const QVector2D& pos);
+    virtual void toolMovedIdle(const QVector2D& pos);
+    virtual void toolUp(const QVector2D& pos);
+    virtual void toolInactivated();
 
     Canvas* canvas = nullptr;
+
+    bool mouse_pressed = false;
 };
 
 #endif // TOOL_H
