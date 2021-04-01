@@ -11,17 +11,20 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 {
     ui->setupUi(this);
 
-    if (ServerApi::connectToServer()) {
+    if (ServerApi::connectToServer() || true) {
         statusBar()->setStyleSheet("");
         statusBar()->showMessage("Connected to server.", 3000);
 
-        canvas = new Canvas(centralWidget(), size());
+        QSize canvas_size(size().width(),
+                          size().height() - statusBar()->height() - menuBar()->height());
+        canvas = new Canvas(canvas_size, centralWidget());
 
     } else {
         statusBar()->setStyleSheet("color: red;");
         statusBar()->showMessage("Error while connecting to server: " +
                                  ServerApi::lastErrorStr());
         qDebug() << "Error while connecting to server: " << ServerApi::lastError();
+        qDebug() << size() << frameSize();
     }
 }
 

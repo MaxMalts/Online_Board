@@ -5,30 +5,31 @@
 #include <QColor>
 #include <QVector2D>
 
-#include "canvas.h"
+class Canvas;
 
 class Tool : public QObject
 {
     Q_OBJECT
+    friend class Canvas;
+
 public:
-    explicit Tool(QObject* parent = nullptr);
+    explicit Tool(Canvas* canvas, QObject* parent = nullptr);
 
-    void setActive(Canvas* canvas, size_t size = 3, QColor color = QColor());
+    void activate();
+    void inactivate();
 
-    void setInactive();
+    virtual ~Tool();
 
-signals:
-
-private:
-    virtual void toolActivated() = 0;
+private slots:
     virtual void toolDown(const QVector2D& pos) = 0;
     virtual void toolMoved(const QVector2D& pos) = 0;
     virtual void toolUp(const QVector2D& pos) = 0;
+
+private:
+    virtual void toolActivated() = 0;
     virtual void toolInactivated() = 0;
 
     Canvas* canvas = nullptr;
-    size_t size = 3;
-    QColor color;
 };
 
 #endif // TOOL_H

@@ -111,7 +111,7 @@ void ServerApi::onReadyRead()
 #ifdef JSON_SERIALIZER
         JsonSerializer serial_arg(data);
 #else
-        Q_ASSERT(false);
+        static_assert(false, "No serializer defined.");
 #endif
 
         Q_ASSERT(str_to_signal.contains(header["method"].toString()));
