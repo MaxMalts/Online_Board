@@ -19,34 +19,50 @@ JsonSerializer::JsonSerializer(const QJsonObject& json)
     set(json);
 }
 
-void JsonSerializer::serialize(const Serializable& object)
+bool JsonSerializer::serialize(const Serializable& object)
 {
     QJsonObject jsonObj;
-    object.serialize(jsonObj);
-    json_doc.setObject(jsonObj);
+    if (object.serialize(jsonObj)) {
+        json_doc.setObject(jsonObj);
+        Q_ASSERT(!json_doc.isNull());
+        return true;
+    }
+
+    return false;
 }
 
-void JsonSerializer::deserialize(Serializable& object) const
+bool JsonSerializer::deserialize(Serializable& object) const
 {
-    object.deserialize(json_doc.object());
+    return object.deserialize(json_doc.object());
 }
 
 QByteArray JsonSerializer::getData() const
 {
-    return json_doc.toJson();
+    if (!json_doc.isNull()) {
+        return json_doc.toJson();
+    } else {
+        return {};
+    }
+}
+
+bool JsonSerializer::set(const QByteArray& json)
+{
+    json_doc = QJsonDocument::fromJson(json, &last_error);
+    return !json_doc.isNull();
+}
+
+bool JsonSerializer::set(const QJsonObject& json)
+{
+    json_doc.setObject(json);
+    return !json_doc.isNull();
+}
+
+bool JsonSerializer::isNull()
+{
+    return json_doc.isNull();
 }
 
 QJsonParseError JsonSerializer::lastError() const
 {
     return last_error;
-}
-
-void JsonSerializer::set(const QByteArray& json)
-{
-    json_doc = QJsonDocument::fromJson(json, &last_error);
-}
-
-void JsonSerializer::set(const QJsonObject& json)
-{
-    json_doc.setObject(json);
 }

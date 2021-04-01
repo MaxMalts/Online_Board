@@ -15,10 +15,12 @@ public:
 // Represents object in serialized format
 class Serializer {
 public:
-    virtual void serialize(const Serializable& object) = 0;
-    virtual void deserialize(Serializable& object) const = 0;
+    virtual bool serialize(const Serializable& object) = 0;
+    virtual bool deserialize(Serializable& object) const = 0;
     virtual QByteArray getData() const = 0;
-    virtual void set(const QByteArray& data) = 0;
+    virtual bool set(const QByteArray& data) = 0;
+
+    virtual bool isNull() const = 0;
 };
 
 
@@ -28,13 +30,15 @@ public:
     JsonSerializer(const QByteArray& data);
     JsonSerializer(const QJsonObject& json_doc);
 
-    virtual void serialize(const Serializable& object) override;
-    virtual void deserialize(Serializable& object) const override;
+    virtual bool serialize(const Serializable& object) override;
+    virtual bool deserialize(Serializable& object) const override;
     virtual QByteArray getData() const override;
-    virtual void set(const QByteArray& data) override;
+    virtual bool set(const QByteArray& data) override;
 
     QJsonDocument getJson() const;
-    void set(const QJsonObject& json_doc);
+    bool set(const QJsonObject& json_doc);
+
+    virtual bool isNull() override;
 
     QJsonParseError lastError() const;
 
