@@ -51,7 +51,6 @@ void Tool::onMouseUp(const QVector2D& pos)
     toolUp(pos);
 }
 
-
 void Tool::toolActivated() {}
 void Tool::toolDown(const QVector2D&) {}
 void Tool::toolDragged(const QVector2D&) {}

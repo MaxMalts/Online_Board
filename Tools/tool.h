@@ -18,7 +18,7 @@ public:
     void activate();
     void inactivate();
 
-    virtual ~Tool();
+    virtual ~Tool() = default;
 
 private slots:
     void onMouseDown(const QVector2D& pos);
