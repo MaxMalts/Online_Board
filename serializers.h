@@ -30,15 +30,15 @@ public:
     JsonSerializer(const QByteArray& data);
     JsonSerializer(const QJsonObject& json_doc);
 
-    virtual bool serialize(const Serializable& object) override;
-    virtual bool deserialize(Serializable& object) const override;
-    virtual QByteArray getData() const override;
-    virtual bool set(const QByteArray& data) override;
+    bool serialize(const Serializable& object) override;
+    bool deserialize(Serializable& object) const override;
+    QByteArray getData() const override;
+    bool set(const QByteArray& data) override;
 
     QJsonDocument getJson() const;
     bool set(const QJsonObject& json_doc);
 
-    virtual bool isNull() override;
+    bool isNull() const override;
 
     QJsonParseError lastError() const;
 

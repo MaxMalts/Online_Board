@@ -57,7 +57,7 @@ bool JsonSerializer::set(const QJsonObject& json)
     return !json_doc.isNull();
 }
 
-bool JsonSerializer::isNull()
+bool JsonSerializer::isNull() const
 {
     return json_doc.isNull();
 }
