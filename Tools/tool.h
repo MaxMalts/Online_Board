@@ -21,16 +21,12 @@ public:
     virtual ~Tool() = default;
 
 private slots:
-    void onMouseDown(const QVector2D& pos);
-    void onMouseMoved(const QVector2D& pos);
-    void onMouseUp(const QVector2D& pos);
+    virtual void toolDown(const QVector2D& pos);
+    virtual void toolDragged(const QVector2D& pos);
+    virtual void toolUp(const QVector2D& pos);
 
 private:
     virtual void toolActivated();
-    virtual void toolDown(const QVector2D& pos);
-    virtual void toolDragged(const QVector2D& pos);
-    virtual void toolMovedIdle(const QVector2D& pos);
-    virtual void toolUp(const QVector2D& pos);
     virtual void toolInactivated();
 
     Canvas* canvas = nullptr;

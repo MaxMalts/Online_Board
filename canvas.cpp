@@ -2,25 +2,56 @@
 #include "serverapi.h"
 
 #include <QMouseEvent>
-#include <QString>
-#include <QStringList>
-#include <QImage>
-#include <QPainter>
-#include <QColor>
 #include <QDebug>
 
-#include "Layers/line.h"
-
 Canvas::Canvas(QSize size, QWidget* parent)
-    : QWidget(parent),
-      gscene(this),
-      gview(this),
+    : QGraphicsView(parent),
+      gscene(this)
 {
-    resize(size);
-    gview.setScene(&gscene);
-    gscene.addItem(new Line(0, 0, 100, 100));
+    setScene(&gscene);
+    setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
 
-    gview.setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
+    active_tool = tools.at(0);
+    active_tool->activate();
+}
+
+bool Canvas::setActiveTool(Canvas::ToolType tool)
+{
+    int tool_ind = 0;
+    switch (tool) {
+    case pencil:
+        return false;
+    case line:
+        tool_ind = 0;
+        break;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+
+    Tool* new_tool = tools.at(tool_ind);
+    if (active_tool != new_tool) {
+        active_tool->inactivate();
+        active_tool = new_tool;
+        active_tool->activate();
+    }
+
+    return true;
+}
+
+void Canvas::mousePressEvent(QMouseEvent* event)
+{
+    emit mouseDown(QVector2D(mapToScene(event->pos())));
+}
+
+void Canvas::mouseMoveEvent(QMouseEvent* event)
+{
+    emit mouseDragged(QVector2D(mapToScene(event->pos())));
+}
+
+void Canvas::mouseReleaseEvent(QMouseEvent* event)
+{
+    emit mouseUp(QVector2D(mapToScene(event->pos())));
 }
 
 //void Canvas::mousePressEvent(QMouseEvent* event)

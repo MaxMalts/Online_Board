@@ -9,8 +9,9 @@
 #include <QDebug>
 
 #include "Tools/tool.h"
+#include "Tools/line.h"
 
-class Canvas : public QWidget
+class Canvas : public QGraphicsView
 {
     Q_OBJECT
 
@@ -23,7 +24,7 @@ public:
 
     explicit Canvas(QSize size = QSize(500, 500), QWidget *parent = nullptr);
 
-    void setActiveTool(ToolType tool);
+    bool setActiveTool(ToolType tool);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -33,17 +34,19 @@ protected:
 signals:
     // pos is position on the scene
     void mouseDown(const QVector2D& pos);
-    void mouseMoved(const QVector2D& pos);
+    void mouseDragged(const QVector2D& pos);
     void mouseUp(const QVector2D& pos);
 
 private:
     void addItem(QGraphicsItem* item);
 
     QGraphicsScene gscene;
-    QGraphicsView gview;
+    //QGraphicsView gview;
 
     Tool* active_tool = nullptr;
-    QList<Tool*> tools;  // todo
+    const QList<Tool*> tools {
+        new Line(this, this)
+    };
 
 //    void startDrawing(const QPoint& pos);
 //    void drawLineToPoint(const QPoint& point);

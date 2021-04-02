@@ -10,7 +10,7 @@ public:
     virtual bool serialize(QJsonObject& json) const = 0;
     virtual bool deserialize(const QJsonObject& json) = 0;
 
-    virtual ~Serializable();
+    virtual ~Serializable() = default;
 };
 
 
@@ -24,7 +24,7 @@ public:
 
     virtual bool isNull() const = 0;
 
-    virtual ~Serializer();
+    virtual ~Serializer() = default;
 };
 
 
