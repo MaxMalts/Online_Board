@@ -10,12 +10,25 @@
 #include "common.h"
 
 
-/* ClientProps */
+/* AddLayerArgs */
 
-int ServerApi::ClientProps::clientId() const
+#ifdef JSON_SERIALIZER
+bool AddLayerArgs::serialize(QJsonObject& json) const
 {
-    return client_id;
+    return false;
 }
+
+bool AddLayerArgs::deserialize(const QJsonObject& json)
+{
+    return false;
+}
+#else
+static_assert(false, "No serializer defined.");
+#endif
+
+
+
+/* ClientProps */
 
 bool ServerApi::ClientProps::serialize(QJsonObject& json) const
 {
@@ -87,7 +100,7 @@ QString ServerApi::lastErrorStr()
 void ServerApi::onInitClient(const Serializer& argument)
 {
     argument.deserialize(props);
-    Q_ASSERT(props.clientId() > 0);
+    Q_ASSERT(props.client_id > 0);
 }
 
 

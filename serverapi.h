@@ -4,8 +4,34 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QJsonObject>
+#include <QMap>
+#include <QPointF>
+#include <QSizeF>
+#include <QGraphicsItem>
 
 #include "serializers.h"
+
+
+struct AddLayerArgs : public Serializable {
+public:
+    enum ToolType {
+        line
+    };
+
+#ifdef JSON_SERIALIZER
+    bool serialize(QJsonObject& json) const override;
+    bool deserialize(const QJsonObject& json) override;
+
+    static const QMap<QString, ToolType> tool_to_tooltype;
+#else
+    static_assert(false, "No serializer defined.");
+#endif
+
+    QPointF position;
+    QSizeF size;
+    ToolType tool;
+    QGraphicsItem* layer_data = nullptr;
+};
 
 
 class ServerApi : public QObject
@@ -20,14 +46,11 @@ private:
         const int connect_timeout = 10000;
     } config;
 
-    class ClientProps : public Serializable {
+    struct ClientProps : public Serializable {
     public:
-        int clientId() const;
+        bool serialize(QJsonObject& json) const override;
+        bool deserialize(const QJsonObject& json) override;
 
-        virtual bool serialize(QJsonObject& json) const override;
-        virtual bool deserialize(const QJsonObject& json) override;
-
-    private:
         int client_id;
     };
 

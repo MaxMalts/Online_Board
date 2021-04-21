@@ -54,6 +54,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
     emit mouseUp(QVector2D(mapToScene(event->pos())));
 }
 
+void Canvas::addItem(QGraphicsItem* item)
+{
+    gscene.addItem(item);
+}
+
 //void Canvas::mousePressEvent(QMouseEvent* event)
 //{
 //    if (event->button() == Qt::LeftButton) {

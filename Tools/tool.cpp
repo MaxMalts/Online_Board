@@ -39,3 +39,13 @@ void Tool::toolDown(const QVector2D&) {}
 void Tool::toolDragged(const QVector2D&) {}
 void Tool::toolUp(const QVector2D&) {}
 void Tool::toolInactivated() {}
+
+void Tool::setItem(QGraphicsItem* item)
+{
+    canvas->addItem(item);
+}
+
+void Tool::sendItem(QString tool_name, QGraphicsItem* item)
+{
+
+}
