@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QEventLoop>
 #include <QMap>
+#include <initializer_list>
+#include <utility>
 
 
 template<typename QObject_T, typename... Args>
@@ -30,7 +32,13 @@ class BiMap {
 public:
     BiMap() = default;
     BiMap(const BiMap<LeftVal, RightVal>& other) = default;
-    BiMap(const BiMap<LeftVal, RightVal>&& other) = default;
+    BiMap(BiMap<LeftVal, RightVal>&& other) = default;
+
+    BiMap(std::initializer_list<std::pair<LeftVal, RightVal>> list) {
+        for (auto& pair : list) {
+            insert(pair.first, pair.second);
+        }
+    }
 
     BiMap<LeftVal, RightVal>& operator=(const BiMap<LeftVal, RightVal>& other) = default;
 
@@ -53,13 +61,13 @@ public:
         return true;
     }
 
-    const RightVal leftToRight(const LeftVal& left,
+    const RightVal rightByLeft(const LeftVal& left,
                                const RightVal& defaultValue = RightVal()) const {
 
         return left_to_right.value(left, defaultValue);
     }
 
-    const LeftVal rightToLeft(const RightVal& right,
+    const LeftVal leftByRight(const RightVal& right,
                               const LeftVal& defaultValue = LeftVal()) const {
 
         return right_to_left.value(right, defaultValue);
