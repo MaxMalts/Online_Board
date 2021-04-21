@@ -1,8 +1,89 @@
 #include "canvas.h"
-#include "serverapi.h"
 
 #include <QMouseEvent>
+#include <QString>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
+
+#include "serverapi.h"
+#include "common.h"
+
+/* AddLayerArgs */
+
+const BiMap<QString, AddLayerArgs::LayerType> AddLayerArgs::str_layertype_map {
+    { "line", AddLayerArgs::LayerType::line }
+};
+
+#ifdef JSON_SERIALIZER
+bool AddLayerArgs::serialize(QJsonObject& json) const
+{
+    if (layer_data.isNull()) {
+        return false;
+    }
+
+    json = QJsonObject();
+    json.insert("position", QJsonArray{ position.x(), position.y() });
+    json.insert("size", QJsonArray{ size.width(), size.height() });
+    json.insert("layer_type", str_layertype_map.leftByRight(layer_type));
+
+    QJsonObject layer_data_json = layer_data.getJson().object();
+    Q_ASSERT(!layer_data_json.isEmpty());
+    json.insert("layer_data", layer_data_json);
+
+    return true;
+}
+
+bool AddLayerArgs::deserialize(const QJsonObject& json)
+{
+    // position
+    QJsonValue cur_value = json.value("position");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue x = cur_value.toArray().at(0);
+    QJsonValue y = cur_value.toArray().at(1);
+    if (!x.isDouble() || !y.isDouble()) {
+        return false;
+    }
+    position = QPointF(x.toDouble(), y.toDouble());
+
+    // size
+    cur_value = json.value("size");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue width = cur_value.toArray().at(0);
+    QJsonValue height = cur_value.toArray().at(1);
+    if (!width.isDouble() || !height.isDouble()) {
+        return false;
+    }
+    size = QSizeF(width.toDouble(), height.toDouble());
+
+    // layer_type
+    cur_value = json.value("layer_type");
+    if (!cur_value.isString()) {
+        return false;
+    }
+    layer_type = str_layertype_map.rightByLeft(cur_value.toString());
+
+    //layer_data
+    cur_value = json.value("layer_data");
+    if (!cur_value.isObject()) {
+        return false;
+    }
+    layer_data.set(cur_value.toObject());
+    Q_ASSERT(!layer_data.isNull());
+
+    return true;
+}
+#else
+static_assert(false, "No serializer defined.");
+#endif
+
+
+/* Canvas */
 
 Canvas::Canvas(QSize size, QWidget* parent)
     : QGraphicsView(parent),

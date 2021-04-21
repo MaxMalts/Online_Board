@@ -5,7 +5,8 @@
 #include <QByteArray>
 
 
-class Serializable {
+class Serializable
+{
 public:
     virtual bool serialize(QJsonObject& json) const = 0;
     virtual bool deserialize(const QJsonObject& json) = 0;
@@ -15,7 +16,8 @@ public:
 
 
 // Represents object in serialized format
-class Serializer {
+class Serializer
+{
 public:
     virtual bool serialize(const Serializable& object) = 0;
     virtual bool deserialize(Serializable& object) const = 0;
@@ -28,8 +30,10 @@ public:
 };
 
 
-class JsonSerializer : public Serializer{
+class JsonSerializer : public Serializer
+{
 public:
+    JsonSerializer() = default;
     JsonSerializer(const Serializable& object);
     JsonSerializer(const QByteArray& data);
     JsonSerializer(const QJsonObject& json_doc);

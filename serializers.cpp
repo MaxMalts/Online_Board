@@ -51,6 +51,11 @@ bool JsonSerializer::set(const QByteArray& json)
     return !json_doc.isNull();
 }
 
+QJsonDocument JsonSerializer::getJson() const
+{
+    return json_doc;
+}
+
 bool JsonSerializer::set(const QJsonObject& json)
 {
     json_doc.setObject(json);

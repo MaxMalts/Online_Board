@@ -1,7 +1,8 @@
 #include <QDebug>
 #include "canvas.h"
 #include "tool.h"
-#include <QGuiApplication>
+#include "serverapi.h"
+
 
 Tool::Tool(Canvas* canvas, QObject *parent)
       : QObject(parent),
@@ -47,5 +48,6 @@ void Tool::setItem(QGraphicsItem* item)
 
 void Tool::sendItem(QString tool_name, QGraphicsItem* item)
 {
+    AddLayerArgs args;
 
 }

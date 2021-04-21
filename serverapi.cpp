@@ -10,24 +10,6 @@
 #include "common.h"
 
 
-/* AddLayerArgs */
-
-#ifdef JSON_SERIALIZER
-bool AddLayerArgs::serialize(QJsonObject& json) const
-{
-    return false;
-}
-
-bool AddLayerArgs::deserialize(const QJsonObject& json)
-{
-    return false;
-}
-#else
-static_assert(false, "No serializer defined.");
-#endif
-
-
-
 /* ClientProps */
 
 bool ServerApi::ClientProps::serialize(QJsonObject& json) const
