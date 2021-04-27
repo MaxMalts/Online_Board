@@ -110,7 +110,7 @@ void ServerApi::onReadyRead()
 #endif
 
         Q_ASSERT(str_to_signal.contains(header["method"].toString()));
-        emit (this->*str_to_signal[header["mehtod"].toString()])(serial_arg);
+        emit (this->*str_to_signal[header["method"].toString()])(serial_arg);
     }
 }
 

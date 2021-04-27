@@ -65,6 +65,7 @@ private:
     ClientProps props;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
+        { "init_client", &ServerApi::cInitClient },
         { "c_add_layer", &ServerApi::cAddLayer }
     };
 };
