@@ -6,45 +6,338 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>758</width>
-    <height>417</height>
+    <width>1099</width>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Online Board</string>
   </property>
+  <property name="iconSize">
+   <size>
+    <width>100</width>
+    <height>100</height>
+   </size>
+  </property>
   <property name="animated">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>91</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget {
+	background: #ececec;
+	border: 1px solid #d1d6d0;
+	border-radius: 20px;
+}</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QToolButton" name="pencil">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+	
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:pressed {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+	border-width: 4px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Data/img/tools/pencil.png</normaloff>Data/img/tools/pencil.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="line">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	width: 80px;
+	height: 80px;
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+	
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:pressed {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+	border-width: 4px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Data/img/tools/line.png</normaloff>Data/img/tools/line.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="rectangle">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	width: 80px;
+	height: 80px;
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+	
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:pressed {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+	border-width: 4px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>758</width>
-     <height>26</height>
+     <width>1099</width>
+     <height>21</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e946a, stop:1 #a4c9a1);
+}
+
+QMenuBar::item {
+	padding: 0 5px;
+}
+
+QMenuBar::item:selected  {
+	background: rgba(220, 220, 220, 100);
+}
+
+QMenuBar::item:pressed  {
+	background: rgba(240, 240, 240, 200);
+}</string>
+   </property>
    <widget class="QMenu" name="menuFile">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu::item {
+	background: #f8f8f8;
+	color: black;
+}</string>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actiontest"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu::item {
+	background: #f8f8f8;
+	color: black;
+}</string>
+    </property>
     <property name="title">
      <string>Edit</string>
     </property>
+    <addaction name="actiontest_2"/>
+    <addaction name="actiontest2"/>
+    <addaction name="separator"/>
+    <addaction name="actiontest3"/>
    </widget>
    <widget class="QMenu" name="menuTools">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu::item {
+	background: #f8f8f8;
+	color: black;
+}</string>
+    </property>
     <property name="title">
      <string>Tools</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QMenu::item {
+	background: #f8f8f8;
+	color: black;
+}</string>
+    </property>
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionhelp"/>
+    <addaction name="actionabout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -56,6 +349,36 @@
     <bool>true</bool>
    </property>
   </widget>
+  <action name="actiontest">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actiontest_2">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actiontest2">
+   <property name="text">
+    <string>test2</string>
+   </property>
+  </action>
+  <action name="actiontest3">
+   <property name="text">
+    <string>test3</string>
+   </property>
+  </action>
+  <action name="actionhelp">
+   <property name="text">
+    <string>help</string>
+   </property>
+  </action>
+  <action name="actionabout">
+   <property name="text">
+    <string>about</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

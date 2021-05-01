@@ -44,3 +44,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 DEFINES += JSON_SERIALIZER
+
+DISTFILES += \
+    Data/img/tools/line.png
