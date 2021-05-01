@@ -7,6 +7,8 @@
 #include <QGraphicsItem>
 #include <QString>
 
+#include "serverapi.h"
+
 
 class Canvas;
 
@@ -32,7 +34,7 @@ protected:
     virtual void toolInactivated();
 
     void setItem(QGraphicsItem* item);
-    void sendItem(QString tool_name, QGraphicsItem* item);
+    void sendItem(AddLayerArgs::LayerType layer_type, QGraphicsItem* item);
 
     Canvas* canvas = nullptr;
 

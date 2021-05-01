@@ -42,6 +42,9 @@ signals:
     void mouseDragged(const QVector2D& pos);
     void mouseUp(const QVector2D& pos);
 
+private slots:
+    void onLayerReceived(const Serializer& argument);
+
 private:
     void addItem(QGraphicsItem* item);
 

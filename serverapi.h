@@ -31,7 +31,7 @@ public:
 #endif
 
     QPointF position;
-    QSizeF size;
+    qreal scale;
     LayerType layer_type = undefined;
 };
 
@@ -66,14 +66,12 @@ public:
     static ServerApi* getInstance();
 
     static bool connectToServer();
-    //static QByteArray readData();
     static void sAddLayer(const Serializer& argument);
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
 
 signals:
-    //void dataReceived();
     void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);
 

@@ -30,7 +30,7 @@ bool AddLayerArgs::serialize(QJsonObject& json) const
 
     json = QJsonObject();
     json.insert("position", QJsonArray{ position.x(), position.y() });
-    json.insert("size", QJsonArray{ size.width(), size.height() });
+    json.insert("scale", scale);
     json.insert("layer_type", str_layertype_map.leftByRight(layer_type));
 
     QJsonObject layer_data_json = layer_data.getJson().object();
@@ -42,6 +42,8 @@ bool AddLayerArgs::serialize(QJsonObject& json) const
 
 bool AddLayerArgs::deserialize(const QJsonObject& json)
 {
+    Q_ASSERT(!json.isEmpty());
+
     // position
     QJsonValue cur_value = json.value("position");
     if (!cur_value.isArray()) {
@@ -55,16 +57,11 @@ bool AddLayerArgs::deserialize(const QJsonObject& json)
     position = QPointF(x.toDouble(), y.toDouble());
 
     // size
-    cur_value = json.value("size");
-    if (!cur_value.isArray()) {
+    cur_value = json.value("scale");
+    if (!cur_value.isDouble()) {
         return false;
     }
-    QJsonValue width = cur_value.toArray().at(0);
-    QJsonValue height = cur_value.toArray().at(1);
-    if (!width.isDouble() || !height.isDouble()) {
-        return false;
-    }
-    size = QSizeF(width.toDouble(), height.toDouble());
+    scale = cur_value.toDouble();
 
     // layer_type
     cur_value = json.value("layer_type");
@@ -92,18 +89,25 @@ static_assert(false, "No serializer defined.");
 
 bool ServerApi::ClientProps::serialize(QJsonObject& json) const
 {
-    json["client_id"] = client_id;
+    json.insert("client_id", client_id);
     return true;
 }
 
 bool ServerApi::ClientProps::deserialize(const QJsonObject& json)
 {
+    Q_ASSERT(!json.isEmpty());
+
     if (!json.contains("client_id")) {
         return false;
     }
 
-    client_id = json["client_id"].toInt();
-    return true;;
+    QJsonValue cur_value = json.value("client_id");
+    if (!cur_value.isDouble()) {
+        return false;
+    }
+
+    client_id = cur_value.toInt();
+    return true;
 }
 
 

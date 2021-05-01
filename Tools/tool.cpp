@@ -1,4 +1,5 @@
 #include <QDebug>
+
 #include "canvas.h"
 #include "tool.h"
 #include "serverapi.h"
@@ -46,9 +47,11 @@ void Tool::setItem(QGraphicsItem* item)
     canvas->addItem(item);
 }
 
-void Tool::sendItem(QString tool_name, QGraphicsItem* item)
+void Tool::sendItem(AddLayerArgs::LayerType layer_type, QGraphicsItem* item)
 {
     AddLayerArgs args;
-
-
+    args.position = item->scenePos();
+    args.scale = item->scale();
+    args.layer_type = layer_type;
+    args.layer_data.serialize(dynamic_cast<Serializable&>(*item));
 }

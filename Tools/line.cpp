@@ -2,6 +2,8 @@
 
 #include <QGraphicsLineItem>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QLineF>
 #include <QPoint>
 #include "serverapi.h"
@@ -13,12 +15,50 @@
 #ifdef JSON_SERIALIZER
 bool LineItem::deserialize(const QJsonObject& json)
 {
-    return false;
+    Q_ASSERT(!json.isEmpty());
+
+    QLineF new_line;
+
+    QJsonValue cur_value = json.value("first_point");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue x = cur_value.toArray().at(0);
+    QJsonValue y = cur_value.toArray().at(0);
+    if (!x.isDouble() || !y.isDouble()) {
+        return false;
+    }
+    new_line.setP1(QPointF(x.toDouble(), y.toDouble()));
+
+    cur_value = json.value("second_point");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    x = cur_value.toArray().at(0);
+    y = cur_value.toArray().at(0);
+    if (!x.isDouble() || !y.isDouble()) {
+        return false;
+    }
+    new_line.setP2(QPointF(x.toDouble(), y.toDouble()));
+
+    setLine(new_line);
+
+    return true;
 }
 
 bool LineItem::serialize(QJsonObject& json) const
 {
-    return false;
+    json = QJsonObject();
+
+    QLineF cur_line = line();
+    if (cur_line.isNull()) {
+        return false;
+    }
+
+    json.insert("first_point", QJsonArray{ cur_line.p1().x(), cur_line.p1().y() });
+    json.insert("second_point", QJsonArray{ cur_line.p2().x(), cur_line.p2().y() });
+
+    return true;
 }
 #else
 static_assert(false, "No serializer defined.");
@@ -51,7 +91,7 @@ void Line::toolUp(const QVector2D& pos)
     line_item->setLine(cur_line);
 
     setItem(line_item);
-    sendItem("line", line_item);
+    sendItem(AddLayerArgs::LayerType::line, line_item);
 
     cur_line = QLineF();
     qDebug() << "Line up.";

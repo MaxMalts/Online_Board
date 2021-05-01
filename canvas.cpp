@@ -17,6 +17,9 @@ Canvas::Canvas(QSize size, QWidget* parent)
     setScene(&gscene);
     setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
 
+    connect(ServerApi::getInstance(), SIGNAL(cAddLayer(const Serializer&)),
+            this, SLOT(onLayerReceived(const Serializer&)));
+
     active_tool = tools.at(0);
     active_tool->activate();
 }
@@ -60,9 +63,33 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
     emit mouseUp(QVector2D(mapToScene(event->pos())));
 }
 
+void Canvas::onLayerReceived(const Serializer& argument)
+{
+    AddLayerArgs layer_info;
+    argument.deserialize(layer_info);
+
+    QGraphicsItem* item = nullptr;
+    switch (layer_info.layer_type) {
+    case AddLayerArgs::LayerType::line: {
+        LineItem* line_item = new LineItem;
+        layer_info.layer_data.deserialize(*line_item);
+        item = line_item;
+        break;
+    }
+
+    default:
+        Q_ASSERT(false);
+    }
+
+    item->setPos(layer_info.position);
+    item->setScale(layer_info.scale);
+
+    addItem(item);
+}
+
 void Canvas::addItem(QGraphicsItem* item)
 {
-    gscene.addItem(item);
+    gscene.addItem(item);  // Takes ownership
 }
 
 //void Canvas::mousePressEvent(QMouseEvent* event)

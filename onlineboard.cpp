@@ -11,7 +11,7 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 {
     ui->setupUi(this);
 
-    if (ServerApi::connectToServer() || true) {
+    if (ServerApi::connectToServer()) {
         statusBar()->setStyleSheet("");
         statusBar()->showMessage("Connected to server.", 3000);
 
