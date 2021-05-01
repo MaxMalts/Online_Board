@@ -16,29 +16,6 @@
 #include "common.h"
 
 
-struct AddLayerArgs : public Serializable {
-public:
-    enum LayerType {
-        undefined,
-        line
-    };
-
-#ifdef JSON_SERIALIZER
-    bool serialize(QJsonObject& json) const override;
-    bool deserialize(const QJsonObject& json) override;
-
-    static const BiMap<QString, LayerType> str_layertype_map;
-    JsonSerializer layer_data;
-#else
-    static_assert(false, "No serializer defined.");
-#endif
-
-    QPointF position;
-    QSizeF size;
-    LayerType layer_type = undefined;
-};
-
-
 class Canvas : public QGraphicsView
 {
     Q_OBJECT
