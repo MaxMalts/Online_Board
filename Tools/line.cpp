@@ -24,7 +24,7 @@ bool LineItem::deserialize(const QJsonObject& json)
         return false;
     }
     QJsonValue x = cur_value.toArray().at(0);
-    QJsonValue y = cur_value.toArray().at(0);
+    QJsonValue y = cur_value.toArray().at(1);
     if (!x.isDouble() || !y.isDouble()) {
         return false;
     }
@@ -35,7 +35,7 @@ bool LineItem::deserialize(const QJsonObject& json)
         return false;
     }
     x = cur_value.toArray().at(0);
-    y = cur_value.toArray().at(0);
+    y = cur_value.toArray().at(1);
     if (!x.isDouble() || !y.isDouble()) {
         return false;
     }

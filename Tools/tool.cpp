@@ -56,7 +56,7 @@ void Tool::sendItem(AddLayerArgs::LayerType layer_type, QGraphicsItem* item)
     args.layer_data.serialize(dynamic_cast<Serializable&>(*item));
 
 #ifdef JSON_SERIALIZER
-    JsonSerializer argument(dynamic_cast<Serializable&>(*item));
+    JsonSerializer argument(args);
 #else
 static_assert(false, "No serializer defined.");
 #endif
