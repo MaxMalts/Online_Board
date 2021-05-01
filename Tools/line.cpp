@@ -69,13 +69,11 @@ static_assert(false, "No serializer defined.");
 void Line::toolDown(const QVector2D& pos)
 {
     cur_line.setP1(pos.toPointF());
-    qDebug() << "Line down.";
 }
 
 void Line::toolDragged(const QVector2D& pos)
 {
     // to do
-    qDebug() << "Line dragged.";
 }
 
 void Line::toolUp(const QVector2D& pos)
@@ -94,5 +92,4 @@ void Line::toolUp(const QVector2D& pos)
     sendItem(AddLayerArgs::LayerType::line, line_item);
 
     cur_line = QLineF();
-    qDebug() << "Line up.";
 }

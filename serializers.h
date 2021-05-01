@@ -8,8 +8,12 @@
 class Serializable
 {
 public:
+#ifdef JSON_SERIALIZER
     virtual bool serialize(QJsonObject& json) const = 0;
     virtual bool deserialize(const QJsonObject& json) = 0;
+#else
+    static_assert(false, "No serializer defined.");
+#endif
 
     virtual ~Serializable() = default;
 };
@@ -30,6 +34,7 @@ public:
 };
 
 
+#ifdef JSON_SERIALIZER
 class JsonSerializer : public Serializer
 {
 public:
@@ -54,5 +59,8 @@ private:
     QJsonDocument json_doc;
     QJsonParseError last_error;
 };
+#else
+    static_assert(false, "No serializer defined.");
+#endif
 
 #endif // SERIALIZERS_H

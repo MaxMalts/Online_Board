@@ -177,6 +177,8 @@ void ServerApi::onReadyRead()
 
         QByteArray data = socket->read(header_size);
         Q_ASSERT(static_cast<uint64_t>(data.size()) == header_size);
+        qDebug() << "Data received from server:";
+        qDebug().noquote() << QString::fromUtf8(data);
 
         QJsonObject header = QJsonDocument::fromJson(data).object();
         int arg_size = header["argument_size"].toInt();
@@ -184,6 +186,7 @@ void ServerApi::onReadyRead()
 
         data = socket->read(arg_size);
         Q_ASSERT(data.size() == arg_size);
+        qDebug().noquote().nospace() << QString::fromUtf8(data);
 
 #ifdef JSON_SERIALIZER
         JsonSerializer serial_arg(data);
@@ -207,17 +210,22 @@ bool ServerApi::sendMethod(const QString& method, const Serializer& argument)
     int arg_data_size = arg_data.size();
 
     QJsonObject header;
-    header["client_id"] = 1;  // To be implemented
-    header["method"] = method;
-    header["argument_size"] = arg_data_size;
+    header.insert("client_id", props.client_id);
+    header.insert("method", method);
+    header.insert("argument_size", arg_data_size);
 
     QByteArray header_data = QJsonDocument(header).toJson();
     uint64_t header_size = header_data.size();
 
     QByteArray package;
-    package.resize(sizeof(header_size) + header_size + 1 + arg_data_size);
+    package.reserve(sizeof(header_size) + header_size + 1 + arg_data_size);
     package += QByteArray(reinterpret_cast<char*>(&header_size), sizeof(header_size)) +
-            header_data + '\n' + arg_data;
+            '\n' + header_data + arg_data;
 
-    return socket->write(package) == package.size();
+    if (socket->write(package) == package.size()) {
+        qDebug() << "Data sent to server:";
+        qDebug().noquote() << package.data() + sizeof(header_size);
+        return true;
+    }
+    return false;
 }

@@ -53,7 +53,7 @@ private:
         bool serialize(QJsonObject& json) const override;
         bool deserialize(const QJsonObject& json) override;
 
-        int client_id;
+        int client_id = 0;
     };
 
 public:

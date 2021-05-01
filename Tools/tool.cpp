@@ -54,4 +54,12 @@ void Tool::sendItem(AddLayerArgs::LayerType layer_type, QGraphicsItem* item)
     args.scale = item->scale();
     args.layer_type = layer_type;
     args.layer_data.serialize(dynamic_cast<Serializable&>(*item));
+
+#ifdef JSON_SERIALIZER
+    JsonSerializer argument(dynamic_cast<Serializable&>(*item));
+#else
+static_assert(false, "No serializer defined.");
+#endif
+
+    ServerApi::sAddLayer(argument);
 }
