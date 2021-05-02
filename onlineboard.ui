@@ -78,7 +78,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QToolButton" name="pencil">
+        <widget class="QToolButton" name="buttonPencil">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -112,9 +112,10 @@ QToolButton:hover {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
 }
 
-QToolButton:pressed {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
 	border-width: 4px;
+	border-color: #6d7d06;
 }</string>
          </property>
          <property name="text">
@@ -130,6 +131,15 @@ QToolButton:pressed {
            <height>50</height>
           </size>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">toolsGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -146,7 +156,7 @@ QToolButton:pressed {
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="line">
+        <widget class="QToolButton" name="buttonLine">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -171,8 +181,6 @@ QToolButton:pressed {
          <property name="styleSheet">
           <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	width: 80px;
-	height: 80px;
 	border: 3px solid #8fc286;
 	border-radius: 20px;
 	
@@ -182,9 +190,10 @@ QToolButton:hover {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
 }
 
-QToolButton:pressed {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
 	border-width: 4px;
+	border-color: #6d7d06;
 }</string>
          </property>
          <property name="text">
@@ -200,6 +209,12 @@ QToolButton:pressed {
            <height>50</height>
           </size>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">toolsGroup</string>
+         </attribute>
         </widget>
        </item>
        <item>
@@ -216,7 +231,7 @@ QToolButton:pressed {
         </spacer>
        </item>
        <item>
-        <widget class="QToolButton" name="rectangle">
+        <widget class="QToolButton" name="buttonRectangle">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -241,8 +256,6 @@ QToolButton:pressed {
          <property name="styleSheet">
           <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	width: 80px;
-	height: 80px;
 	border: 3px solid #8fc286;
 	border-radius: 20px;
 	
@@ -252,9 +265,10 @@ QToolButton:hover {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
 }
 
-QToolButton:pressed {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #cfcfcf, stop:1 #f5f5f5);
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
 	border-width: 4px;
+	border-color: #6d7d06;
 }</string>
          </property>
          <property name="text">
@@ -270,6 +284,12 @@ QToolButton:pressed {
            <height>50</height>
           </size>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">toolsGroup</string>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -338,7 +358,6 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actiontest"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="cursor">
@@ -353,10 +372,7 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actiontest_2"/>
-    <addaction name="actiontest2"/>
     <addaction name="separator"/>
-    <addaction name="actiontest3"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="cursor">
@@ -371,6 +387,9 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionPencil"/>
+    <addaction name="actionLine"/>
+    <addaction name="actionRectangle"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="cursor">
@@ -398,37 +417,155 @@ QMenuBar::item:pressed  {
     <bool>true</bool>
    </property>
   </widget>
-  <action name="actiontest">
-   <property name="text">
-    <string>test</string>
-   </property>
-  </action>
-  <action name="actiontest_2">
-   <property name="text">
-    <string>test</string>
-   </property>
-  </action>
-  <action name="actiontest2">
-   <property name="text">
-    <string>test2</string>
-   </property>
-  </action>
-  <action name="actiontest3">
-   <property name="text">
-    <string>test3</string>
-   </property>
-  </action>
   <action name="actionhelp">
    <property name="text">
-    <string>help</string>
+    <string>Help</string>
    </property>
   </action>
   <action name="actionabout">
    <property name="text">
-    <string>about</string>
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionPencil">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pencil</string>
+   </property>
+  </action>
+  <action name="actionLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Line</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>Test</string>
    </property>
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonPencil</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>actionPencil</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>494</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLine</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>actionLine</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRectangle</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>actionRectangle</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>480</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPencil</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buttonPencil</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRectangle</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buttonRectangle</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>480</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLine</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>buttonLine</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>Test()</slot>
+ </slots>
+ <buttongroups>
+  <buttongroup name="toolsGroup"/>
+ </buttongroups>
 </ui>
