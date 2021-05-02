@@ -46,6 +46,7 @@ private:
         const QString ip_address = "localhost";
         const quint16 port = 5555;
         const int connect_timeout = 10000;
+        const int reconnect_interval = 1000;
     } config;
 
     struct ClientProps : public Serializable {
@@ -75,10 +76,14 @@ signals:
     void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);
 
+    void connected();
+    void disconnected();
+
 private slots:
     void onReadyRead();
     void onInitClient(const Serializer& argument);
     void onDisconnected();
+    void onReconnectTimer();
 
 private:
     bool sendMethod(const QString& method, const Serializer& argument);
@@ -87,6 +92,8 @@ private:
 
     QTcpSocket* socket = nullptr;
     ClientProps props;
+
+    QTimer reconnectTimer;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
         { "init_client", &ServerApi::cInitClient },

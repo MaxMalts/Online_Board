@@ -12,20 +12,27 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 {
     ui->setupUi(this);
 
-    while (!ServerApi::connectToServer()) {
-        statusBar()->setStyleSheet("color: red;");
-        statusBar()->showMessage("Error while connecting to server: " +
-                                 ServerApi::lastErrorStr());
-
-        qDebug() << "Error while connecting to server: " << ServerApi::lastError();
-    }
-
-    statusBar()->setStyleSheet("");
-    statusBar()->showMessage("Connected to server.", 3000);
-
     canvas = new Canvas(QSize(0, 0), centralWidget());
     canvas->lower();
     canvas->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
+
+    connect(ServerApi::getInstance(), SIGNAL(disconnected()),
+            this, SLOT(onServerDisconnected()));
+    connect(ServerApi::getInstance(), SIGNAL(connected()),
+            this, SLOT(onServerConnected()));
+
+    if (!ServerApi::connectToServer()) {
+        statusBar()->setStyleSheet("color: red;");
+        statusBar()->showMessage("Disconnected from server: " +
+                                 ServerApi::lastErrorStr() + ". Reconnecting...");
+        setEnabled(false);
+
+        qDebug() << "Error while connecting to server: " << ServerApi::lastError();
+
+    } else {
+        statusBar()->setStyleSheet("");
+        statusBar()->showMessage("Connected to server.", 3000);
+    }
 }
 
 void OnlineBoard::resizeEvent(QResizeEvent*)
@@ -35,6 +42,25 @@ void OnlineBoard::resizeEvent(QResizeEvent*)
                       menuBar()->height() + 1);
 
     canvas->resize(canvas_size);
+}
+
+void OnlineBoard::onServerDisconnected()
+{
+    statusBar()->setStyleSheet("color: red;");
+    statusBar()->showMessage("Disconnected from server: " +
+                             ServerApi::lastErrorStr() + " Reconnecting...");
+    setEnabled(false);
+
+    qDebug() << "Disconnected from server: " << ServerApi::lastError();
+}
+
+
+void OnlineBoard::onServerConnected()
+{
+    setEnabled(true);
+
+    statusBar()->setStyleSheet("");
+    statusBar()->showMessage("Connected to server.", 3000);
 }
 
 OnlineBoard::~OnlineBoard()

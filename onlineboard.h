@@ -28,6 +28,10 @@ public:
 protected:
     void resizeEvent(QResizeEvent*) override;
 
+private slots:
+    void onServerDisconnected();
+    void onServerConnected();
+
 private:
     Ui::OnlineBoard* ui;
 

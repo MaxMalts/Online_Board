@@ -127,6 +127,9 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
         connect(this, SIGNAL(cInitClient(const Serializer&)),
                 this, SLOT(onInitClient(const Serializer&)));
 
+        reconnectTimer.setInterval(config.reconnect_interval);
+        connect(&reconnectTimer, SIGNAL(timeout()), this, SLOT(onReconnectTimer()));
+
         instance = this;
     }
 }
@@ -139,11 +142,19 @@ ServerApi* ServerApi::getInstance()
 bool ServerApi::connectToServer()
 {
     instance->socket->connectToHost(config.ip_address, config.port);
-    if (!instance->socket->waitForConnected(config.connect_timeout)) {
+    if (!instance->socket->waitForConnected(config.connect_timeout) ||
+        !waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout)) {
+
+        qDebug() << "Connection failed:" << lastError();
+
+        instance->reconnectTimer.start();
         return false;
     }
 
-    return waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout);
+    qDebug() << "Socket connected.";
+
+    emit instance->connected();
+    return true;
 }
 
 void ServerApi::sAddLayer(const Serializer& argument)
@@ -202,6 +213,23 @@ void ServerApi::onReadyRead()
 void ServerApi::onDisconnected()
 {
     qDebug() << "Socket disconnected.";
+    emit disconnected();
+
+    reconnectTimer.start();
+}
+
+void ServerApi::onReconnectTimer()
+{
+    reconnectTimer.stop();
+
+    qDebug() << "Reconnecting...";
+
+    if (!connectToServer()) {
+        reconnectTimer.start();
+
+    } else {
+        emit connected();
+    }
 }
 
 bool ServerApi::sendMethod(const QString& method, const Serializer& argument)
