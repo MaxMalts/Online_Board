@@ -17,7 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Tools/ellipse.cpp \
     Tools/line.cpp \
+    Tools/pencil.cpp \
     Tools/rectangle.cpp \
     Tools/tool.cpp \
     canvas.cpp \
@@ -27,7 +29,9 @@ SOURCES += \
     serverapi.cpp
 
 HEADERS += \
+    Tools/ellipse.h \
     Tools/line.h \
+    Tools/pencil.h \
     Tools/rectangle.h \
     Tools/tool.h \
     canvas.h \

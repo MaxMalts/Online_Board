@@ -37,12 +37,16 @@ bool Canvas::setActiveTool(Canvas::ToolType tool)
     int tool_ind = 0;
     switch (tool) {
     case pencil:
-        return false;
-    case line:
         tool_ind = 0;
         break;
-    case rectangle:
+    case line:
         tool_ind = 1;
+        break;
+    case rectangle:
+        tool_ind = 2;
+        break;
+    case ellipse:
+        tool_ind = 3;
         break;
     default:
         Q_ASSERT(false);

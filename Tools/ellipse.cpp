@@ -1,4 +1,4 @@
-#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -9,11 +9,11 @@
 #include "serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
-#include "rectangle.h"
+#include "ellipse.h"
 
 
 #ifdef JSON_SERIALIZER
-bool RectangleItem::deserialize(const QJsonObject& json)
+bool EllipseItem::deserialize(const QJsonObject& json)
 {
     Q_ASSERT(!json.isEmpty());
 
@@ -31,7 +31,7 @@ bool RectangleItem::deserialize(const QJsonObject& json)
     return true;
 }
 
-bool RectangleItem::serialize(QJsonObject& json) const
+bool EllipseItem::serialize(QJsonObject& json) const
 {
     json = QJsonObject();
 
@@ -49,18 +49,18 @@ static_assert(false, "No serializer defined.");
 #endif
 
 
-void Rectangle::toolDown(const QPointF& pos)
+void Ellipse::toolDown(const QPointF& pos)
 {
     cur_rect.setTopLeft(pos);
     cur_rect.setBottomRight(pos);
 }
 
-void Rectangle::toolDragged(const QPointF& pos)
+void Ellipse::toolDragged(const QPointF& pos)
 {
     // to do
 }
 
-void Rectangle::toolUp(const QPointF& pos)
+void Ellipse::toolUp(const QPointF& pos)
 {
     cur_rect.setBottomRight(pos);
     if (cur_rect.isNull()) {
@@ -68,7 +68,7 @@ void Rectangle::toolUp(const QPointF& pos)
     }
     cur_rect = cur_rect.normalized();
 
-    RectangleItem* rect_item = new RectangleItem(cur_rect);
+    EllipseItem* rect_item = new EllipseItem(cur_rect);
 
     // Normalizing position to bounding rect
     QPointF item_pos = rect_item->boundingRect().topLeft();

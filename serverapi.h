@@ -17,8 +17,10 @@ struct AddLayerArgs : public Serializable {
 public:
     enum LayerType {
         undefined,
+        pencil,
         line,
-        rectangle
+        rectangle,
+        ellipse
     };
 
 #ifdef JSON_SERIALIZER
