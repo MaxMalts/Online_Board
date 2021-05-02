@@ -5,7 +5,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QList>
-#include <QVector2D>
 #include <QPointF>
 #include <QSizeF>
 #include <QDebug>
@@ -40,9 +39,9 @@ protected:
 
 signals:
     // pos is position on the scene
-    void mouseDown(const QVector2D& pos);
-    void mouseDragged(const QVector2D& pos);
-    void mouseUp(const QVector2D& pos);
+    void mouseDown(const QPointF& pos);
+    void mouseDragged(const QPointF& pos);
+    void mouseUp(const QPointF& pos);
 
 private slots:
     void onLayerReceived(const Serializer& argument);

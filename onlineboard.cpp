@@ -7,6 +7,7 @@
 #include "ui_onlineboard.h"
 #include "canvas.h"
 
+
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {

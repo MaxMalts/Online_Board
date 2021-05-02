@@ -4,6 +4,8 @@
 #include <QGraphicsLineItem>
 #include <QLineF>
 #include <QJsonDocument>
+#include <QPointF>
+
 #include "serializers.h"
 #include "tool.h"
 
@@ -31,9 +33,9 @@ public:
     Line() = delete;
 
 protected:
-    void toolDown(const QVector2D& pos) override;
-    void toolDragged(const QVector2D& pos) override;
-    void toolUp(const QVector2D& pos) override;
+    void toolDown(const QPointF& pos) override;
+    void toolDragged(const QPointF& pos) override;
+    void toolUp(const QPointF& pos) override;
 
 private:
     QLineF cur_line;

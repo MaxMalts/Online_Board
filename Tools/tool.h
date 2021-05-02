@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QColor>
-#include <QVector2D>
+#include <QPointF>
 #include <QGraphicsItem>
 #include <QString>
 
@@ -25,9 +25,9 @@ public:
     virtual ~Tool() = default;
 
 protected slots:
-    virtual void toolDown(const QVector2D& pos);
-    virtual void toolDragged(const QVector2D& pos);
-    virtual void toolUp(const QVector2D& pos);
+    virtual void toolDown(const QPointF& pos);
+    virtual void toolDragged(const QPointF& pos);
+    virtual void toolUp(const QPointF& pos);
 
 protected:
     virtual void toolActivated();

@@ -14,32 +14,32 @@ Tool::Tool(Canvas* canvas, QObject *parent)
 
 void Tool::activate()
 {
-    connect(canvas, SIGNAL(mouseDown(const QVector2D&)),
-            this, SLOT(toolDown(const QVector2D&)));
-    connect(canvas, SIGNAL(mouseDragged(const QVector2D&)),
-            this, SLOT(toolDragged(const QVector2D&)));
-    connect(canvas, SIGNAL(mouseUp(const QVector2D&)),
-            this, SLOT(toolUp(const QVector2D&)));
+    connect(canvas, SIGNAL(mouseDown(const QPointF&)),
+            this, SLOT(toolDown(const QPointF&)));
+    connect(canvas, SIGNAL(mouseDragged(const QPointF&)),
+            this, SLOT(toolDragged(const QPointF&)));
+    connect(canvas, SIGNAL(mouseUp(const QPointF&)),
+            this, SLOT(toolUp(const QPointF&)));
 
     toolActivated();
 }
 
 void Tool::inactivate()
 {
-    disconnect(canvas, SIGNAL(mouseDown(const QVector2D&)),
-               this, SLOT(toolDown(const QVector2D&)));
-    disconnect(canvas, SIGNAL(mouseDragged(const QVector2D&)),
-               this, SLOT(toolDragged(const QVector2D&)));
-    disconnect(canvas, SIGNAL(mouseUp(const QVector2D&)),
-               this, SLOT(toolUp(const QVector2D&)));
+    disconnect(canvas, SIGNAL(mouseDown(const QPointF&)),
+               this, SLOT(toolDown(const QPointF&)));
+    disconnect(canvas, SIGNAL(mouseDragged(const QPointF&)),
+               this, SLOT(toolDragged(const QPointF&)));
+    disconnect(canvas, SIGNAL(mouseUp(const QPointF&)),
+               this, SLOT(toolUp(const QPointF&)));
 
     toolInactivated();
 }
 
 void Tool::toolActivated() {}
-void Tool::toolDown(const QVector2D&) {}
-void Tool::toolDragged(const QVector2D&) {}
-void Tool::toolUp(const QVector2D&) {}
+void Tool::toolDown(const QPointF&) {}
+void Tool::toolDragged(const QPointF&) {}
+void Tool::toolUp(const QPointF&) {}
 void Tool::toolInactivated() {}
 
 void Tool::setItem(QGraphicsItem* item)

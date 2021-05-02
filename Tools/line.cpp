@@ -1,11 +1,11 @@
-#include <QDebug>
-
 #include <QGraphicsLineItem>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QLineF>
 #include <QPoint>
+#include <QDebug>
+
 #include "serverapi.h"
 #include "serializers.h"
 #include "line.h"
@@ -66,19 +66,19 @@ static_assert(false, "No serializer defined.");
 
 
 
-void Line::toolDown(const QVector2D& pos)
+void Line::toolDown(const QPointF& pos)
 {
-    cur_line.setP1(pos.toPointF());
+    cur_line.setP1(pos);
 }
 
-void Line::toolDragged(const QVector2D& pos)
+void Line::toolDragged(const QPointF& pos)
 {
     // to do
 }
 
-void Line::toolUp(const QVector2D& pos)
+void Line::toolUp(const QPointF& pos)
 {
-    cur_line.setP2(pos.toPointF());
+    cur_line.setP2(pos);
     if (cur_line.p1() == cur_line.p2()) {
         return;
     }
