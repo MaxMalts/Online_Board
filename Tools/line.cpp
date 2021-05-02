@@ -79,6 +79,9 @@ void Line::toolDragged(const QVector2D& pos)
 void Line::toolUp(const QVector2D& pos)
 {
     cur_line.setP2(pos.toPointF());
+    if (cur_line.p1() == cur_line.p2()) {
+        return;
+    }
 
     LineItem* line_item = new LineItem(cur_line);
 
