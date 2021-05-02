@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QLineF>
-#include <QPoint>
+#include <QPointF>
 #include <QDebug>
 
 #include "serverapi.h"
@@ -79,7 +79,7 @@ void Line::toolDragged(const QPointF& pos)
 void Line::toolUp(const QPointF& pos)
 {
     cur_line.setP2(pos);
-    if (cur_line.p1() == cur_line.p2()) {
+    if (cur_line.isNull()) {
         return;
     }
 

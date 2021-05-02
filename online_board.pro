@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Tools/line.cpp \
+    Tools/rectangle.cpp \
     Tools/tool.cpp \
     canvas.cpp \
     main.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 HEADERS += \
     Tools/line.h \
+    Tools/rectangle.h \
     Tools/tool.h \
     canvas.h \
     common.h \

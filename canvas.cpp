@@ -41,6 +41,9 @@ bool Canvas::setActiveTool(Canvas::ToolType tool)
     case line:
         tool_ind = 0;
         break;
+    case rectangle:
+        tool_ind = 1;
+        break;
     default:
         Q_ASSERT(false);
         return false;

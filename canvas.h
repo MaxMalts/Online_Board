@@ -11,6 +11,7 @@
 
 #include "Tools/tool.h"
 #include "Tools/line.h"
+#include "Tools/rectangle.h"
 #include "serializers.h"
 #include "common.h"
 
@@ -24,6 +25,7 @@ public:
         undefined,
         pencil,
         line,
+        rectangle
     };
 
     Canvas(QSize size = QSize(500, 500), QWidget *parent = nullptr);
@@ -53,7 +55,8 @@ private:
 
     Tool* active_tool = nullptr;
     const QList<Tool*> tools {
-        new Line(this, this)
+        new Line(this, this),
+        new Rectangle(this, this)
     };
 
     friend class Tool;

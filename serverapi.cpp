@@ -18,7 +18,8 @@
 /* AddLayerArgs */
 
 const BiMap<QString, AddLayerArgs::LayerType> AddLayerArgs::str_layertype_map {
-    { "line", AddLayerArgs::LayerType::line }
+    { "line", AddLayerArgs::LayerType::line },
+    { "rectangle", AddLayerArgs::LayerType::rectangle }
 };
 
 #ifdef JSON_SERIALIZER

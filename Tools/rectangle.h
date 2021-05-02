@@ -1,8 +1,7 @@
-#ifndef LINE_H
-#define LINE_H
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
-#include <QGraphicsLineItem>
-#include <QLineF>
+#include <QGraphicsRectItem>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointF>
@@ -11,9 +10,9 @@
 #include "tool.h"
 
 
-class LineItem : public QGraphicsLineItem, public Serializable
+class RectangleItem : public QGraphicsRectItem, public Serializable
 {
-    using QGraphicsLineItem::QGraphicsLineItem;
+    using QGraphicsRectItem::QGraphicsRectItem;
 
 public:
 #ifdef JSON_SERIALIZER
@@ -25,13 +24,13 @@ public:
 };
 
 
-class Line : public Tool
+class Rectangle : public Tool
 {
     Q_OBJECT
     using Tool::Tool;
 
 public:
-    Line() = delete;
+    Rectangle() = delete;
 
 protected:
     void toolDown(const QPointF& pos) override;
@@ -39,7 +38,7 @@ protected:
     void toolUp(const QPointF& pos) override;
 
 private:
-    QLineF cur_line;
+    QRectF cur_rect;
 };
 
-#endif // LINE_H
+#endif // RECTANGLE_H
