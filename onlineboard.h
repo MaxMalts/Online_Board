@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QShowEvent>
+#include <QResizeEvent>
 
 #include "canvas.h"
 #include "serverapi.h"
@@ -22,6 +24,9 @@ private:
 public:
     OnlineBoard(QWidget* parent = nullptr);
     ~OnlineBoard();
+
+protected:
+    void resizeEvent(QResizeEvent*) override;
 
 private:
     Ui::OnlineBoard* ui;

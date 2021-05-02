@@ -15,13 +15,21 @@ Canvas::Canvas(QSize size, QWidget* parent)
       gscene(this)
 {
     setScene(&gscene);
-    setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    resize(size);
 
     connect(ServerApi::getInstance(), SIGNAL(cAddLayer(const Serializer&)),
             this, SLOT(onLayerReceived(const Serializer&)));
 
     active_tool = tools.at(0);
     active_tool->activate();
+}
+
+void Canvas::resize(QSize size)
+{
+    setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
+    QGraphicsView::resize(size);
 }
 
 bool Canvas::setActiveTool(Canvas::ToolType tool)

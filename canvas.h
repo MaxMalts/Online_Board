@@ -29,6 +29,8 @@ public:
 
     Canvas(QSize size = QSize(500, 500), QWidget *parent = nullptr);
 
+    void resize(QSize size);
+
     bool setActiveTool(ToolType tool);
 
 protected:

@@ -1,5 +1,6 @@
 #include <QLayout>
 #include <QString>
+#include <QSizePolicy>
 #include <QDebug>
 
 #include "onlineboard.h"
@@ -11,21 +12,29 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 {
     ui->setupUi(this);
 
-    if (ServerApi::connectToServer()) {
-        statusBar()->setStyleSheet("");
-        statusBar()->showMessage("Connected to server.", 3000);
-
-        QSize canvas_size(size().width(),
-                          size().height() - statusBar()->height() - menuBar()->height());
-        canvas = new Canvas(canvas_size, centralWidget());
-
-    } else {
+    while (!ServerApi::connectToServer()) {
         statusBar()->setStyleSheet("color: red;");
         statusBar()->showMessage("Error while connecting to server: " +
                                  ServerApi::lastErrorStr());
+
         qDebug() << "Error while connecting to server: " << ServerApi::lastError();
-        qDebug() << size() << frameSize();
     }
+
+    statusBar()->setStyleSheet("");
+    statusBar()->showMessage("Connected to server.", 3000);
+
+    canvas = new Canvas(QSize(0, 0), centralWidget());
+    canvas->lower();
+    canvas->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
+}
+
+void OnlineBoard::resizeEvent(QResizeEvent*)
+{
+    QSize canvas_size(size().width(),
+                      size().height() - statusBar()->height() -
+                      menuBar()->height() + 1);
+
+    canvas->resize(canvas_size);
 }
 
 OnlineBoard::~OnlineBoard()
