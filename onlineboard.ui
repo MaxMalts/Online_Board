@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>989</width>
-    <height>573</height>
+    <width>1017</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,6 +23,9 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
      <number>15</number>
@@ -43,259 +46,7 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="0">
-     <widget class="QWidget" name="tools" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>91</width>
-        <height>281</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>91</width>
-        <height>281</height>
-       </size>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QWidget {
-	background: #ececec;
-	border: 1px solid #d1d6d0;
-	border-radius: 20px;
-}</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QToolButton" name="buttonPencil">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QToolButton {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
-	border-radius: 20px;
-	
-}
-
-QToolButton:hover {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
-}
-
-QToolButton:checked {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
-	border-color: #6d7d06;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>Data/img/tools/pencil.png</normaloff>Data/img/tools/pencil.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">toolsGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonLine">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QToolButton {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
-	border-radius: 20px;
-	
-}
-
-QToolButton:hover {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
-}
-
-QToolButton:checked {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
-	border-color: #6d7d06;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>Data/img/tools/line.png</normaloff>Data/img/tools/line.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">toolsGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonRectangle">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>70</width>
-           <height>70</height>
-          </size>
-         </property>
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QToolButton {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
-	border-radius: 20px;
-	
-}
-
-QToolButton:hover {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
-}
-
-QToolButton:checked {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
-	border-color: #6d7d06;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">toolsGroup</string>
-         </attribute>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
+    <item row="1" column="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -308,6 +59,473 @@ QToolButton:checked {
       </property>
      </spacer>
     </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="toolsContainer" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>176</width>
+        <height>318</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>186</width>
+        <height>281</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="tools" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>91</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>91</width>
+         <height>281</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>91</width>
+         <height>281</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget {
+	background: #ececec;
+	border: 1px solid #d1d6d0;
+	border-radius: 20px;
+}</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QToolButton" name="buttonPencil">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 4px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/pencil.png</normaloff>Data/img/tools/pencil.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">toolsGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonLine">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 4px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/line.png</normaloff>Data/img/tools/line.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">toolsGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonFigure">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 4px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">toolsGroup</string>
+          </attribute>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="figures" native="true">
+       <property name="geometry">
+        <rect>
+         <x>86</x>
+         <y>152</y>
+         <width>91</width>
+         <height>166</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QToolButton" name="buttonRectangle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 4px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="buttonEllipse">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 3px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 4px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/ellipse.png</normaloff>Data/img/tools/ellipse.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -315,7 +533,7 @@ QToolButton:checked {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>989</width>
+     <width>1017</width>
      <height>21</height>
     </rect>
    </property>
@@ -387,9 +605,16 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>Tools</string>
     </property>
+    <widget class="QMenu" name="menuFigure">
+     <property name="title">
+      <string>Figure</string>
+     </property>
+     <addaction name="actionRectangle"/>
+     <addaction name="actionEllipse"/>
+    </widget>
     <addaction name="actionPencil"/>
     <addaction name="actionLine"/>
-    <addaction name="actionRectangle"/>
+    <addaction name="menuFigure"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="cursor">
@@ -457,9 +682,12 @@ QMenuBar::item:pressed  {
     <string>Rectangle</string>
    </property>
   </action>
-  <action name="actionTest">
+  <action name="actionEllipse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Test</string>
+    <string>Ellipse</string>
    </property>
   </action>
  </widget>
@@ -467,103 +695,152 @@ QMenuBar::item:pressed  {
  <connections>
   <connection>
    <sender>buttonPencil</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>actionPencil</receiver>
-   <slot>setChecked(bool)</slot>
+   <signal>triggered(QAction*)</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonTriggered(QAction*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>60</x>
-     <y>291</y>
+     <x>86</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
-     <x>494</x>
-     <y>286</y>
+     <x>199</x>
+     <y>262</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonLine</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>actionLine</receiver>
-   <slot>setChecked(bool)</slot>
+   <signal>triggered(QAction*)</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonTriggered(QAction*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>60</x>
-     <y>385</y>
+     <x>86</x>
+     <y>372</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>197</x>
+     <y>341</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonRectangle</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>actionRectangle</receiver>
-   <slot>setChecked(bool)</slot>
+   <signal>triggered(QAction*)</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonTriggered(QAction*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>60</x>
-     <y>480</y>
+     <x>146</x>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>229</x>
+     <y>406</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionPencil</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonPencil</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>buttonPencil</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>86</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
-     <x>60</x>
-     <y>291</y>
+     <x>199</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionRectangle</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonRectangle</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>buttonLine</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>86</x>
+     <y>372</y>
     </hint>
     <hint type="destinationlabel">
-     <x>60</x>
-     <y>480</y>
+     <x>200</x>
+     <y>317</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>actionLine</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>buttonLine</receiver>
-   <slot>setChecked(bool)</slot>
+   <sender>buttonFigure</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>10</y>
+     <x>86</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
-     <x>60</x>
-     <y>385</y>
+     <x>548</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonEllipse</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonTriggered(QAction*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>223</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRectangle</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>382</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonEllipse</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onToolButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>471</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>225</x>
+     <y>473</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>Test()</slot>
+  <slot>onToolButtonTriggered(QAction*)</slot>
+  <slot>onToolButtonClicked()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

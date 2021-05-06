@@ -78,6 +78,7 @@ public:
 signals:
     void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);
+    void cFinishBoardInit(const Serializer& argument);
 
     void connected();
     void disconnected();
@@ -100,7 +101,8 @@ private:
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
         { "init_client", &ServerApi::cInitClient },
-        { "c_add_layer", &ServerApi::cAddLayer }
+        { "c_add_layer", &ServerApi::cAddLayer },
+        { "c_finish_board_init", &ServerApi::cFinishBoardInit }
     };
 };
 

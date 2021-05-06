@@ -2,9 +2,13 @@
 #define COMMON_H
 
 #include <QObject>
+#include <QWidget>
+#include <QEvent>
+#include <QMouseEvent>
 #include <QTimer>
 #include <QEventLoop>
 #include <QMap>
+#include <QDebug>
 #include <initializer_list>
 #include <utility>
 
@@ -76,6 +80,90 @@ public:
 private:
     QMap<LeftVal, RightVal> left_to_right;
     QMap<RightVal, LeftVal> right_to_left;
+};
+
+
+/*
+ * This class generates signals for useful events as the
+ * QWidget has very scarce set of signals implemented! >:(
+*/
+class EventSignalAdapter : public QObject {
+    Q_OBJECT
+
+public:
+    EventSignalAdapter(QWidget* widget)
+        : QObject(widget),
+          widget(widget) {
+        widget->installEventFilter(this);
+    }
+
+    QWidget* getWidget() {
+        return widget;
+    }
+
+    virtual ~EventSignalAdapter() = default;
+
+signals:
+    void rClick();
+    void enter();
+    void leave();
+    void focusIn();
+    void focusOut();
+
+protected:
+    bool eventFilter(QObject* /*watched*/, QEvent* event) override {
+        switch (event->type()) {
+        case QEvent::Enter:
+            emit enter();
+            break;
+
+        case QEvent::Leave:
+            right_press_no_leave = false;
+            emit leave();
+            break;
+
+        case QEvent::FocusIn:
+            emit focusIn();
+            break;
+
+        case QEvent::FocusOut:
+            emit focusOut();
+            break;
+
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonDblClick: {
+            QMouseEvent* mouse_event =
+                    dynamic_cast<QMouseEvent*>(event);
+
+            if (mouse_event->button() == Qt::RightButton) {
+                right_press_no_leave = true;
+            }
+            break;
+        }
+
+        case QEvent::MouseButtonRelease: {
+            QMouseEvent* mouse_event =
+                    dynamic_cast<QMouseEvent*>(event);
+
+            if (mouse_event->button() == Qt::RightButton &&
+                right_press_no_leave) {
+
+                right_press_no_leave = false;
+                emit rClick();
+            }
+            break;
+        }
+
+        default: {}  // To prevent warnings
+        }
+
+        return false;
+    }
+
+private:
+    QWidget* widget;
+
+    bool right_press_no_leave = false;
 };
 
 #endif // COMMON_H

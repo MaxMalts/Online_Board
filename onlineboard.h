@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QShowEvent>
 #include <QResizeEvent>
+#include <QActionGroup>
+#include <QToolButton>
 
 #include "canvas.h"
 #include "serverapi.h"
@@ -31,9 +33,22 @@ protected:
 private slots:
     void onServerDisconnected();
     void onServerConnected();
+    void onFinishBoardInit();
+
+    void onToolButtonClicked();
+    void onToolButtonTriggered(QAction* action);
+    void onFigureButtonRClick();
+    void onFiguresFocusOut();
 
 private:
+    void InitTools();
+
+    Canvas::ToolType selected_figure = Canvas::ToolType::rectangle;
+    void handleFigureButtonClicked();
+    void handleFigureButtonTriggered(QToolButton* button);
+
     Ui::OnlineBoard* ui;
+    QActionGroup* tools_actions;
 
     Canvas* canvas;
 };
