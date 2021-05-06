@@ -91,7 +91,24 @@ void Canvas::onLayerReceived(const Serializer& argument)
         item = line_item;
         break;
     }
-
+    case AddLayerArgs::LayerType::pencil: {
+        PencilItem* pencil_item = new PencilItem;
+        layer_info.layer_data.deserialize(*pencil_item);
+        item = pencil_item;
+        break;
+    }
+    case AddLayerArgs::LayerType::rectangle: {
+        RectangleItem* rectangle_item = new RectangleItem;
+        layer_info.layer_data.deserialize(*rectangle_item);
+        item = rectangle_item;
+        break;
+    }
+    case AddLayerArgs::LayerType::ellipse: {
+        EllipseItem* ellipse_item = new EllipseItem;
+        layer_info.layer_data.deserialize(*ellipse_item);
+        item = ellipse_item;
+        break;
+    }
     default:
         Q_ASSERT(false);
     }
