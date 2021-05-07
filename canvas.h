@@ -35,7 +35,7 @@ public:
 
     void resize(QSize size);
 
-    bool setActiveTool(ToolType tool);
+    void setActiveTool(ToolType tool);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -57,11 +57,11 @@ private:
     QGraphicsScene gscene;
 
     Tool* active_tool = nullptr;
-    const QList<Tool*> tools {
-        new Pencil(this, this),
-        new Line(this, this),
-        new Rectangle(this, this),
-        new Ellipse(this, this)
+    const BiMap<ToolType, Tool*> tools {
+        { ToolType::pencil, new Pencil(this, this) },
+        { ToolType::line, new Line(this, this) },
+        { ToolType::rectangle, new Rectangle(this, this) },
+        { ToolType::ellipse, new Ellipse(this, this) }
     };
 
     friend class Tool;

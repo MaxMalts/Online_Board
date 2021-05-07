@@ -65,13 +65,13 @@ public:
         return true;
     }
 
-    const RightVal rightByLeft(const LeftVal& left,
+    const RightVal atL(const LeftVal& left,
                                const RightVal& defaultValue = RightVal()) const {
 
         return left_to_right.value(left, defaultValue);
     }
 
-    const LeftVal leftByRight(const RightVal& right,
+    const LeftVal atR(const RightVal& right,
                               const LeftVal& defaultValue = LeftVal()) const {
 
         return right_to_left.value(right, defaultValue);

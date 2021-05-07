@@ -1,6 +1,7 @@
 #include <QWidget>
 #include <QShowEvent>
 #include <QResizeEvent>
+#include <QAction>
 #include <QActionGroup>
 #include <QToolButton>
 #include <QLayout>
@@ -17,7 +18,7 @@
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {
-    //setEnabled(false);  // waiting for board initialization
+    setEnabled(false);  // waiting for board initialization
 
     ui->setupUi(this);
 
@@ -32,7 +33,7 @@ OnlineBoard::OnlineBoard(QWidget* parent)
             this, SLOT(onServerDisconnected()));
     connect(ServerApi::getInstance(), SIGNAL(connected()),
             this, SLOT(onServerConnected()));
-    connect(ServerApi::getInstance(), SIGNAL(cFinishBoardInit()),
+    connect(ServerApi::getInstance(), SIGNAL(cFinishBoardInit(const Serializer&)),
             this, SLOT(onFinishBoardInit()));
 
     if (!ServerApi::connectToServer()) {
@@ -50,12 +51,21 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 
 void OnlineBoard::InitTools()
 {
+    tool_type_to_action = BiMap<Canvas::ToolType, QAction*> {
+        { Canvas::ToolType::pencil, ui->actionPencil },
+        { Canvas::ToolType::line, ui->actionLine },
+        { Canvas::ToolType::rectangle, ui->actionRectangle },
+        { Canvas::ToolType::ellipse, ui->actionEllipse }
+    };
+
     tools_actions = new QActionGroup(ui->menuTools);
 
     tools_actions->addAction(ui->actionPencil);
     tools_actions->addAction(ui->actionLine);
     tools_actions->addAction(ui->actionRectangle);
     tools_actions->addAction(ui->actionEllipse);
+    connect(tools_actions, SIGNAL(triggered(QAction*)),
+            this, SLOT(onToolsActionTriggered(QAction*)));
 
     ui->buttonPencil->addAction(ui->actionPencil);
     ui->buttonLine->addAction(ui->actionLine);
@@ -71,6 +81,8 @@ void OnlineBoard::InitTools()
             new EventSignalAdapter(ui->figures);
     connect(figures_adapter, SIGNAL(focusOut()),
             this, SLOT(onFiguresFocusOut()));
+
+    ui->figures->hide();
 }
 
 void OnlineBoard::resizeEvent(QResizeEvent*)
@@ -101,6 +113,7 @@ void OnlineBoard::onServerConnected()
 
 void OnlineBoard::onFinishBoardInit()
 {
+    qDebug() << "Board initialized.";
     setEnabled(true);
 }
 
@@ -111,6 +124,12 @@ OnlineBoard::~OnlineBoard()
 
 
 /* User interaction handlers */
+
+void OnlineBoard::onToolsActionTriggered(QAction* action)
+{
+    Canvas::ToolType tool = tool_type_to_action.atR(action);
+    canvas->setActiveTool(tool);
+}
 
 void OnlineBoard::handleFigureButtonClicked()
 {

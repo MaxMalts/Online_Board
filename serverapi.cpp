@@ -34,7 +34,7 @@ bool AddLayerArgs::serialize(QJsonObject& json) const
     json = QJsonObject();
     json.insert("position", QJsonArray{ position.x(), position.y() });
     json.insert("scale", scale);
-    json.insert("layer_type", str_layertype_map.leftByRight(layer_type));
+    json.insert("layer_type", str_layertype_map.atR(layer_type));
 
     QJsonObject layer_data_json = layer_data.getJson().object();
     Q_ASSERT(!layer_data_json.isEmpty());
@@ -71,7 +71,7 @@ bool AddLayerArgs::deserialize(const QJsonObject& json)
     if (!cur_value.isString()) {
         return false;
     }
-    layer_type = str_layertype_map.rightByLeft(cur_value.toString());
+    layer_type = str_layertype_map.atL(cur_value.toString());
 
     //layer_data
     cur_value = json.value("layer_data");

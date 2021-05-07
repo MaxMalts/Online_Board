@@ -36,7 +36,7 @@ bool EllipseItem::serialize(QJsonObject& json) const
     json = QJsonObject();
 
     QRectF cur_rect = rect();
-    if (cur_rect.isValid()) {
+    if (!cur_rect.isValid()) {
         return false;
     }
 
@@ -77,7 +77,7 @@ void Ellipse::toolUp(const QPointF& pos)
     rect_item->setRect(cur_rect);
 
     setItem(rect_item);
-    sendItem(AddLayerArgs::LayerType::rectangle, rect_item);
+    sendItem(AddLayerArgs::LayerType::ellipse, rect_item);
 
     cur_rect = QRectF();
 }

@@ -841,6 +841,7 @@ QMenuBar::item:pressed  {
  <slots>
   <slot>onToolButtonTriggered(QAction*)</slot>
   <slot>onToolButtonClicked()</slot>
+  <slot>onToolActionTriggered()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

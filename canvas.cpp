@@ -22,7 +22,7 @@ Canvas::Canvas(QSize size, QWidget* parent)
     connect(ServerApi::getInstance(), SIGNAL(cAddLayer(const Serializer&)),
             this, SLOT(onLayerReceived(const Serializer&)));
 
-    active_tool = tools.at(0);
+    active_tool = tools.atL(ToolType::pencil);
     active_tool->activate();
 }
 
@@ -32,35 +32,14 @@ void Canvas::resize(QSize size)
     QGraphicsView::resize(size);
 }
 
-bool Canvas::setActiveTool(Canvas::ToolType tool)
+void Canvas::setActiveTool(Canvas::ToolType tool)
 {
-    int tool_ind = 0;
-    switch (tool) {
-    case pencil:
-        tool_ind = 0;
-        break;
-    case line:
-        tool_ind = 1;
-        break;
-    case rectangle:
-        tool_ind = 2;
-        break;
-    case ellipse:
-        tool_ind = 3;
-        break;
-    default:
-        Q_ASSERT(false);
-        return false;
-    }
-
-    Tool* new_tool = tools.at(tool_ind);
+    Tool* new_tool = tools.atL(tool);
     if (active_tool != new_tool) {
         active_tool->inactivate();
         active_tool = new_tool;
         active_tool->activate();
     }
-
-    return true;
 }
 
 void Canvas::mousePressEvent(QMouseEvent* event)

@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include <QShowEvent>
 #include <QResizeEvent>
+#include <QAction>
 #include <QActionGroup>
 #include <QToolButton>
 
 #include "canvas.h"
 #include "serverapi.h"
+#include "common.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +37,7 @@ private slots:
     void onServerConnected();
     void onFinishBoardInit();
 
+    void onToolsActionTriggered(QAction* action);
     void onToolButtonClicked();
     void onToolButtonTriggered(QAction* action);
     void onFigureButtonRClick();
@@ -48,7 +51,9 @@ private:
     void handleFigureButtonTriggered(QToolButton* button);
 
     Ui::OnlineBoard* ui;
+
     QActionGroup* tools_actions;
+    BiMap<Canvas::ToolType, QAction*> tool_type_to_action;
 
     Canvas* canvas;
 };
