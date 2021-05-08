@@ -22,13 +22,14 @@ JsonSerializer::JsonSerializer(const QJsonObject& json)
 bool JsonSerializer::serialize(const Serializable& object)
 {
     QJsonObject jsonObj;
-    if (object.serialize(jsonObj)) {
-        json_doc.setObject(jsonObj);
-        Q_ASSERT(!json_doc.isNull());
-        return true;
+    if (!object.serialize(jsonObj)) {
+        return false;
     }
 
-    return false;
+    json_doc.setObject(jsonObj);
+    Q_ASSERT(!json_doc.isNull());
+
+    return true;
 }
 
 bool JsonSerializer::deserialize(Serializable& object) const

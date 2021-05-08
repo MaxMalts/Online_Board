@@ -17,18 +17,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ServerApi/addlayerargs.cpp \
+    ServerApi/confirmaddlayerargs.cpp \
+    ServerApi/serverapi.cpp \
     Tools/ellipse.cpp \
     Tools/line.cpp \
     Tools/pencil.cpp \
     Tools/rectangle.cpp \
     Tools/tool.cpp \
     canvas.cpp \
+    common.cpp \
     main.cpp \
     onlineboard.cpp \
-    serializers.cpp \
-    serverapi.cpp
+    serializers.cpp
 
 HEADERS += \
+    ServerApi/addlayerargs.h \
+    ServerApi/confirmaddlayerargs.h \
+    ServerApi/serverapi.h \
     Tools/ellipse.h \
     Tools/line.h \
     Tools/pencil.h \
@@ -37,8 +43,7 @@ HEADERS += \
     canvas.h \
     common.h \
     onlineboard.h \
-    serializers.h \
-    serverapi.h
+    serializers.h
 
 FORMS += \
     onlineboard.ui

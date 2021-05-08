@@ -39,6 +39,7 @@ protected:
 
 private:
     QRectF cur_rect;
+    RectangleItem* cur_item = nullptr;
 };
 
 #endif // RECTANGLE_H

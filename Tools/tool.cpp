@@ -2,7 +2,7 @@
 
 #include "canvas.h"
 #include "tool.h"
-#include "serverapi.h"
+#include "ServerApi/serverapi.h"
 
 
 Tool::Tool(Canvas* canvas, QObject *parent)
@@ -41,25 +41,3 @@ void Tool::toolDown(const QPointF&) {}
 void Tool::toolDragged(const QPointF&) {}
 void Tool::toolUp(const QPointF&) {}
 void Tool::toolInactivated() {}
-
-void Tool::setItem(QGraphicsItem* item)
-{
-    canvas->addItem(item);
-}
-
-void Tool::sendItem(AddLayerArgs::LayerType layer_type, QGraphicsItem* item)
-{
-    AddLayerArgs args;
-    args.position = item->scenePos();
-    args.scale = item->scale();
-    args.layer_type = layer_type;
-    args.layer_data.serialize(dynamic_cast<Serializable&>(*item));
-
-#ifdef JSON_SERIALIZER
-    JsonSerializer argument(args);
-#else
-static_assert(false, "No serializer defined.");
-#endif
-
-    ServerApi::sAddLayer(argument);
-}

@@ -6,7 +6,7 @@
 #include <QPointF>
 #include <QDebug>
 
-#include "serverapi.h"
+#include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
 #include "pencil.h"
@@ -30,6 +30,18 @@ void PencilItem::setVertices(const QPolygonF& vertices) {
 void PencilItem::setVertices(const QPolygonF&& vertices)
 {
     this->vertices = vertices;
+    verticesToPath();
+}
+
+void PencilItem::addVertex(const QPointF& vertex)
+{
+    vertices.append(vertex);
+    verticesToPath();
+}
+
+void PencilItem::translateVertices(const QPointF& offset)
+{
+    vertices.translate(offset);
     verticesToPath();
 }
 
@@ -97,30 +109,29 @@ void PencilItem::verticesToPath()
 
 void Pencil::toolDown(const QPointF& pos)
 {
-    Q_ASSERT(cur_vertices.isEmpty());
+    Q_ASSERT(cur_item == nullptr);
 
-    cur_vertices.push_back(pos);
+    cur_item = new PencilItem();
+    cur_item->addVertex(pos);
+    canvas->addPreviewItem(Canvas::ItemType::pencil, cur_item);
 }
 
 void Pencil::toolDragged(const QPointF& pos)
 {
-    cur_vertices.push_back(pos);
+    cur_item->addVertex(pos);
 }
 
 void Pencil::toolUp(const QPointF& pos)
 {
-    cur_vertices.push_back(pos);
-
-    PencilItem* pencil_item = new PencilItem(cur_vertices);
+    cur_item->addVertex(pos);
 
     // Normalizing position to bounding rect
-    QPointF item_pos = pencil_item->boundingRect().topLeft();
-    pencil_item->setPos(item_pos);
-    cur_vertices.translate(-item_pos);
-    pencil_item->setVertices(cur_vertices);
+    QPointF item_pos = cur_item->boundingRect().topLeft();
+    cur_item->setPos(item_pos);
+    cur_item->translateVertices(-item_pos);
 
-    setItem(pencil_item);
-    sendItem(AddLayerArgs::LayerType::pencil, pencil_item);
+    bool ret = canvas->fixPreviewItem(cur_item);
+    Q_ASSERT(ret);
 
-    cur_vertices.clear();
+    cur_item = nullptr;
 }

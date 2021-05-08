@@ -9,7 +9,7 @@
 #include <QToolButton>
 
 #include "canvas.h"
-#include "serverapi.h"
+#include "ServerApi/serverapi.h"
 #include "common.h"
 
 

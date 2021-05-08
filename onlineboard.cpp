@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QLayout>
 #include <QString>
+#include <QSet>
 #include <QSizePolicy>
 #include <QDebug>
 
@@ -22,12 +23,12 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 
     ui->setupUi(this);
 
-    InitTools();
-
     canvas = new Canvas(QSize(0, 0), centralWidget());
     canvas->lower();
     canvas->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
     canvas->setFocusPolicy(Qt::ClickFocus);
+
+    InitTools();
 
     connect(ServerApi::getInstance(), SIGNAL(disconnected()),
             this, SLOT(onServerDisconnected()));

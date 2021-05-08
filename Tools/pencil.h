@@ -22,6 +22,8 @@ public:
 
     void setVertices(const QPolygonF& vertices);
     void setVertices(const QPolygonF&& vertices);
+    void addVertex(const QPointF& vertex);
+    void translateVertices(const QPointF& offset);
 
 #ifdef JSON_SERIALIZER
     virtual bool deserialize(const QJsonObject& json) override;
@@ -51,7 +53,7 @@ protected:
     void toolUp(const QPointF& pos) override;
 
 private:
-    QPolygonF cur_vertices;
+    PencilItem* cur_item = nullptr;
 };
 
 #endif // PENCIL_H

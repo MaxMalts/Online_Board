@@ -6,7 +6,7 @@
 #include <QPointF>
 #include <QDebug>
 
-#include "serverapi.h"
+#include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "line.h"
 #include "canvas.h"
@@ -68,31 +68,43 @@ static_assert(false, "No serializer defined.");
 
 void Line::toolDown(const QPointF& pos)
 {
+    Q_ASSERT(cur_item == nullptr);
+
     cur_line.setP1(pos);
+    cur_line.setP2(pos);
+
+    cur_item = new LineItem(cur_line);
+    canvas->addPreviewItem(Canvas::ItemType::line, cur_item);
 }
 
 void Line::toolDragged(const QPointF& pos)
 {
-    // to do
+    cur_line.setP2(pos);
+    cur_item->setLine(cur_line);
 }
 
 void Line::toolUp(const QPointF& pos)
 {
     cur_line.setP2(pos);
     if (cur_line.isNull()) {
+        bool ret = canvas->deletePreviewItem(cur_item);
+        Q_ASSERT(ret);
+
+        cur_item = nullptr;
         return;
     }
 
-    LineItem* line_item = new LineItem(cur_line);
+    cur_item->setLine(cur_line);
 
     // Normalizing position to bounding rect
-    QPointF item_pos = line_item->boundingRect().topLeft();
-    line_item->setPos(item_pos);
+    QPointF item_pos = cur_item->boundingRect().topLeft();
+    cur_item->setPos(item_pos);
     cur_line.translate(-item_pos);
-    line_item->setLine(cur_line);
+    cur_item->setLine(cur_line);
 
-    setItem(line_item);
-    sendItem(AddLayerArgs::LayerType::line, line_item);
+    bool ret = canvas->fixPreviewItem(cur_item);
+    Q_ASSERT(ret);
 
     cur_line = QLineF();
+    cur_item = nullptr;
 }

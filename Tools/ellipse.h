@@ -39,6 +39,7 @@ protected:
 
 private:
     QRectF cur_rect;
+    EllipseItem* cur_item = nullptr;
 };
 
 #endif // ELLIPSE_H

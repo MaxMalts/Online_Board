@@ -40,6 +40,7 @@ protected:
 
 private:
     QLineF cur_line;
+    LineItem* cur_item = nullptr;
 };
 
 #endif // LINE_H

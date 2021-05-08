@@ -6,7 +6,7 @@
 #include <QPointF>
 #include <QDebug>
 
-#include "serverapi.h"
+#include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
 #include "rectangle.h"
@@ -51,33 +51,44 @@ static_assert(false, "No serializer defined.");
 
 void Rectangle::toolDown(const QPointF& pos)
 {
+    Q_ASSERT(cur_item == nullptr);
+
     cur_rect.setTopLeft(pos);
     cur_rect.setBottomRight(pos);
+
+    cur_item = new RectangleItem(cur_rect);
+    canvas->addPreviewItem(Canvas::ItemType::rectangle, cur_item);
 }
 
 void Rectangle::toolDragged(const QPointF& pos)
 {
-    // to do
+    cur_rect.setBottomRight(pos);
+    cur_item->setRect(cur_rect.normalized());
 }
 
 void Rectangle::toolUp(const QPointF& pos)
 {
     cur_rect.setBottomRight(pos);
     if (cur_rect.isNull()) {
+        bool ret = canvas->deletePreviewItem(cur_item);
+        Q_ASSERT(ret);
+
+        cur_item = nullptr;
         return;
     }
     cur_rect = cur_rect.normalized();
 
-    RectangleItem* rect_item = new RectangleItem(cur_rect);
+    cur_item->setRect(cur_rect);
 
     // Normalizing position to bounding rect
-    QPointF item_pos = rect_item->boundingRect().topLeft();
-    rect_item->setPos(item_pos);
+    QPointF item_pos = cur_item->boundingRect().topLeft();
+    cur_item->setPos(item_pos);
     cur_rect.translate(-item_pos);
-    rect_item->setRect(cur_rect);
+    cur_item->setRect(cur_rect);
 
-    setItem(rect_item);
-    sendItem(AddLayerArgs::LayerType::rectangle, rect_item);
+    bool ret = canvas->fixPreviewItem(cur_item);
+    Q_ASSERT(ret);
 
     cur_rect = QRectF();
+    cur_item = nullptr;
 }

@@ -4,39 +4,10 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QJsonObject>
-#include <QGraphicsItem>
-#include <QPointF>
-#include <QSizeF>
+#include <QTimer>
 #include <QString>
 
 #include "serializers.h"
-#include "common.h"
-
-
-struct AddLayerArgs : public Serializable {
-public:
-    enum LayerType {
-        undefined,
-        pencil,
-        line,
-        rectangle,
-        ellipse
-    };
-
-#ifdef JSON_SERIALIZER
-    bool serialize(QJsonObject& json) const override;
-    bool deserialize(const QJsonObject& json) override;
-
-    static const BiMap<QString, LayerType> str_layertype_map;
-    JsonSerializer layer_data;
-#else
-    static_assert(false, "No serializer defined.");
-#endif
-
-    QPointF position;
-    qreal scale;
-    LayerType layer_type = undefined;
-};
 
 
 class ServerApi : public QObject
@@ -79,6 +50,7 @@ signals:
     void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);
     void cFinishBoardInit(const Serializer& argument);
+    void cConfirmAddLayer(const Serializer& argument);
 
     void connected();
     void disconnected();
@@ -102,7 +74,8 @@ private:
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
         { "init_client", &ServerApi::cInitClient },
         { "c_add_layer", &ServerApi::cAddLayer },
-        { "c_finish_board_init", &ServerApi::cFinishBoardInit }
+        { "c_finish_board_init", &ServerApi::cFinishBoardInit },
+        { "c_confirm_add_layer", &ServerApi::cConfirmAddLayer }
     };
 };
 

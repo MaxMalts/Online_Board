@@ -1,12 +1,16 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include <QObject>
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsItem>
 #include <QList>
 #include <QPointF>
+#include <QRectF>
 #include <QSizeF>
+#include <QQueue>
 #include <QDebug>
 
 #include "Tools/tool.h"
@@ -23,7 +27,7 @@ class Canvas : public QGraphicsView
     Q_OBJECT
 
 public:
-    enum ToolType {
+    enum class ToolType {
         undefined,
         pencil,
         line,
@@ -31,11 +35,28 @@ public:
         ellipse,
     };
 
+    enum class ItemType {
+        undefined,
+        pencil,
+        line,
+        rectangle,
+        ellipse
+    };
+
     Canvas(QSize size = QSize(500, 500), QWidget* parent = nullptr);
 
     void resize(QSize size);
 
     void setActiveTool(ToolType tool);
+
+    void addItem(ItemType type, QGraphicsItem* item);  // takes ownership
+    bool deleteItem(QGraphicsItem* item);  // deletes pointer
+
+    void addPreviewItem(ItemType type, QGraphicsItem* item);  // takes ownership
+    bool fixPreviewItem(QGraphicsItem* item);
+    bool deletePreviewItem(QGraphicsItem* item);  // deletes pointer
+
+    void redrawRect(const QRectF& rect);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -50,11 +71,22 @@ signals:
 
 private slots:
     void onLayerReceived(const Serializer& argument);
+    void onLayerConfirmed(const Serializer& argument);
 
 private:
-    void addItem(QGraphicsItem* item);
+    enum ItemDataInd {
+        id,
+        item_type,
+        is_preview
+    };
+
+    void sendItem(QGraphicsItem* item);
+    bool deleteFromScene(QGraphicsItem* item);
+
 
     QGraphicsScene gscene;
+
+    QQueue<QGraphicsItem*> pending_add_confirm;
 
     Tool* active_tool = nullptr;
     const BiMap<ToolType, Tool*> tools {
@@ -63,8 +95,8 @@ private:
         { ToolType::rectangle, new Rectangle(this, this) },
         { ToolType::ellipse, new Ellipse(this, this) }
     };
-
-    friend class Tool;
 };
+
+Q_DECLARE_METATYPE(Canvas::ItemType)  // to use in QVariant
 
 #endif // CANVAS_H

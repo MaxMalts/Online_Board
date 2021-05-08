@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QEventLoop>
 #include <QMap>
+#include <QSet>
 #include <QDebug>
 #include <initializer_list>
 #include <utility>
@@ -66,13 +67,13 @@ public:
     }
 
     const RightVal atL(const LeftVal& left,
-                               const RightVal& defaultValue = RightVal()) const {
+                       const RightVal& defaultValue = RightVal()) const {
 
         return left_to_right.value(left, defaultValue);
     }
 
     const LeftVal atR(const RightVal& right,
-                              const LeftVal& defaultValue = LeftVal()) const {
+                      const LeftVal& defaultValue = LeftVal()) const {
 
         return right_to_left.value(right, defaultValue);
     }
@@ -91,15 +92,9 @@ class EventSignalAdapter : public QObject {
     Q_OBJECT
 
 public:
-    EventSignalAdapter(QWidget* widget)
-        : QObject(widget),
-          widget(widget) {
-        widget->installEventFilter(this);
-    }
+    EventSignalAdapter(QWidget* widget);
 
-    QWidget* getWidget() {
-        return widget;
-    }
+    QWidget* getWidget();
 
     virtual ~EventSignalAdapter() = default;
 
@@ -111,59 +106,31 @@ signals:
     void focusOut();
 
 protected:
-    bool eventFilter(QObject* /*watched*/, QEvent* event) override {
-        switch (event->type()) {
-        case QEvent::Enter:
-            emit enter();
-            break;
-
-        case QEvent::Leave:
-            right_press_no_leave = false;
-            emit leave();
-            break;
-
-        case QEvent::FocusIn:
-            emit focusIn();
-            break;
-
-        case QEvent::FocusOut:
-            emit focusOut();
-            break;
-
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonDblClick: {
-            QMouseEvent* mouse_event =
-                    dynamic_cast<QMouseEvent*>(event);
-
-            if (mouse_event->button() == Qt::RightButton) {
-                right_press_no_leave = true;
-            }
-            break;
-        }
-
-        case QEvent::MouseButtonRelease: {
-            QMouseEvent* mouse_event =
-                    dynamic_cast<QMouseEvent*>(event);
-
-            if (mouse_event->button() == Qt::RightButton &&
-                right_press_no_leave) {
-
-                right_press_no_leave = false;
-                emit rClick();
-            }
-            break;
-        }
-
-        default: {}  // To prevent warnings
-        }
-
-        return false;
-    }
+    bool eventFilter(QObject* /*watched*/, QEvent* event) override;
 
 private:
     QWidget* widget;
-
     bool right_press_no_leave = false;
 };
+
+
+///*
+// * Used when you need to handle events and forward them to
+// * other objects. Most useful for mouse propagation.
+//*/
+//class MouseForwarder : public QObject
+//{
+//    Q_OBJECT
+//public:
+//    MouseForwarder(QWidget* to_forward, QWidget* widget);
+//    MouseForwarder(const QSet<QEvent::Type>& events, QWidget* to_forward, QWidget* widget);
+
+//protected:
+//    bool eventFilter(QObject* /*watched*/, QEvent* event) override;
+
+//private:
+//    QWidget* to_forward = nullptr;
+//    QSet<QEvent::Type> events;
+//};
 
 #endif // COMMON_H
