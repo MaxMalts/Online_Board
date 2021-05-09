@@ -11,6 +11,7 @@
 #include <QRectF>
 #include <QSizeF>
 #include <QQueue>
+#include <QColor>
 #include <QDebug>
 
 #include "Tools/tool.h"
@@ -48,6 +49,8 @@ public:
     void resize(QSize size);
 
     void setActiveTool(ToolType tool);
+    void setActiveColor(const QColor& color);
+    QColor activeColor() const;
 
     void addItem(ItemType type, QGraphicsItem* item);  // takes ownership
     bool deleteItem(QGraphicsItem* item);  // deletes pointer
@@ -95,6 +98,8 @@ private:
         { ToolType::rectangle, new Rectangle(this, this) },
         { ToolType::ellipse, new Ellipse(this, this) }
     };
+
+    QColor active_color;
 };
 
 Q_DECLARE_METATYPE(Canvas::ItemType)  // to use in QVariant

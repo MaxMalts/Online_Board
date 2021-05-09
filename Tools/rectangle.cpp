@@ -4,6 +4,8 @@
 #include <QJsonArray>
 #include <QRectF>
 #include <QPointF>
+#include <QPen>
+#include <QColor>
 #include <QDebug>
 
 #include "ServerApi/serverapi.h"
@@ -17,15 +19,43 @@ bool RectangleItem::deserialize(const QJsonObject& json)
 {
     Q_ASSERT(!json.isEmpty());
 
-    QJsonValue size = json.value("size");
-    if (!size.isArray()) {
+    // size
+    QJsonValue cur_value = json.value("size");
+    if (!cur_value.isArray()) {
         return false;
     }
-    QJsonValue width = size.toArray().at(0);
-    QJsonValue height = size.toArray().at(1);
+    QJsonValue width = cur_value.toArray().at(0);
+    QJsonValue height = cur_value.toArray().at(1);
     if (!width.isDouble() || !height.isDouble()) {
         return false;
     }
+
+    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap);
+
+    // color
+    cur_value = json.value("color");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue r = cur_value.toArray().at(0);
+    QJsonValue g = cur_value.toArray().at(1);
+    QJsonValue b = cur_value.toArray().at(2);
+    QJsonValue a = cur_value.toArray().at(3);
+    if (!a.isDouble() || !r.isDouble() ||
+        !g.isDouble() || !b.isDouble()) {
+        return false;
+    }
+    new_pen.setColor(QColor(r.toInt(), g.toInt(),
+                            b.toInt(), a.toInt()));
+
+    // width
+    cur_value = json.value("width");
+    if (!cur_value.isDouble()) {
+        return false;
+    }
+    new_pen.setWidthF(cur_value.toDouble());
+
+    setPen(new_pen);
     setRect(0, 0, width.toDouble(), height.toDouble());
 
     return true;
@@ -42,6 +72,16 @@ bool RectangleItem::serialize(QJsonObject& json) const
 
     json.insert("size", QJsonArray{ cur_rect.width(), cur_rect.height() });
 
+    QColor color = pen().color();
+    json.insert("color", QJsonArray{
+            color.alpha(),
+            color.red(),
+            color.green(),
+            color.blue()
+        });
+
+    json.insert("width", pen().widthF());
+
     return true;
 }
 #else
@@ -57,6 +97,10 @@ void Rectangle::toolDown(const QPointF& pos)
     cur_rect.setBottomRight(pos);
 
     cur_item = new RectangleItem(cur_rect);
+    QPen pen = cur_item->pen();
+    pen.setColor(canvas->activeColor());
+    cur_item->setPen(pen);
+
     canvas->addPreviewItem(Canvas::ItemType::rectangle, cur_item);
 }
 

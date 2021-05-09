@@ -8,6 +8,8 @@
 #include <QString>
 #include <QSet>
 #include <QSizePolicy>
+#include <QColor>
+#include <QColorDialog>
 #include <QDebug>
 
 #include "onlineboard.h"
@@ -199,4 +201,28 @@ void OnlineBoard::onFigureButtonRClick()
 void OnlineBoard::onFiguresFocusOut()
 {
     ui->figures->hide();
+}
+
+
+void OnlineBoard::onColorButtonClicked()
+{
+    Q_ASSERT(sender() == ui->colorButton);
+
+    QColor new_color = QColorDialog::getColor(canvas->activeColor(), this,
+                                              "Color Picker",
+                                              QColorDialog::ShowAlphaChannel);
+    if (!new_color.isValid()) {
+        return;
+    }
+
+    QString css = ui->colorButton->styleSheet();
+    int replace_pos = css.indexOf(":", css.indexOf("background-color:")) + 1;
+    int replace_size = css.indexOf(";", replace_pos) - replace_pos;
+    ui->colorButton->setStyleSheet(css.replace(replace_pos, replace_size,
+                                               new_color.name(QColor::HexArgb)));
+
+    qDebug().noquote() << ui->colorButton->styleSheet();
+    qDebug() << new_color;
+
+    canvas->setActiveColor(new_color);
 }

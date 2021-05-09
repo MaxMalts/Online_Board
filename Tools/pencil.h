@@ -14,9 +14,8 @@
 
 class PencilItem : public QGraphicsPathItem, public Serializable
 {
-    using QGraphicsPathItem::QGraphicsPathItem;
-
 public:
+    PencilItem() = default;
     PencilItem(const QPolygonF& vertices);
     PencilItem(const QPolygonF&& vertices);
 

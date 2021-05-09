@@ -5,6 +5,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointF>
+#include <QPen>
+#include <QBrush>
+#include <utility>
 
 #include "serializers.h"
 #include "tool.h"
@@ -12,9 +15,13 @@
 
 class EllipseItem : public QGraphicsEllipseItem, public Serializable
 {
-    using QGraphicsEllipseItem::QGraphicsEllipseItem;
-
 public:
+    template<typename ...Args>
+    EllipseItem(Args... args)
+        : QGraphicsEllipseItem(std::forward<Args>(args)...) {
+        setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+    }
+
 #ifdef JSON_SERIALIZER
     virtual bool deserialize(const QJsonObject& json) override;
     virtual bool serialize(QJsonObject& json) const override;

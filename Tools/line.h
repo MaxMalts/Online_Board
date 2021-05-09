@@ -6,6 +6,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointF>
+#include <QPen>
+#include <QBrush>
+#include <utility>
 
 #include "serializers.h"
 #include "tool.h"
@@ -13,9 +16,13 @@
 
 class LineItem : public QGraphicsLineItem, public Serializable
 {
-    using QGraphicsLineItem::QGraphicsLineItem;
-
 public:
+    template<typename ...Args>
+    LineItem(Args... args)
+        : QGraphicsLineItem(std::forward<Args>(args)...) {
+        setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+    }
+
 #ifdef JSON_SERIALIZER
     virtual bool deserialize(const QJsonObject& json) override;
     virtual bool serialize(QJsonObject& json) const override;

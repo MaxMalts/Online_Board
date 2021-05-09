@@ -31,7 +31,7 @@
      <number>15</number>
     </property>
     <property name="bottomMargin">
-     <number>20</number>
+     <number>0</number>
     </property>
     <item row="0" column="0">
      <spacer name="verticalSpacer_3">
@@ -39,7 +39,7 @@
        <enum>Qt::Vertical</enum>
       </property>
       <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
+       <enum>QSizePolicy::Preferred</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -72,14 +72,14 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>176</width>
-        <height>318</height>
+        <width>170</width>
+        <height>380</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>186</width>
-        <height>281</height>
+        <width>170</width>
+        <height>380</height>
        </size>
       </property>
       <property name="mouseTracking">
@@ -89,7 +89,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>66</y>
          <width>91</width>
          <height>281</height>
         </rect>
@@ -158,7 +158,7 @@
           <property name="styleSheet">
            <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
+	border: 2px solid #8fc286;
 	border-radius: 20px;
 }
 
@@ -168,7 +168,7 @@ QToolButton:hover {
 
 QToolButton:checked {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
+	border-width: 3px;
 	border-color: #6d7d06;
 }
 
@@ -242,7 +242,7 @@ QToolButton::menu-indicator {
           <property name="styleSheet">
            <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
+	border: 2px solid #8fc286;
 	border-radius: 20px;
 }
 
@@ -252,7 +252,7 @@ QToolButton:hover {
 
 QToolButton:checked {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
+	border-width: 3px;
 	border-color: #6d7d06;
 }
 
@@ -323,7 +323,7 @@ QToolButton::menu-indicator {
           <property name="styleSheet">
            <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
+	border: 2px solid #8fc286;
 	border-radius: 20px;
 }
 
@@ -333,7 +333,7 @@ QToolButton:hover {
 
 QToolButton:checked {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
+	border-width: 3px;
 	border-color: #6d7d06;
 }
 
@@ -367,10 +367,10 @@ QToolButton::menu-indicator {
       <widget class="QWidget" name="figures" native="true">
        <property name="geometry">
         <rect>
-         <x>86</x>
-         <y>152</y>
-         <width>91</width>
-         <height>166</height>
+         <x>92</x>
+         <y>219</y>
+         <width>78</width>
+         <height>161</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -401,71 +401,21 @@ QToolButton::menu-indicator {
         <string notr="true"/>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QToolButton" name="buttonRectangle">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>70</width>
-            <height>70</height>
-           </size>
-          </property>
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::StrongFocus</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QToolButton {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
-	border-radius: 20px;
-}
-
-QToolButton:hover {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
-}
-
-QToolButton:checked {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
-	border-color: #6d7d06;
-}
-
-QToolButton::menu-indicator {
-	image: none;
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>50</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QToolButton" name="buttonEllipse">
           <property name="sizePolicy">
@@ -495,7 +445,7 @@ QToolButton::menu-indicator {
           <property name="styleSheet">
            <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
-	border: 3px solid #8fc286;
+	border: 2px solid #8fc286;
 	border-radius: 20px;
 }
 
@@ -505,7 +455,7 @@ QToolButton:hover {
 
 QToolButton:checked {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
-	border-width: 4px;
+	border-width: 3px;
 	border-color: #6d7d06;
 }
 
@@ -531,7 +481,116 @@ QToolButton::menu-indicator {
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QToolButton" name="buttonRectangle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>70</width>
+            <height>70</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #e0e0e0, stop:1 #f7f7f7);
+	border: 2px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #d5d5d5, stop:1 #f6f6f6);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0 #f1f1f1, stop:1 #e9e9e9);
+	border-width: 3px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
+      </widget>
+      <widget class="QPushButton" name="colorButton">
+       <property name="geometry">
+        <rect>
+         <x>16</x>
+         <y>0</y>
+         <width>60</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: black;
+	border: 3px solid #aaa;
+	border-radius: 30px 20px;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
       </widget>
      </widget>
     </item>
@@ -846,11 +905,28 @@ QMenuBar::item:pressed  {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>colorButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onColorButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>276</x>
+     <y>166</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onToolButtonTriggered(QAction*)</slot>
   <slot>onToolButtonClicked()</slot>
   <slot>onToolActionTriggered()</slot>
+  <slot>onColorButtonClicked()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

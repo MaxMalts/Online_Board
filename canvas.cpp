@@ -48,6 +48,16 @@ void Canvas::setActiveTool(Canvas::ToolType tool)
     }
 }
 
+void Canvas::setActiveColor(const QColor& color)
+{
+    active_color = color;
+}
+
+QColor Canvas::activeColor() const
+{
+    return active_color;
+}
+
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
     emit mouseDown(mapToScene(event->pos()));

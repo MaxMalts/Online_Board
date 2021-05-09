@@ -4,6 +4,9 @@
 #include <QJsonArray>
 #include <QPainterPath>
 #include <QPointF>
+#include <QPen>
+#include <QBrush>
+#include <QColor>
 #include <QDebug>
 
 #include "ServerApi/serverapi.h"
@@ -14,11 +17,13 @@
 
 PencilItem::PencilItem(const QPolygonF& vertices) : vertices(vertices)
 {
+    setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
     verticesToPath();
 }
 
 PencilItem::PencilItem(const QPolygonF&& vertices) : vertices(vertices)
 {
+    setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
     verticesToPath();
 }
 
@@ -50,16 +55,15 @@ bool PencilItem::deserialize(const QJsonObject& json)
 {
     Q_ASSERT(!json.isEmpty());
 
-    QPolygonF new_vertices;
-
-    QJsonValue json_vertices = json.value("coordinates");
-    if (!json_vertices.isArray()) {
+    // vertices
+    QJsonValue cur_value = json.value("coordinates");
+    if (!cur_value.isArray()) {
         return false;
     }
+    QPolygonF new_vertices;
+    new_vertices.reserve(cur_value.toArray().size());
 
-    new_vertices.reserve(json_vertices.toArray().size());
-
-    for (const QJsonValue& vertex : json_vertices.toArray()) {
+    for (const QJsonValue& vertex : cur_value.toArray()) {
         if (!vertex.isArray()) {
             return false;
         }
@@ -73,6 +77,32 @@ bool PencilItem::deserialize(const QJsonObject& json)
         new_vertices.append(QPointF(x.toDouble(), y.toDouble()));
     }
 
+    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap);
+
+    // color
+    cur_value = json.value("color");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue r = cur_value.toArray().at(0);
+    QJsonValue g = cur_value.toArray().at(1);
+    QJsonValue b = cur_value.toArray().at(2);
+    QJsonValue a = cur_value.toArray().at(3);
+    if (!a.isDouble() || !r.isDouble() ||
+        !g.isDouble() || !b.isDouble()) {
+        return false;
+    }
+    new_pen.setColor(QColor(r.toInt(), g.toInt(),
+                            b.toInt(), a.toInt()));
+
+    // width
+    cur_value = json.value("width");
+    if (!cur_value.isDouble()) {
+        return false;
+    }
+    new_pen.setWidthF(cur_value.toDouble());
+
+    setPen(new_pen);
     vertices = new_vertices;
     verticesToPath();
 
@@ -112,6 +142,10 @@ void Pencil::toolDown(const QPointF& pos)
     Q_ASSERT(cur_item == nullptr);
 
     cur_item = new PencilItem();
+    QPen pen = cur_item->pen();
+    pen.setColor(canvas->activeColor());
+    cur_item->setPen(pen);
+
     cur_item->addVertex(pos);
     canvas->addPreviewItem(Canvas::ItemType::pencil, cur_item);
 }

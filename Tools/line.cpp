@@ -4,6 +4,8 @@
 #include <QJsonArray>
 #include <QLineF>
 #include <QPointF>
+#include <QPen>
+#include <QColor>
 #include <QDebug>
 
 #include "ServerApi/serverapi.h"
@@ -19,6 +21,7 @@ bool LineItem::deserialize(const QJsonObject& json)
 
     QLineF new_line;
 
+    // points
     QJsonValue cur_value = json.value("first_point");
     if (!cur_value.isArray()) {
         return false;
@@ -41,6 +44,32 @@ bool LineItem::deserialize(const QJsonObject& json)
     }
     new_line.setP2(QPointF(x.toDouble(), y.toDouble()));
 
+    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap);
+
+    // color
+    cur_value = json.value("color");
+    if (!cur_value.isArray()) {
+        return false;
+    }
+    QJsonValue r = cur_value.toArray().at(0);
+    QJsonValue g = cur_value.toArray().at(1);
+    QJsonValue b = cur_value.toArray().at(2);
+    QJsonValue a = cur_value.toArray().at(3);
+    if (!a.isDouble() || !r.isDouble() ||
+        !g.isDouble() || !b.isDouble()) {
+        return false;
+    }
+    new_pen.setColor(QColor(r.toInt(), g.toInt(),
+                            b.toInt(), a.toInt()));
+
+    // width
+    cur_value = json.value("width");
+    if (!cur_value.isDouble()) {
+        return false;
+    }
+    new_pen.setWidthF(cur_value.toDouble());
+
+    setPen(new_pen);
     setLine(new_line);
 
     return true;
@@ -58,6 +87,16 @@ bool LineItem::serialize(QJsonObject& json) const
     json.insert("first_point", QJsonArray{ cur_line.p1().x(), cur_line.p1().y() });
     json.insert("second_point", QJsonArray{ cur_line.p2().x(), cur_line.p2().y() });
 
+    QColor color = pen().color();
+    json.insert("color", QJsonArray{
+            color.alpha(),
+            color.red(),
+            color.green(),
+            color.blue()
+        });
+
+    json.insert("width", pen().widthF());
+
     return true;
 }
 #else
@@ -74,6 +113,10 @@ void Line::toolDown(const QPointF& pos)
     cur_line.setP2(pos);
 
     cur_item = new LineItem(cur_line);
+    QPen pen = cur_item->pen();
+    pen.setColor(canvas->activeColor());
+    cur_item->setPen(pen);
+
     canvas->addPreviewItem(Canvas::ItemType::line, cur_item);
 }
 
