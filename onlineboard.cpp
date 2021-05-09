@@ -206,7 +206,7 @@ void OnlineBoard::onFiguresFocusOut()
 
 void OnlineBoard::onColorButtonClicked()
 {
-    Q_ASSERT(sender() == ui->colorButton);
+    Q_ASSERT(sender() == ui->buttonColor);
 
     QColor new_color = QColorDialog::getColor(canvas->activeColor(), this,
                                               "Color Picker",
@@ -215,7 +215,7 @@ void OnlineBoard::onColorButtonClicked()
         return;
     }
 
-    QString new_css = ui->colorButton->styleSheet();
+    QString new_css = ui->colorPreview->styleSheet();
 
     int replace_pos =
             new_css.indexOf(":", new_css.indexOf("background-color:")) + 1;
@@ -225,12 +225,9 @@ void OnlineBoard::onColorButtonClicked()
     replace_pos = new_css.indexOf(":", new_css.indexOf("border-color:")) + 1;
     replace_size = new_css.indexOf(";", replace_pos) - replace_pos;
     new_css.replace(replace_pos, replace_size,
-                    new_color.darker(150).name(QColor::HexArgb));
+                    new_color.darker(150).name(QColor::HexRgb));
 
-    ui->colorButton->setStyleSheet(new_css);
-
-    qDebug().noquote() << ui->colorButton->styleSheet();
-    qDebug() << new_color;
+    ui->colorPreview->setStyleSheet(new_css);
 
     canvas->setActiveColor(new_color);
 }

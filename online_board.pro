@@ -46,6 +46,7 @@ HEADERS += \
     serializers.h
 
 FORMS += \
+    line_props.ui \
     onlineboard.ui
 
 # Default rules for deployment.
