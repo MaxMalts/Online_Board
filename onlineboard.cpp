@@ -215,11 +215,19 @@ void OnlineBoard::onColorButtonClicked()
         return;
     }
 
-    QString css = ui->colorButton->styleSheet();
-    int replace_pos = css.indexOf(":", css.indexOf("background-color:")) + 1;
-    int replace_size = css.indexOf(";", replace_pos) - replace_pos;
-    ui->colorButton->setStyleSheet(css.replace(replace_pos, replace_size,
-                                               new_color.name(QColor::HexArgb)));
+    QString new_css = ui->colorButton->styleSheet();
+
+    int replace_pos =
+            new_css.indexOf(":", new_css.indexOf("background-color:")) + 1;
+    int replace_size = new_css.indexOf(";", replace_pos) - replace_pos;
+    new_css.replace(replace_pos, replace_size, new_color.name(QColor::HexArgb));
+
+    replace_pos = new_css.indexOf(":", new_css.indexOf("border-color:")) + 1;
+    replace_size = new_css.indexOf(";", replace_pos) - replace_pos;
+    new_css.replace(replace_pos, replace_size,
+                    new_color.darker(150).name(QColor::HexArgb));
+
+    ui->colorButton->setStyleSheet(new_css);
 
     qDebug().noquote() << ui->colorButton->styleSheet();
     qDebug() << new_color;

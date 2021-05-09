@@ -584,7 +584,8 @@ QToolButton::menu-indicator {
        <property name="styleSheet">
         <string notr="true">QPushButton {
 	background-color: black;
-	border: 3px solid #aaa;
+	border: 2px solid;
+	border-color: black;
 	border-radius: 30px 20px;
 }</string>
        </property>
