@@ -8,6 +8,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QList>
+#include <QMap>
 #include <QPointF>
 #include <QRectF>
 #include <QSizeF>
@@ -54,7 +55,7 @@ public:
     void setActiveColor(const QColor& color);
     QColor activeColor() const;
 
-    void addItem(ItemType type, QGraphicsItem* item);  // takes ownership
+//    void addItem(ItemType type, QGraphicsItem* item);  // takes ownership
     bool deleteItem(QGraphicsItem* item);  // deletes pointer
 
     void addPreviewItem(ItemType type, QGraphicsItem* item);  // takes ownership
@@ -80,6 +81,7 @@ signals:
 private slots:
     void onLayerReceived(const Serializer& argument);
     void onLayerConfirmed(const Serializer& argument);
+    void onDeleteLayer(const Serializer& argument);
 
 private:
     enum ItemDataInd {
@@ -93,6 +95,7 @@ private:
 
 
     QGraphicsScene gscene;
+    QMap<int, QGraphicsItem*> id_to_item;
 
     QQueue<QGraphicsItem*> pending_add_confirm;
 

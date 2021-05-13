@@ -8,6 +8,7 @@
 #include "ServerApi/serverapi.h"
 #include "ServerApi/addlayerargs.h"
 #include "ServerApi/confirmaddlayerargs.h"
+#include "ServerApi/deletelayerargs.h"
 #include "serializers.h"
 #include "common.h"
 
@@ -27,6 +28,8 @@ Canvas::Canvas(QSize size, QWidget* parent)
             this, SLOT(onLayerReceived(const Serializer&)));
     connect(ServerApi::getInstance(), SIGNAL(cConfirmAddLayer(const Serializer&)),
             this, SLOT(onLayerConfirmed(const Serializer&)));
+    connect(ServerApi::getInstance(), SIGNAL(cDeleteLayer(const Serializer&)),
+            this, SLOT(onDeleteLayer(const Serializer&)));
 }
 
 void Canvas::setupTools(QLayout* props_container)
@@ -142,17 +145,30 @@ void Canvas::onLayerConfirmed(const Serializer& argument)
 
     QGraphicsItem* item = pending_add_confirm.dequeue();
     item->setData(ItemDataInd::id, layer_id.layer_id);
+    id_to_item.insert(layer_id.layer_id, item);
 }
 
-void Canvas::addItem(ItemType type, QGraphicsItem* item)
+void Canvas::onDeleteLayer(const Serializer& argument)
 {
+    DeleteLayerArgs layer_id;
+    argument.deserialize(layer_id);
+
+    QGraphicsItem* item = id_to_item.value(layer_id.layer_id, nullptr);
     Q_ASSERT(item != nullptr);
 
-    item->setData(ItemDataInd::item_type, QVariant::fromValue(type));
-    gscene.addItem(item);
-
-    sendItem(item);
+    bool ret = deleteFromScene(item);
+    Q_ASSERT(ret);
 }
+
+//void Canvas::addItem(ItemType type, QGraphicsItem* item)
+//{
+//    Q_ASSERT(item != nullptr);
+
+//    item->setData(ItemDataInd::item_type, QVariant::fromValue(type));
+//    gscene.addItem(item);
+
+//    sendItem(item);
+//}
 
 bool Canvas::deleteItem(QGraphicsItem* item)
 {
@@ -162,7 +178,17 @@ bool Canvas::deleteItem(QGraphicsItem* item)
         return false;
     }
 
-    // to do sending info to server
+    DeleteLayerArgs args;
+    args.layer_id = item->data(ItemDataInd::id).toInt();
+
+#ifdef JSON_SERIALIZER
+    JsonSerializer argument(args);
+#else
+static_assert(false, "No serializer defined.");
+#endif
+
+    ServerApi::sDeleteLayer(argument);
+
     return true;
 }
 
@@ -185,6 +211,7 @@ bool Canvas::fixPreviewItem(QGraphicsItem* item)
 
     item->setData(ItemDataInd::is_preview, false);
     sendItem(item);
+
     return true;
 }
 
@@ -196,7 +223,9 @@ bool Canvas::deletePreviewItem(QGraphicsItem* item)
         return false;
     }
 
-    deleteFromScene(item);
+    bool ret = deleteFromScene(item);
+    Q_ASSERT(ret);
+
     return true;
 }
 
@@ -238,6 +267,9 @@ bool Canvas::deleteFromScene(QGraphicsItem* item)
     if (!gscene.items().contains(item)) {
         return false;
     }
+
+    int ret = id_to_item.remove(item->data(ItemDataInd::id).toInt());
+    Q_ASSERT(ret == 1);
 
     gscene.removeItem(item);
     delete item;
