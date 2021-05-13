@@ -11,6 +11,7 @@
 #include <QDebug>
 
 #include "common.h"
+#include "serializers.h"
 
 
 /* ClientProps */
@@ -88,6 +89,16 @@ bool ServerApi::connectToServer()
 void ServerApi::sAddLayer(const Serializer& argument)
 {
     instance->sendMethod("s_add_layer", argument);
+}
+
+void ServerApi::sDeleteLayer(const Serializer& argument)
+{
+    instance->sendMethod("s_delete_layer", argument);
+}
+
+void ServerApi::sUndo()
+{
+    instance->sendMethod("s_undo");
 }
 
 QTcpSocket::SocketError ServerApi::lastError()

@@ -205,6 +205,11 @@ void Canvas::redrawRect(const QRectF& rect)
     gscene.invalidate(rect);
 }
 
+void Canvas::undo()
+{
+    ServerApi::sUndo();
+}
+
 void Canvas::sendItem(QGraphicsItem* item)
 {
     Q_ASSERT(item != nullptr);

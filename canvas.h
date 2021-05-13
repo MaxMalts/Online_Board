@@ -63,6 +63,8 @@ public:
 
     void redrawRect(const QRectF& rect);
 
+    void undo();
+
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent* event) override;

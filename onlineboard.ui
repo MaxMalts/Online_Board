@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>551</height>
+    <width>982</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -462,75 +462,6 @@ QToolButton::menu-indicator {
            <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="buttonEllipse">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>60</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>60</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QToolButton {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.5 #e0e0e0, stop:1 #f7f7f7);
-	border: 2px solid #8fc286;
-	border-radius: 20px;
-}
-
-QToolButton:hover {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.6 #e9e9e9, stop:1 #fff);
-}
-
-QToolButton:pressed {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.8 #dedede, stop:1 #d0d0d0);
-}
-
-QToolButton:checked {
-	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.6 #e9e9e9, stop:1 #fff);
-	border-width: 3px;
-	border-color: #6d7d06;
-}
-
-QToolButton::menu-indicator {
-	image: none;
-}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>Data/img/tools/ellipse.png</normaloff>Data/img/tools/ellipse.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>50</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QToolButton" name="buttonRectangle">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
@@ -587,6 +518,75 @@ QToolButton::menu-indicator {
             <property name="icon">
              <iconset>
               <normaloff>Data/img/tools/rect.png</normaloff>Data/img/tools/rect.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>50</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="buttonEllipse">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QToolButton {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.5 #e0e0e0, stop:1 #f7f7f7);
+	border: 2px solid #8fc286;
+	border-radius: 20px;
+}
+
+QToolButton:hover {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.6 #e9e9e9, stop:1 #fff);
+}
+
+QToolButton:pressed {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.8 #dedede, stop:1 #d0d0d0);
+}
+
+QToolButton:checked {
+	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.6 #e9e9e9, stop:1 #fff);
+	border-width: 3px;
+	border-color: #6d7d06;
+}
+
+QToolButton::menu-indicator {
+	image: none;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Data/img/tools/ellipse.png</normaloff>Data/img/tools/ellipse.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -733,7 +733,7 @@ QToolButton::menu-indicator {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>984</width>
+     <width>982</width>
      <height>21</height>
     </rect>
    </property>
@@ -790,7 +790,7 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="separator"/>
+    <addaction name="actionUndo"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="cursor">
@@ -890,6 +890,11 @@ QMenuBar::item:pressed  {
     <string>Ellipse</string>
    </property>
   </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -901,7 +906,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>338</y>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -917,7 +922,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>413</y>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>197</x>
@@ -933,7 +938,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>521</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>229</x>
@@ -949,7 +954,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>338</y>
+     <y>318</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
@@ -965,7 +970,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>413</y>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>200</x>
@@ -981,7 +986,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>488</y>
+     <y>468</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -997,7 +1002,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>457</y>
+     <y>501</y>
     </hint>
     <hint type="destinationlabel">
      <x>223</x>
@@ -1013,7 +1018,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>521</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>229</x>
@@ -1029,7 +1034,7 @@ QMenuBar::item:pressed  {
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>457</y>
+     <y>501</y>
     </hint>
     <hint type="destinationlabel">
      <x>225</x>
@@ -1053,12 +1058,29 @@ QMenuBar::item:pressed  {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionUndo</sender>
+   <signal>triggered()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onUndoTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onToolButtonTriggered(QAction*)</slot>
   <slot>onToolButtonClicked()</slot>
   <slot>onToolActionTriggered()</slot>
   <slot>onColorButtonClicked()</slot>
+  <slot>onUndoTriggered()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

@@ -34,6 +34,7 @@ SOURCES += \
 HEADERS += \
     ServerApi/addlayerargs.h \
     ServerApi/confirmaddlayerargs.h \
+    ServerApi/deletelayerargs.h \
     ServerApi/serverapi.h \
     Tools/ellipse.h \
     Tools/line.h \

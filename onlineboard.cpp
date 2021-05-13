@@ -232,3 +232,8 @@ void OnlineBoard::onColorButtonClicked()
 
     canvas->setActiveColor(new_color);
 }
+
+void OnlineBoard::onUndoTriggered()
+{
+    canvas->undo();
+}

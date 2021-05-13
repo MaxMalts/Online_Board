@@ -42,7 +42,9 @@ private slots:
     void onToolButtonTriggered(QAction* action);
     void onFigureButtonRClick();
     void onFiguresFocusOut();
+
     void onColorButtonClicked();
+    void onUndoTriggered();
 
 private:
     void InitTools();

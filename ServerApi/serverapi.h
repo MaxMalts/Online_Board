@@ -41,7 +41,10 @@ public:
     static ServerApi* getInstance();
 
     static bool connectToServer();
+
     static void sAddLayer(const Serializer& argument);
+    static void sDeleteLayer(const Serializer& argument);
+    static void sUndo();
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
@@ -51,6 +54,7 @@ signals:
     void cAddLayer(const Serializer& argument);
     void cFinishBoardInit(const Serializer& argument);
     void cConfirmAddLayer(const Serializer& argument);
+    void cDeleteLayer(const Serializer& argument);
 
     void connected();
     void disconnected();
@@ -62,7 +66,12 @@ private slots:
     void onReconnectTimer();
 
 private:
-    bool sendMethod(const QString& method, const Serializer& argument);
+#ifdef JSON_SERIALIZER
+    bool sendMethod(const QString& method,
+                    const Serializer& argument = JsonSerializer(QJsonObject()));
+#else
+    static_assert(false, "No serializer defined.");
+#endif
 
     static ServerApi* instance;
 
@@ -72,7 +81,7 @@ private:
     QTimer reconnectTimer;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
-        { "init_client", &ServerApi::cInitClient },
+        { "с_init_client", &ServerApi::cInitClient },
         { "c_add_layer", &ServerApi::cAddLayer },
         { "c_finish_board_init", &ServerApi::cFinishBoardInit },
         { "c_confirm_add_layer", &ServerApi::cConfirmAddLayer }
