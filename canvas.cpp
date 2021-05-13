@@ -75,6 +75,11 @@ void Canvas::mousePressEvent(QMouseEvent* event)
     emit mouseDown(mapToScene(event->pos()));
 }
 
+void Canvas::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    mousePressEvent(event);
+}
+
 void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
     emit mouseDragged(mapToScene(event->pos()));
