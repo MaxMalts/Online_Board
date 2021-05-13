@@ -102,7 +102,7 @@ QSlider::sub-page {
       <number>100</number>
      </property>
      <property name="value">
-      <number>20</number>
+      <number>5</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

@@ -102,7 +102,7 @@ QSlider::sub-page {
       <number>100</number>
      </property>
      <property name="value">
-      <number>20</number>
+      <number>5</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -142,8 +142,8 @@ QSlider::sub-page {
    <slot>onWidthSliderChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>499</x>
-     <y>70</y>
+     <x>595</x>
+     <y>81</y>
     </hint>
     <hint type="destinationlabel">
      <x>614</x>
