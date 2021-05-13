@@ -27,7 +27,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>382</width>
+       <width>405</width>
        <height>20</height>
       </size>
      </property>
@@ -62,7 +62,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>130</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
@@ -76,7 +76,24 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QSlider::groove {
+    height: 5px;
+	background: #2a2a2a;
+	border-radius: 2px;
+}
+
+QSlider::handle{
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #555, stop:1 #383838);;
+	width: 13px;
+    margin: -5px 0;     
+	border: 1px solid black;
+	border-radius: 7px;
+}
+
+QSlider::sub-page {
+	background: #aeb08d;
+	border-radius: 2px;
+}</string>
      </property>
      <property name="minimum">
       <number>1</number>
@@ -108,7 +125,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>381</width>
+       <width>404</width>
        <height>20</height>
       </size>
      </property>
