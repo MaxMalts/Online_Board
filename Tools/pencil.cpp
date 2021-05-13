@@ -131,6 +131,17 @@ bool PencilItem::serialize(QJsonObject& json) const
     }
 
     json.insert("coordinates", json_vertices);
+
+    QColor color = pen().color();
+    json.insert("color", QJsonArray{
+            color.red(),
+            color.green(),
+            color.blue(),
+            color.alpha()
+        });
+
+    json.insert("width", pen().widthF());
+
     return true;
 }
 #else

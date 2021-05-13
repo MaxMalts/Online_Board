@@ -78,10 +78,10 @@ bool EllipseItem::serialize(QJsonObject& json) const
 
     QColor color = pen().color();
     json.insert("color", QJsonArray{
-            color.alpha(),
             color.red(),
             color.green(),
-            color.blue()
+            color.blue(),
+            color.alpha()
         });
 
     json.insert("width", pen().widthF());
