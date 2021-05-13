@@ -1,7 +1,10 @@
 #ifndef ELLIPSE_H
 #define ELLIPSE_H
 
+#include <QWidget>
+#include <QLayout>
 #include <QGraphicsEllipseItem>
+#include <QRectF>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointF>
@@ -32,13 +35,36 @@ public:
 };
 
 
+namespace Ui {
+class EllipseProps;
+}
+
+class EllipseProps : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit EllipseProps(QWidget *parent = nullptr);
+    ~EllipseProps();
+
+    qreal getWidth() const;
+
+private slots:
+    void onWidthSliderChanged(int value);
+
+private:
+    Ui::EllipseProps* ui;
+
+    qreal width;
+};
+
+
 class Ellipse : public Tool
 {
     Q_OBJECT
-    using Tool::Tool;
 
 public:
-    Ellipse() = delete;
+    Ellipse(Canvas* canvas, QLayout* props_container, QObject* parent = nullptr);
 
 protected:
     void toolDown(const QPointF& pos) override;
@@ -48,6 +74,8 @@ protected:
 private:
     QRectF cur_rect;
     EllipseItem* cur_item = nullptr;
+
+    EllipseProps* ellipse_props = nullptr;
 };
 
 #endif // ELLIPSE_H

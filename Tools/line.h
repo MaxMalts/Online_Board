@@ -53,7 +53,7 @@ private slots:
     void onWidthSliderChanged(int value);
 
 private:
-    Ui::LineProps *ui;
+    Ui::LineProps* ui;
 
     qreal width;
 };

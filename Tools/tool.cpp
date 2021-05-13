@@ -1,3 +1,4 @@
+#include <QApplication>
 #include <QDebug>
 
 #include "canvas.h"
@@ -25,8 +26,7 @@ void Tool::activate()
 
     if (props_widget != nullptr) {
         props_container->addWidget(props_widget);
-        //props_widget->show();
-        qDebug() << props_widget->parent();
+        props_widget->show();
     }
 
     toolActivated();
@@ -43,7 +43,7 @@ void Tool::inactivate()
 
     if (props_widget != nullptr) {
         props_container->removeWidget(props_widget);
-        qDebug() << props_widget->parent();
+        props_widget->hide();
     }
 
     toolInactivated();
@@ -63,5 +63,13 @@ void Tool::toolInactivated() {}
 void Tool::setPropsWidget(QWidget* props_widget)
 {
     Q_ASSERT(props_widget != nullptr);
+
+    // Without this crutch mouse works bad! >:(
+    props_widget->setParent(props_container->parentWidget());
+    props_widget->show();
+    qApp->processEvents();
+    props_widget->hide();
+    qApp->processEvents();
+
     this->props_widget = props_widget;
 }

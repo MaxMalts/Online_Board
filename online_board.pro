@@ -46,8 +46,11 @@ HEADERS += \
     serializers.h
 
 FORMS += \
+    ellipseprops.ui \
     lineprops.ui \
-    onlineboard.ui
+    onlineboard.ui \
+    pencilprops.ui \
+    rectangleprops.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

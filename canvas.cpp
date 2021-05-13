@@ -34,12 +34,13 @@ void Canvas::setupTools(QLayout* props_container)
     Q_ASSERT(props_container != nullptr);
 
     tools = BiMap<ToolType, Tool*> {
-        { ToolType::pencil, nullptr},//new Pencil(this, this) },
+        { ToolType::pencil, new Pencil(this, props_container, this) },
         { ToolType::line, new Line(this, props_container, this) },
-        { ToolType::rectangle, nullptr},//new Rectangle(this, this) },
-        { ToolType::ellipse, nullptr},//new Ellipse(this, this) }
+        { ToolType::rectangle, new Rectangle(this, props_container, this) },
+        { ToolType::ellipse, new Ellipse(this, props_container, this) }
     };
-    active_tool = tools.atL(ToolType::line);
+
+    active_tool = tools.atL(ToolType::pencil);
     active_tool->activate();
 }
 

@@ -1,7 +1,10 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
+#include <QWidget>
+#include <QLayout>
 #include <QGraphicsRectItem>
+#include <QRectF>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPointF>
@@ -32,13 +35,36 @@ public:
 };
 
 
+namespace Ui {
+class RectangleProps;
+}
+
+class RectangleProps : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit RectangleProps(QWidget *parent = nullptr);
+    ~RectangleProps();
+
+    qreal getWidth() const;
+
+private slots:
+    void onWidthSliderChanged(int value);
+
+private:
+    Ui::RectangleProps* ui;
+
+    qreal width;
+};
+
+
 class Rectangle : public Tool
 {
     Q_OBJECT
-    using Tool::Tool;
 
 public:
-    Rectangle() = delete;
+    Rectangle(Canvas* canvas, QLayout* props_container, QObject* parent = nullptr);
 
 protected:
     void toolDown(const QPointF& pos) override;
@@ -48,6 +74,8 @@ protected:
 private:
     QRectF cur_rect;
     RectangleItem* cur_item = nullptr;
+
+    RectangleProps* rectangle_props = nullptr;
 };
 
 #endif // RECTANGLE_H

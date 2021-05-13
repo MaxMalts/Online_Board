@@ -12,8 +12,11 @@
 #include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
+#include "ui_ellipseprops.h"
 #include "ellipse.h"
 
+
+/* EllipseItem */
 
 #ifdef JSON_SERIALIZER
 bool EllipseItem::deserialize(const QJsonObject& json)
@@ -90,6 +93,41 @@ static_assert(false, "No serializer defined.");
 #endif
 
 
+/* EllipseProps */
+
+EllipseProps::EllipseProps(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::EllipseProps)
+{
+    ui->setupUi(this);
+    width = ui->widthSlider->value();
+}
+
+EllipseProps::~EllipseProps()
+{
+    delete ui;
+}
+
+qreal EllipseProps::getWidth() const
+{
+    return width;
+}
+
+void EllipseProps::onWidthSliderChanged(int value)
+{
+    width = value;
+}
+
+
+/* Ellipse */
+
+Ellipse::Ellipse(Canvas* canvas, QLayout* props_container, QObject* parent)
+    : Tool(canvas, props_container, parent),
+      ellipse_props(new EllipseProps)
+{
+    setPropsWidget(ellipse_props);
+}
+
 void Ellipse::toolDown(const QPointF& pos)
 {
     Q_ASSERT(cur_item == nullptr);
@@ -100,6 +138,7 @@ void Ellipse::toolDown(const QPointF& pos)
     cur_item = new EllipseItem(cur_rect);
     QPen pen = cur_item->pen();
     pen.setColor(canvas->activeColor());
+    pen.setWidthF(ellipse_props->getWidth());
     cur_item->setPen(pen);
 
     canvas->addPreviewItem(Canvas::ItemType::ellipse, cur_item);

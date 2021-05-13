@@ -1,6 +1,8 @@
 #ifndef PENCIL_H
 #define PENCIL_H
 
+#include <QWidget>
+#include <QLayout>
 #include <QGraphicsPathItem>
 #include <QPainterPath>
 #include <QJsonDocument>
@@ -38,13 +40,36 @@ private:
 };
 
 
+namespace Ui {
+class PencilProps;
+}
+
+class PencilProps : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit PencilProps(QWidget *parent = nullptr);
+    ~PencilProps();
+
+    qreal getWidth() const;
+
+private slots:
+    void onWidthSliderChanged(int value);
+
+private:
+    Ui::PencilProps* ui;
+
+    qreal width;
+};
+
+
 class Pencil : public Tool
 {
     Q_OBJECT
-    using Tool::Tool;
 
 public:
-    Pencil() = delete;
+    Pencil(Canvas* canvas, QLayout* props_container, QObject* parent = nullptr);
 
 protected:
     void toolDown(const QPointF& pos) override;
@@ -53,6 +78,8 @@ protected:
 
 private:
     PencilItem* cur_item = nullptr;
+
+    PencilProps* pencil_props = nullptr;
 };
 
 #endif // PENCIL_H

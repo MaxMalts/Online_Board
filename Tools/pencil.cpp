@@ -12,8 +12,11 @@
 #include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
+#include "ui_pencilprops.h"
 #include "pencil.h"
 
+
+/* PencilItem */
 
 PencilItem::PencilItem(const QPolygonF& vertices) : vertices(vertices)
 {
@@ -137,6 +140,41 @@ void PencilItem::verticesToPath()
 }
 
 
+/* PencilProps */
+
+PencilProps::PencilProps(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::PencilProps)
+{
+    ui->setupUi(this);
+    width = ui->widthSlider->value();
+}
+
+PencilProps::~PencilProps()
+{
+    delete ui;
+}
+
+qreal PencilProps::getWidth() const
+{
+    return width;
+}
+
+void PencilProps::onWidthSliderChanged(int value)
+{
+    width = value;
+}
+
+
+/* Pencil */
+
+Pencil::Pencil(Canvas* canvas, QLayout* props_container, QObject* parent)
+    : Tool(canvas, props_container, parent),
+      pencil_props(new PencilProps)
+{
+    setPropsWidget(pencil_props);
+}
+
 void Pencil::toolDown(const QPointF& pos)
 {
     Q_ASSERT(cur_item == nullptr);
@@ -144,6 +182,7 @@ void Pencil::toolDown(const QPointF& pos)
     cur_item = new PencilItem();
     QPen pen = cur_item->pen();
     pen.setColor(canvas->activeColor());
+    pen.setWidthF(pencil_props->getWidth());
     cur_item->setPen(pen);
 
     cur_item->addVertex(pos);

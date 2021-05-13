@@ -11,8 +11,11 @@
 #include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "canvas.h"
+#include "ui_rectangleprops.h"
 #include "rectangle.h"
 
+
+/* RectangleItem */
 
 #ifdef JSON_SERIALIZER
 bool RectangleItem::deserialize(const QJsonObject& json)
@@ -89,6 +92,41 @@ static_assert(false, "No serializer defined.");
 #endif
 
 
+/* RectangleProps */
+
+RectangleProps::RectangleProps(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RectangleProps)
+{
+    ui->setupUi(this);
+    width = ui->widthSlider->value();
+}
+
+RectangleProps::~RectangleProps()
+{
+    delete ui;
+}
+
+qreal RectangleProps::getWidth() const
+{
+    return width;
+}
+
+void RectangleProps::onWidthSliderChanged(int value)
+{
+    width = value;
+}
+
+
+/* Rectangle */
+
+Rectangle::Rectangle(Canvas* canvas, QLayout* props_container, QObject* parent)
+    : Tool(canvas, props_container, parent),
+      rectangle_props(new RectangleProps)
+{
+    setPropsWidget(rectangle_props);
+}
+
 void Rectangle::toolDown(const QPointF& pos)
 {
     Q_ASSERT(cur_item == nullptr);
@@ -99,6 +137,7 @@ void Rectangle::toolDown(const QPointF& pos)
     cur_item = new RectangleItem(cur_rect);
     QPen pen = cur_item->pen();
     pen.setColor(canvas->activeColor());
+    pen.setWidthF(rectangle_props->getWidth());
     cur_item->setPen(pen);
 
     canvas->addPreviewItem(Canvas::ItemType::rectangle, cur_item);

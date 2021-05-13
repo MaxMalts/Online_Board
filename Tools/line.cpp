@@ -16,6 +16,7 @@
 
 
 /* LineItem */
+
 #ifdef JSON_SERIALIZER
 bool LineItem::deserialize(const QJsonObject& json)
 {
