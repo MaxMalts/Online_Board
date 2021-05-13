@@ -81,10 +81,11 @@ private:
     QTimer reconnectTimer;
 
     const QMap<QString, void (ServerApi::*)(const Serializer&)> str_to_signal {
-        { "с_init_client", &ServerApi::cInitClient },
+        { "c_init_client", &ServerApi::cInitClient },
         { "c_add_layer", &ServerApi::cAddLayer },
         { "c_finish_board_init", &ServerApi::cFinishBoardInit },
-        { "c_confirm_add_layer", &ServerApi::cConfirmAddLayer }
+        { "c_confirm_add_layer", &ServerApi::cConfirmAddLayer },
+        { "c_delete_layer", &ServerApi::cDeleteLayer }
     };
 };
 
