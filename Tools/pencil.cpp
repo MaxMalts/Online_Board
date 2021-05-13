@@ -157,6 +157,11 @@ void PencilItem::verticesToPath()
 {
     QPainterPath path;
     path.addPolygon(vertices);
+    if (vertices.size() == 2 && vertices.at(0) == vertices.at(1)) {
+        // to draw single point
+        path.lineTo(vertices.at(0) + QPointF(0.1, 0.1));
+    }
+
     setPath(path);
 }
 
