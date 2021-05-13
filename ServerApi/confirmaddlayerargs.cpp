@@ -25,6 +25,8 @@ bool ConfirmAddLayerArgs::deserialize(const QJsonObject& json)
     }
 
     layer_id = std::lround(cur_value.toDouble());
+
+    return true;
 }
 #else
 static_assert(false, "No serializer defined.");

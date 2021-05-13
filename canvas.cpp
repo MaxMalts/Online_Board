@@ -27,8 +27,19 @@ Canvas::Canvas(QSize size, QWidget* parent)
             this, SLOT(onLayerReceived(const Serializer&)));
     connect(ServerApi::getInstance(), SIGNAL(cConfirmAddLayer(const Serializer&)),
             this, SLOT(onLayerConfirmed(const Serializer&)));
+}
 
-    active_tool = tools.atL(ToolType::pencil);
+void Canvas::setupTools(QLayout* props_container)
+{
+    Q_ASSERT(props_container != nullptr);
+
+    tools = BiMap<ToolType, Tool*> {
+        { ToolType::pencil, nullptr},//new Pencil(this, this) },
+        { ToolType::line, new Line(this, props_container, this) },
+        { ToolType::rectangle, nullptr},//new Rectangle(this, this) },
+        { ToolType::ellipse, nullptr},//new Ellipse(this, this) }
+    };
+    active_tool = tools.atL(ToolType::line);
     active_tool->activate();
 }
 

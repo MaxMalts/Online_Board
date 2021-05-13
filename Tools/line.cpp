@@ -11,9 +11,11 @@
 #include "ServerApi/serverapi.h"
 #include "serializers.h"
 #include "line.h"
+#include "ui_lineprops.h"
 #include "canvas.h"
 
 
+/* LineItem */
 #ifdef JSON_SERIALIZER
 bool LineItem::deserialize(const QJsonObject& json)
 {
@@ -104,6 +106,40 @@ static_assert(false, "No serializer defined.");
 #endif
 
 
+/* LineProps */
+
+LineProps::LineProps(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::LineProps)
+{
+    ui->setupUi(this);
+    width = ui->widthSlider->value();
+}
+
+LineProps::~LineProps()
+{
+    delete ui;
+}
+
+qreal LineProps::getWidth() const
+{
+    return width;
+}
+
+void LineProps::onWidthSliderChanged(int value)
+{
+    width = value;
+}
+
+
+/* Line */
+
+Line::Line(Canvas* canvas, QLayout* props_container, QObject* parent)
+    : Tool(canvas, props_container, parent),
+      line_props(new LineProps)
+{
+    setPropsWidget(line_props);
+}
 
 void Line::toolDown(const QPointF& pos)
 {
@@ -115,6 +151,7 @@ void Line::toolDown(const QPointF& pos)
     cur_item = new LineItem(cur_line);
     QPen pen = cur_item->pen();
     pen.setColor(canvas->activeColor());
+    pen.setWidthF(line_props->getWidth());
     cur_item->setPen(pen);
 
     canvas->addPreviewItem(Canvas::ItemType::line, cur_item);

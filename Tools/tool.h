@@ -2,6 +2,8 @@
 #define TOOL_H
 
 #include <QObject>
+#include <QWidget>
+#include <QLayout>
 #include <QColor>
 #include <QPointF>
 #include <QGraphicsItem>
@@ -17,12 +19,12 @@ class Tool : public QObject
     Q_OBJECT
 
 public:
-    Tool(Canvas* canvas, QObject* parent = nullptr);
+    Tool(Canvas* canvas, QLayout* props_container, QObject* parent = nullptr);
 
     void activate();
     void inactivate();
 
-    virtual ~Tool() = default;
+    virtual ~Tool();
 
 protected slots:
     virtual void toolDown(const QPointF& pos);
@@ -33,9 +35,14 @@ protected:
     virtual void toolActivated();
     virtual void toolInactivated();
 
+    void setPropsWidget(QWidget* props_widget);
+
     Canvas* canvas = nullptr;
 
 private:
+    QLayout* props_container = nullptr;
+    QWidget* props_widget = nullptr;
+
     bool mouse_pressed = false;
 };
 

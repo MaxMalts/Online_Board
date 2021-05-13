@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QLayout>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
@@ -45,6 +46,7 @@ public:
     };
 
     Canvas(QSize size = QSize(500, 500), QWidget* parent = nullptr);
+    void setupTools(QLayout* props_container);
 
     void resize(QSize size);
 
@@ -92,12 +94,7 @@ private:
     QQueue<QGraphicsItem*> pending_add_confirm;
 
     Tool* active_tool = nullptr;
-    const BiMap<ToolType, Tool*> tools {
-        { ToolType::pencil, new Pencil(this, this) },
-        { ToolType::line, new Line(this, this) },
-        { ToolType::rectangle, new Rectangle(this, this) },
-        { ToolType::ellipse, new Ellipse(this, this) }
-    };
+    BiMap<ToolType, Tool*> tools;
 
     QColor active_color;
 };

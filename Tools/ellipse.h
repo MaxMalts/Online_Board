@@ -18,7 +18,8 @@ class EllipseItem : public QGraphicsEllipseItem, public Serializable
 public:
     template<typename ...Args>
     EllipseItem(Args... args)
-        : QGraphicsEllipseItem(std::forward<Args>(args)...) {
+        : QGraphicsEllipseItem(std::forward<Args>(args)...)
+    {
         setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
     }
 

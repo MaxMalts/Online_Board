@@ -18,7 +18,8 @@ class RectangleItem : public QGraphicsRectItem, public Serializable
 public:
     template<typename ...Args>
     RectangleItem(Args... args)
-        : QGraphicsRectItem(std::forward<Args>(args)...) {
+        : QGraphicsRectItem(std::forward<Args>(args)...)
+    {
         setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
     }
 

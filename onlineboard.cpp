@@ -26,6 +26,7 @@ OnlineBoard::OnlineBoard(QWidget* parent)
     ui->setupUi(this);
 
     canvas = new Canvas(QSize(0, 0), centralWidget());
+    canvas->setupTools(ui->toolsPropsContainer->layout());
     canvas->lower();
     canvas->setSizePolicy(QSizePolicy::Policy::Ignored, QSizePolicy::Policy::Ignored);
     canvas->setFocusPolicy(Qt::ClickFocus);

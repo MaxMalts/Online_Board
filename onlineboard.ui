@@ -43,7 +43,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QWidget" name="toolProps" native="true">
+     <widget class="QWidget" name="toolsPropsContainer" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -63,11 +63,25 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">QWidget {
+       <string notr="true">QWidget#toolsPropsContainer {
 	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #4e634b, stop:0.1 #5d7859);
 	border-top: 1px solid #3e4f3d;
 }</string>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </item>
     <item>
