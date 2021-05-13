@@ -134,6 +134,7 @@ void Canvas::onLayerReceived(const Serializer& argument)
     item->setData(ItemDataInd::id, layer_info.layer_id);
     item->setData(ItemDataInd::item_type, QVariant::fromValue(layer_info.item_type));
     gscene.addItem(item);
+    id_to_item.insert(layer_info.layer_id, item);
 }
 
 void Canvas::onLayerConfirmed(const Serializer& argument)
