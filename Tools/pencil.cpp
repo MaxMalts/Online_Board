@@ -18,15 +18,20 @@
 
 /* PencilItem */
 
+PencilItem::PencilItem()
+{
+    setPen(defaultPen());
+}
+
 PencilItem::PencilItem(const QPolygonF& vertices) : vertices(vertices)
 {
-    setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+    setPen(defaultPen());
     verticesToPath();
 }
 
 PencilItem::PencilItem(const QPolygonF&& vertices) : vertices(vertices)
 {
-    setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+    setPen(defaultPen());
     verticesToPath();
 }
 
@@ -80,7 +85,7 @@ bool PencilItem::deserialize(const QJsonObject& json)
         new_vertices.append(QPointF(x.toDouble(), y.toDouble()));
     }
 
-    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap);
+    QPen new_pen = defaultPen();
 
     // color
     cur_value = json.value("color");
@@ -131,6 +136,11 @@ bool PencilItem::serialize(QJsonObject& json) const
 #else
     static_assert(false, "No serializer defined.");
 #endif
+
+QPen PencilItem::defaultPen()
+{
+    return QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+}
 
 void PencilItem::verticesToPath()
 {

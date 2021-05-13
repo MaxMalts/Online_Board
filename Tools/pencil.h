@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QPolygonF>
+#include <QPen>
 #include <QPointF>
 
 #include "serializers.h"
@@ -17,7 +18,7 @@
 class PencilItem : public QGraphicsPathItem, public Serializable
 {
 public:
-    PencilItem() = default;
+    PencilItem();
     PencilItem(const QPolygonF& vertices);
     PencilItem(const QPolygonF&& vertices);
 
@@ -34,6 +35,7 @@ public:
 #endif
 
 private:
+    QPen defaultPen();
     void verticesToPath();
 
     QPolygonF vertices;

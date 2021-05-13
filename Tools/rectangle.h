@@ -23,7 +23,7 @@ public:
     RectangleItem(Args... args)
         : QGraphicsRectItem(std::forward<Args>(args)...)
     {
-        setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+        setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     }
 
 #ifdef JSON_SERIALIZER
