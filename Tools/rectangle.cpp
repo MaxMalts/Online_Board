@@ -33,7 +33,7 @@ bool RectangleItem::deserialize(const QJsonObject& json)
         return false;
     }
 
-    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap);
+    QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     // color
     cur_value = json.value("color");
