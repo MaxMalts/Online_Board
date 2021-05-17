@@ -114,6 +114,9 @@ private:
 };
 
 
+bool ChangeCssProp(QString& css, const QString& props, const QString& value);
+
+
 ///*
 // * Used when you need to handle events and forward them to
 // * other objects. Most useful for mouse propagation.

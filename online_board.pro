@@ -63,3 +63,6 @@ DEFINES += JSON_SERIALIZER
 
 DISTFILES += \
     Data/img/tools/line.png
+
+RESOURCES += \
+    resources.qrc

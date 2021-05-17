@@ -24,6 +24,7 @@ public:
         : QGraphicsEllipseItem(std::forward<Args>(args)...)
     {
         setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
+        setBrush(QBrush(Qt::transparent));
     }
 
 #ifdef JSON_SERIALIZER
@@ -47,15 +48,23 @@ public:
     explicit EllipseProps(QWidget *parent = nullptr);
     ~EllipseProps();
 
-    qreal getWidth() const;
+    qreal strokeWidth() const;
+    QColor strokeColor() const;
+    QColor fillColor() const;
 
 private slots:
     void onWidthSliderChanged(int value);
+    void onStrokeColorClicked();
+    void onFillColorClicked();
 
 private:
+    void updatePreviewColorCss(QWidget* color_preview, const QColor& color);
+
     Ui::EllipseProps* ui;
 
-    qreal width;
+    qreal stroke_width;
+    QColor stroke_color = Qt::black;
+    QColor fill_color = Qt::transparent;
 };
 
 

@@ -27,7 +27,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>405</width>
+       <width>40</width>
        <height>20</height>
       </size>
      </property>
@@ -125,7 +125,7 @@ QSlider::sub-page {
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>404</width>
+       <width>40</width>
        <height>20</height>
       </size>
      </property>

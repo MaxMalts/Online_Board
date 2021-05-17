@@ -5,7 +5,9 @@
 #include <QRectF>
 #include <QPointF>
 #include <QPen>
+#include <QBrush>
 #include <QColor>
+#include <QColorDialog>
 #include <QDebug>
 
 #include "ServerApi/serverapi.h"
@@ -99,7 +101,10 @@ RectangleProps::RectangleProps(QWidget *parent) :
     ui(new Ui::RectangleProps)
 {
     ui->setupUi(this);
-    width = ui->widthSlider->value();
+    stroke_width = ui->widthSlider->value();
+
+    updatePreviewColorCss(ui->strokeColorButton, stroke_color);
+    updatePreviewColorCss(ui->fillColorButton, fill_color);
 }
 
 RectangleProps::~RectangleProps()
@@ -107,14 +112,66 @@ RectangleProps::~RectangleProps()
     delete ui;
 }
 
-qreal RectangleProps::getWidth() const
+qreal RectangleProps::strokeWidth() const
 {
-    return width;
+    return stroke_width;
+}
+
+QColor RectangleProps::strokeColor() const
+{
+    return stroke_color;
+}
+
+QColor RectangleProps::fillColor() const
+{
+    return fill_color;
 }
 
 void RectangleProps::onWidthSliderChanged(int value)
 {
-    width = value;
+    stroke_width = value;
+}
+
+void RectangleProps::onStrokeColorClicked()
+{
+    Q_ASSERT(sender() == ui->strokeColorButton);
+
+    QColor new_color = QColorDialog::getColor(stroke_color, this,
+                                              "Color Picker",
+                                              QColorDialog::ShowAlphaChannel);
+    if (!new_color.isValid()) {
+        return;
+    }
+
+    updatePreviewColorCss(ui->strokeColorButton, new_color);
+
+    stroke_color = new_color;
+}
+
+void RectangleProps::onFillColorClicked()
+{
+    Q_ASSERT(sender() == ui->fillColorButton);
+
+    QColor new_color = QColorDialog::getColor(fill_color, this,
+                                              "Color Picker",
+                                              QColorDialog::ShowAlphaChannel);
+    if (!new_color.isValid()) {
+        return;
+    }
+
+    updatePreviewColorCss(ui->fillColorButton, new_color);
+
+    fill_color = new_color;
+}
+
+void RectangleProps::updatePreviewColorCss(QWidget* color_preview, const QColor& color)
+{
+    QString new_css = color_preview->styleSheet();
+    bool ret = ChangeCssProp(new_css, "background",
+                             color.name(QColor::HexArgb));
+    Q_ASSERT(ret);
+
+    color_preview->setStyleSheet(new_css);
 }
 
 
@@ -135,10 +192,15 @@ void Rectangle::toolDown(const QPointF& pos)
     cur_rect.setBottomRight(pos);
 
     cur_item = new RectangleItem(cur_rect);
+
     QPen pen = cur_item->pen();
-    pen.setColor(canvas->activeColor());
-    pen.setWidthF(rectangle_props->getWidth());
+    pen.setWidthF(rectangle_props->strokeWidth());
+    pen.setColor(rectangle_props->strokeColor());
     cur_item->setPen(pen);
+
+    QBrush brush = cur_item->brush();
+    brush.setColor(rectangle_props->fillColor());
+    cur_item->setBrush(brush);
 
     canvas->addPreviewItem(Canvas::ItemType::rectangle, cur_item);
 }

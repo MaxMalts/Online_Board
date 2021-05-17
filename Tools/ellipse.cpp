@@ -6,7 +6,9 @@
 #include <QMarginsF>
 #include <QPointF>
 #include <QPen>
+#include <QBrush>
 #include <QColor>
+#include <QColorDialog>
 #include <QDebug>
 
 #include "ServerApi/serverapi.h"
@@ -100,7 +102,10 @@ EllipseProps::EllipseProps(QWidget *parent) :
     ui(new Ui::EllipseProps)
 {
     ui->setupUi(this);
-    width = ui->widthSlider->value();
+    stroke_width = ui->widthSlider->value();
+
+    updatePreviewColorCss(ui->strokeColorButton, stroke_color);
+    updatePreviewColorCss(ui->fillColorButton, fill_color);
 }
 
 EllipseProps::~EllipseProps()
@@ -108,14 +113,66 @@ EllipseProps::~EllipseProps()
     delete ui;
 }
 
-qreal EllipseProps::getWidth() const
+qreal EllipseProps::strokeWidth() const
 {
-    return width;
+    return stroke_width;
+}
+
+QColor EllipseProps::strokeColor() const
+{
+    return stroke_color;
+}
+
+QColor EllipseProps::fillColor() const
+{
+    return fill_color;
 }
 
 void EllipseProps::onWidthSliderChanged(int value)
 {
-    width = value;
+    stroke_width = value;
+}
+
+void EllipseProps::onStrokeColorClicked()
+{
+    Q_ASSERT(sender() == ui->strokeColorButton);
+
+    QColor new_color = QColorDialog::getColor(stroke_color, this,
+                                              "Color Picker",
+                                              QColorDialog::ShowAlphaChannel);
+    if (!new_color.isValid()) {
+        return;
+    }
+
+    updatePreviewColorCss(ui->strokeColorButton, new_color);
+
+    stroke_color = new_color;
+}
+
+void EllipseProps::onFillColorClicked()
+{
+    Q_ASSERT(sender() == ui->fillColorButton);
+
+    QColor new_color = QColorDialog::getColor(fill_color, this,
+                                              "Color Picker",
+                                              QColorDialog::ShowAlphaChannel);
+    if (!new_color.isValid()) {
+        return;
+    }
+
+    updatePreviewColorCss(ui->fillColorButton, new_color);
+
+    fill_color = new_color;
+}
+
+void EllipseProps::updatePreviewColorCss(QWidget* color_preview, const QColor& color)
+{
+    QString new_css = color_preview->styleSheet();
+    bool ret = ChangeCssProp(new_css, "background",
+                             color.name(QColor::HexArgb));
+    Q_ASSERT(ret);
+
+    color_preview->setStyleSheet(new_css);
 }
 
 
@@ -136,10 +193,15 @@ void Ellipse::toolDown(const QPointF& pos)
     cur_rect.setBottomRight(pos);
 
     cur_item = new EllipseItem(cur_rect);
+
     QPen pen = cur_item->pen();
-    pen.setColor(canvas->activeColor());
-    pen.setWidthF(ellipse_props->getWidth());
+    pen.setWidthF(ellipse_props->strokeWidth());
+    pen.setColor(ellipse_props->strokeColor());
     cur_item->setPen(pen);
+
+    QBrush brush = cur_item->brush();
+    brush.setColor(ellipse_props->fillColor());
+    cur_item->setBrush(brush);
 
     canvas->addPreviewItem(Canvas::ItemType::ellipse, cur_item);
 }

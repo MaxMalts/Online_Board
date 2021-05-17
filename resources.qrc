@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>img/transparency.png</file>
+    </qresource>
+</RCC>

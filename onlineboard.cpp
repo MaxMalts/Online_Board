@@ -217,19 +217,15 @@ void OnlineBoard::onColorButtonClicked()
     }
 
     QString new_css = ui->colorPreview->styleSheet();
+    bool ret = ChangeCssProp(new_css, "background-color",
+                             new_color.name(QColor::HexArgb));
+    Q_ASSERT(ret);
 
-    int replace_pos =
-            new_css.indexOf(":", new_css.indexOf("background-color:")) + 1;
-    int replace_size = new_css.indexOf(";", replace_pos) - replace_pos;
-    new_css.replace(replace_pos, replace_size, new_color.name(QColor::HexArgb));
-
-    replace_pos = new_css.indexOf(":", new_css.indexOf("border-color:")) + 1;
-    replace_size = new_css.indexOf(";", replace_pos) - replace_pos;
-    new_css.replace(replace_pos, replace_size,
-                    new_color.darker(150).name(QColor::HexRgb));
+    ret = ChangeCssProp(new_css, "border-color",
+                        new_color.darker(150).name(QColor::HexRgb));
+    Q_ASSERT(ret);
 
     ui->colorPreview->setStyleSheet(new_css);
-
     canvas->setActiveColor(new_color);
 }
 

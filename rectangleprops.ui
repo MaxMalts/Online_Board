@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>994</width>
-    <height>117</height>
+    <width>933</width>
+    <height>110</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,14 +20,23 @@
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>382</width>
+       <width>40</width>
        <height>20</height>
       </size>
      </property>
@@ -116,6 +125,179 @@ QSlider::sub-page {
     </widget>
    </item>
    <item>
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="strokeColorLabel">
+     <property name="text">
+      <string>stroke color:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="strokeColorBgd" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>45</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>45</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+	background: url(':/resources/img/transparency.png');
+	border: 2px solid #363d35;
+	border-radius: 7px;
+}</string>
+     </property>
+     <widget class="QPushButton" name="strokeColorButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>45</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background: black;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QLabel" name="fillColorLabel">
+     <property name="text">
+      <string>fill color:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="fillColorBgd" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>45</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>45</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+	background: url(':/resources/img/transparency.png');
+	border: 2px solid #363d35;
+	border-radius: 7px;
+}</string>
+     </property>
+     <widget class="QPushButton" name="fillColorButton">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>45</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>45</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>45</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+	background: transparent;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -125,7 +307,7 @@ QSlider::sub-page {
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>381</width>
+       <width>40</width>
        <height>20</height>
       </size>
      </property>
@@ -142,17 +324,51 @@ QSlider::sub-page {
    <slot>onWidthSliderChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>595</x>
-     <y>81</y>
+     <x>372</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>614</x>
-     <y>92</y>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>strokeColorButton</sender>
+   <signal>clicked()</signal>
+   <receiver>RectangleProps</receiver>
+   <slot>onStrokeColorClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>568</x>
+     <y>59</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>542</x>
+     <y>9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fillColorButton</sender>
+   <signal>clicked()</signal>
+   <receiver>RectangleProps</receiver>
+   <slot>onFillColorClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>746</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>761</x>
+     <y>7</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>onWidthSliderChanged(int)</slot>
+  <slot>onStrokeColorClicked()</slot>
+  <slot>onFillColorClicked()</slot>
  </slots>
 </ui>

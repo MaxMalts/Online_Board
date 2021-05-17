@@ -53,13 +53,13 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>40</height>
+        <height>50</height>
        </size>
       </property>
       <property name="styleSheet">
@@ -637,7 +637,7 @@ QToolButton::menu-indicator {
          <property name="styleSheet">
           <string notr="true">QToolButton {
 	background: qradialgradient(cx:0.5, cy:1.2, radius:1.2, fx:0.5, fy:1.2, stop:0.5 #e0e0e0, stop:1 #f7f7f7);
-	border: 1px solid #7c8f79;
+	border: 1px solid #9cb598;
 	border-radius: 20px;
 }
 

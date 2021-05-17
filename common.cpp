@@ -68,6 +68,30 @@ bool EventSignalAdapter::eventFilter(QObject*, QEvent* event) {
 }
 
 
+bool ChangeCssProp(QString& css, const QString& prop, const QString& value)
+{
+    int prop_pos = css.indexOf(prop);
+    if (prop_pos == -1) {
+        return false;
+    }
+
+    int replace_pos = css.indexOf(":", prop_pos) + 1;
+    if (replace_pos == 0) {
+        return false;
+    }
+
+    int replace_size = css.indexOf(";", replace_pos) - replace_pos;
+    if (replace_size < 0) {
+        return false;
+    }
+
+    css.replace(replace_pos, replace_size, value);
+
+    return true;
+}
+
+
+
 ///* EventsForwarder */
 
 //MouseForwarder::MouseForwarder(QWidget* to_forward, QWidget* widget)
