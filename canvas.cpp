@@ -115,14 +115,6 @@ void Canvas::wheelEvent(QWheelEvent* event)
     emit mouseScrolled(event);
 }
 
-void Canvas::resizeEvent(QResizeEvent* event)
-{
-    QPointF offset = mapToScene(0, 0);
-    QPointF center = offset + QPointF(event->oldSize().width(),
-                                      event->oldSize().height()) / 2;
-    centerOn(center);
-}
-
 void Canvas::onLayerReceived(const Serializer& argument)
 {
     AddLayerArgs layer_info;
@@ -323,8 +315,10 @@ bool Canvas::deleteFromScene(QGraphicsItem* item)
         return false;
     }
 
-    int ret = id_to_item.remove(item->data(ItemDataInd::id).toInt());
-    Q_ASSERT(ret == 1);
+    if (!item->data(ItemDataInd::is_preview).toBool()) {
+        int ret = id_to_item.remove(item->data(ItemDataInd::id).toInt());
+        Q_ASSERT(ret == 1);
+    }
 
     gscene.removeItem(item);
     delete item;

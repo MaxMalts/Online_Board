@@ -80,8 +80,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent* event) override;
     void wheelEvent(QWheelEvent* event) override;
 
-    void resizeEvent(QResizeEvent* event) override;
-
 signals:
     // pos is position on the scene
     void mouseDown(const QPointF& pos);
