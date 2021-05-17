@@ -19,8 +19,8 @@ void Hand::toolInactivated()
 
 void Hand::toolScrolled(QWheelEvent* event)
 {
-    const qreal factor = 1.1;
+    const qreal factor = 1.001;
 
     int delta = event->angleDelta().y();
-    canvas->scale(delta > 0 ? factor : 1 / factor);
+    canvas->scale(qPow(factor, delta));
 }

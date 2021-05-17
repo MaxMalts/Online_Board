@@ -19,7 +19,7 @@ Canvas::Canvas(QSize size, QWidget* parent)
     : QGraphicsView(parent),
       gscene(this)
 {
-    const QSizeF scene_size(16000, 9000);
+    const QSizeF scene_size(48000, 27000);
 
     setScene(&gscene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -273,6 +273,18 @@ void Canvas::setDragable(bool dragable)
 void Canvas::scale(qreal factor)
 {
     Q_ASSERT(factor > 0);
+
+    const qreal min_factor = 0.1;
+    const qreal max_factor = 10;
+
+    qreal cur_factor = transform().m11();
+    Q_ASSERT(cur_factor == transform().m22());
+
+    if (cur_factor * factor < min_factor) {
+        factor = min_factor / cur_factor;
+    } else if (cur_factor * factor > max_factor) {
+        factor = max_factor / cur_factor;
+    }
 
     QGraphicsView::scale(factor, factor);
 }
