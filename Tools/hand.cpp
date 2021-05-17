@@ -1,3 +1,5 @@
+#include <QtMath>
+
 #include "hand.h"
 #include "canvas.h"
 
@@ -13,4 +15,12 @@ void Hand::toolActivated()
 void Hand::toolInactivated()
 {
     canvas->setDragable(false);
+}
+
+void Hand::toolScrolled(QWheelEvent* event)
+{
+    const qreal factor = 1.1;
+
+    int delta = event->angleDelta().y();
+    canvas->scale(delta > 0 ? factor : 1 / factor);
 }

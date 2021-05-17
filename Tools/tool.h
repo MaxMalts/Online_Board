@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QColor>
 #include <QPointF>
+#include <QWheelEvent>
 #include <QGraphicsItem>
 #include <QString>
 
@@ -30,6 +31,7 @@ protected slots:
     virtual void toolDown(const QPointF& pos);
     virtual void toolDragged(const QPointF& pos);
     virtual void toolUp(const QPointF& pos);
+    virtual void toolScrolled(QWheelEvent* event);
 
 protected:
     virtual void toolActivated();

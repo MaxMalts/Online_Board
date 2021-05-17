@@ -110,6 +110,11 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
+void Canvas::wheelEvent(QWheelEvent* event)
+{
+    emit mouseScrolled(event);
+}
+
 void Canvas::resizeEvent(QResizeEvent* event)
 {
     QPointF offset = mapToScene(0, 0);
@@ -263,6 +268,13 @@ void Canvas::redrawRect(const QRectF& rect)
 void Canvas::setDragable(bool dragable)
 {
     setDragMode(dragable ? QGraphicsView::ScrollHandDrag : QGraphicsView::NoDrag);
+}
+
+void Canvas::scale(qreal factor)
+{
+    Q_ASSERT(factor > 0);
+
+    QGraphicsView::scale(factor, factor);
 }
 
 void Canvas::undo()

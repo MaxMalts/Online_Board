@@ -23,6 +23,8 @@ void Tool::activate()
             this, SLOT(toolDragged(const QPointF&)));
     connect(canvas, SIGNAL(mouseUp(const QPointF&)),
             this, SLOT(toolUp(const QPointF&)));
+    connect(canvas, SIGNAL(mouseScrolled(QWheelEvent*)),
+            this, SLOT(toolScrolled(QWheelEvent*)));
 
     if (props_widget != nullptr) {
         props_container->addWidget(props_widget);
@@ -40,6 +42,8 @@ void Tool::inactivate()
                this, SLOT(toolDragged(const QPointF&)));
     disconnect(canvas, SIGNAL(mouseUp(const QPointF&)),
                this, SLOT(toolUp(const QPointF&)));
+    disconnect(canvas, SIGNAL(mouseScrolled(QWheelEvent*)),
+               this, SLOT(toolScrolled(QWheelEvent*)));
 
     if (props_widget != nullptr) {
         props_container->removeWidget(props_widget);
@@ -58,6 +62,7 @@ void Tool::toolActivated() {}
 void Tool::toolDown(const QPointF&) {}
 void Tool::toolDragged(const QPointF&) {}
 void Tool::toolUp(const QPointF&) {}
+void Tool::toolScrolled(QWheelEvent*) {}
 void Tool::toolInactivated() {}
 
 void Tool::setPropsWidget(QWidget* props_widget)

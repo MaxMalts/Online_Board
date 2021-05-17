@@ -16,6 +16,7 @@ public:
 protected:
     void toolActivated() override;
     void toolInactivated() override;
+    void toolScrolled(QWheelEvent* event) override;
 };
 
 #endif // HAND_H

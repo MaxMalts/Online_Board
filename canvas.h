@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QLayout>
 #include <QResizeEvent>
+#include <QWheelEvent>
+#include <QMouseEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
@@ -67,6 +69,8 @@ public:
 
     void setDragable(bool dragable);
 
+    void scale(qreal factor);
+
     void undo();
 
 protected:
@@ -74,6 +78,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
     void resizeEvent(QResizeEvent* event) override;
 
@@ -82,6 +87,7 @@ signals:
     void mouseDown(const QPointF& pos);
     void mouseDragged(const QPointF& pos);
     void mouseUp(const QPointF& pos);
+    void mouseScrolled(QWheelEvent* event);
 
 private slots:
     void onLayerReceived(const Serializer& argument);
