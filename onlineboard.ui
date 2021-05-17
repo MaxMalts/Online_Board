@@ -674,7 +674,7 @@ QToolButton::menu-indicator {
          <property name="checked">
           <bool>false</bool>
          </property>
-         <widget class="QWidget" name="colorPreview" native="true">
+         <widget class="QWidget" name="colorPreviewBgd" native="true">
           <property name="geometry">
            <rect>
             <x>5</x>
@@ -685,12 +685,27 @@ QToolButton::menu-indicator {
           </property>
           <property name="styleSheet">
            <string notr="true">QWidget {
-	background-color: black;
+	background: url(':/resources/img/transparency.png');
 	border: 2px solid;
 	border-color: black;
 	border-radius: 25px 18px;
 }</string>
           </property>
+          <widget class="QWidget" name="colorPreview" native="true">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>50</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget {
+	background: black;
+}</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>
