@@ -22,7 +22,8 @@ Canvas::Canvas(QSize size, QWidget* parent)
     setScene(&gscene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    resize(size);
+    setSceneRect(-1000, -1000, 2000, 2000);
+    QGraphicsView::resize(size);
 
     connect(ServerApi::getInstance(), SIGNAL(cAddLayer(const Serializer&)),
             this, SLOT(onLayerReceived(const Serializer&)));
@@ -37,29 +38,26 @@ void Canvas::setupTools(QLayout* props_container)
     Q_ASSERT(props_container != nullptr);
 
     tools = BiMap<ToolType, Tool*> {
+        { ToolType::undefined, nullptr },
+        { ToolType::hand, new Hand(this, props_container, this) },
         { ToolType::pencil, new Pencil(this, props_container, this) },
         { ToolType::line, new Line(this, props_container, this) },
         { ToolType::rectangle, new Rectangle(this, props_container, this) },
         { ToolType::ellipse, new Ellipse(this, props_container, this) }
     };
-
-    active_tool = tools.atL(ToolType::pencil);
-    active_tool->activate();
-}
-
-void Canvas::resize(QSize size)
-{
-    setSceneRect(-size.width() / 2, -size.height() / 2, size.width(), size.height());
-    QGraphicsView::resize(size);
 }
 
 void Canvas::setActiveTool(Canvas::ToolType tool)
 {
     Tool* new_tool = tools.atL(tool);
     if (active_tool != new_tool) {
-        active_tool->inactivate();
+        if (active_tool != nullptr)
+            active_tool->inactivate();
+
         active_tool = new_tool;
-        active_tool->activate();
+
+        if (active_tool != nullptr)
+            active_tool->activate();
     }
 }
 
@@ -76,21 +74,45 @@ QColor Canvas::activeColor() const
 void Canvas::mousePressEvent(QMouseEvent* event)
 {
     emit mouseDown(mapToScene(event->pos()));
+
+    if (dragMode() == QGraphicsView::ScrollHandDrag) {
+        QGraphicsView::mousePressEvent(event);
+    }
 }
 
 void Canvas::mouseDoubleClickEvent(QMouseEvent* event)
 {
     mousePressEvent(event);
+
+    if (dragMode() == QGraphicsView::ScrollHandDrag) {
+        QGraphicsView::mouseDoubleClickEvent(event);
+    }
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent* event)
 {
     emit mouseDragged(mapToScene(event->pos()));
+
+    if (dragMode() == QGraphicsView::ScrollHandDrag) {
+        QGraphicsView::mouseMoveEvent(event);
+    }
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent* event)
 {
     emit mouseUp(mapToScene(event->pos()));
+
+    if (dragMode() == QGraphicsView::ScrollHandDrag) {
+        QGraphicsView::mouseReleaseEvent(event);
+    }
+}
+
+void Canvas::resizeEvent(QResizeEvent* event)
+{
+    QPointF offset = mapToScene(0, 0);
+    QPointF center = offset + QPointF(event->oldSize().width(),
+                                      event->oldSize().height()) / 2;
+    centerOn(center);
 }
 
 void Canvas::onLayerReceived(const Serializer& argument)
@@ -233,6 +255,11 @@ bool Canvas::deletePreviewItem(QGraphicsItem* item)
 void Canvas::redrawRect(const QRectF& rect)
 {
     gscene.invalidate(rect);
+}
+
+void Canvas::setDragable(bool dragable)
+{
+    setDragMode(dragable ? QGraphicsView::ScrollHandDrag : QGraphicsView::NoDrag);
 }
 
 void Canvas::undo()

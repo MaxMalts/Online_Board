@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QLayout>
+#include <QResizeEvent>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsItem>
@@ -17,6 +18,7 @@
 #include <QDebug>
 
 #include "Tools/tool.h"
+#include "Tools/hand.h"
 #include "Tools/pencil.h"
 #include "Tools/line.h"
 #include "Tools/rectangle.h"
@@ -32,6 +34,7 @@ class Canvas : public QGraphicsView
 public:
     enum class ToolType {
         undefined,
+        hand,
         pencil,
         line,
         rectangle,
@@ -49,8 +52,6 @@ public:
     Canvas(QSize size = QSize(500, 500), QWidget* parent = nullptr);
     void setupTools(QLayout* props_container);
 
-    void resize(QSize size);
-
     void setActiveTool(ToolType tool);
     void setActiveColor(const QColor& color);
     QColor activeColor() const;
@@ -64,6 +65,8 @@ public:
 
     void redrawRect(const QRectF& rect);
 
+    void setDragable(bool dragable);
+
     void undo();
 
 protected:
@@ -71,6 +74,8 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+
+    void resizeEvent(QResizeEvent* event) override;
 
 signals:
     // pos is position on the scene

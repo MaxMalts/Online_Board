@@ -21,6 +21,7 @@ SOURCES += \
     ServerApi/confirmaddlayerargs.cpp \
     ServerApi/serverapi.cpp \
     Tools/ellipse.cpp \
+    Tools/hand.cpp \
     Tools/line.cpp \
     Tools/pencil.cpp \
     Tools/rectangle.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     ServerApi/deletelayerargs.h \
     ServerApi/serverapi.h \
     Tools/ellipse.h \
+    Tools/hand.h \
     Tools/line.h \
     Tools/pencil.h \
     Tools/rectangle.h \
