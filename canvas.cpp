@@ -19,11 +19,14 @@ Canvas::Canvas(QSize size, QWidget* parent)
     : QGraphicsView(parent),
       gscene(this)
 {
+    const QSizeF scene_size(16000, 9000);
+
     setScene(&gscene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setSceneRect(-1000, -1000, 2000, 2000);
-    QGraphicsView::resize(size);
+    setSceneRect(-scene_size.width() / 2, -scene_size.height() / 2,
+                 scene_size.width(), scene_size.height());
+    resize(size);
 
     connect(ServerApi::getInstance(), SIGNAL(cAddLayer(const Serializer&)),
             this, SLOT(onLayerReceived(const Serializer&)));

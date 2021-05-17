@@ -57,6 +57,7 @@ OnlineBoard::OnlineBoard(QWidget* parent)
 void OnlineBoard::InitTools()
 {
     tool_type_to_action = BiMap<Canvas::ToolType, QAction*> {
+        { Canvas::ToolType::hand, ui->actionHand },
         { Canvas::ToolType::pencil, ui->actionPencil },
         { Canvas::ToolType::line, ui->actionLine },
         { Canvas::ToolType::rectangle, ui->actionRectangle },
@@ -65,6 +66,7 @@ void OnlineBoard::InitTools()
 
     tools_actions = new QActionGroup(ui->menuTools);
 
+    tools_actions->addAction(ui->actionHand);
     tools_actions->addAction(ui->actionPencil);
     tools_actions->addAction(ui->actionLine);
     tools_actions->addAction(ui->actionRectangle);
@@ -72,6 +74,7 @@ void OnlineBoard::InitTools()
     connect(tools_actions, SIGNAL(triggered(QAction*)),
             this, SLOT(onToolsActionTriggered(QAction*)));
 
+    ui->buttonHand->addAction(ui->actionHand);
     ui->buttonPencil->addAction(ui->actionPencil);
     ui->buttonLine->addAction(ui->actionLine);
     ui->buttonRectangle->addAction(ui->actionRectangle);
