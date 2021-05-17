@@ -24,7 +24,7 @@ public:
         : QGraphicsEllipseItem(std::forward<Args>(args)...)
     {
         setPen(QPen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap));
-        setBrush(QBrush(Qt::transparent));
+        setBrush(QBrush(Qt::SolidPattern));
     }
 
 #ifdef JSON_SERIALIZER

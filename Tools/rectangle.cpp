@@ -37,8 +37,15 @@ bool RectangleItem::deserialize(const QJsonObject& json)
 
     QPen new_pen(QBrush(), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
-    // color
-    cur_value = json.value("color");
+    // stroke-width
+    cur_value = json.value("stroke-width");
+    if (!cur_value.isDouble()) {
+        return false;
+    }
+    new_pen.setWidthF(cur_value.toDouble());
+
+    // stroke-color
+    cur_value = json.value("stroke-color");
     if (!cur_value.isArray()) {
         return false;
     }
@@ -46,21 +53,33 @@ bool RectangleItem::deserialize(const QJsonObject& json)
     QJsonValue g = cur_value.toArray().at(1);
     QJsonValue b = cur_value.toArray().at(2);
     QJsonValue a = cur_value.toArray().at(3);
-    if (!a.isDouble() || !r.isDouble() ||
-        !g.isDouble() || !b.isDouble()) {
+    if (!r.isDouble() || !g.isDouble() ||
+        !b.isDouble() || !a.isDouble()) {
         return false;
     }
     new_pen.setColor(QColor(r.toInt(), g.toInt(),
                             b.toInt(), a.toInt()));
 
-    // width
-    cur_value = json.value("width");
-    if (!cur_value.isDouble()) {
+    QBrush new_brush(Qt::SolidPattern);
+
+    // fill-color
+    cur_value = json.value("fill-color");
+    if (!cur_value.isArray()) {
         return false;
     }
-    new_pen.setWidthF(cur_value.toDouble());
+    r = cur_value.toArray().at(0);
+    g = cur_value.toArray().at(1);
+    b = cur_value.toArray().at(2);
+    a = cur_value.toArray().at(3);
+    if (!r.isDouble() || !g.isDouble() ||
+        !b.isDouble() || !a.isDouble()) {
+        return false;
+    }
+    new_brush.setColor(QColor(r.toInt(), g.toInt(),
+                              b.toInt(), a.toInt()));
 
     setPen(new_pen);
+    setBrush(new_brush);
     setRect(0, 0, width.toDouble(), height.toDouble());
 
     return true;
@@ -77,15 +96,24 @@ bool RectangleItem::serialize(QJsonObject& json) const
 
     json.insert("size", QJsonArray{ cur_rect.width(), cur_rect.height() });
 
-    QColor color = pen().color();
-    json.insert("color", QJsonArray{
-            color.red(),
-            color.green(),
-            color.blue(),
-            color.alpha()
+    json.insert("stroke-width", pen().widthF());
+
+    QColor stroke_color = pen().color();
+    json.insert("stroke-color", QJsonArray{
+            stroke_color.red(),
+            stroke_color.green(),
+            stroke_color.blue(),
+            stroke_color.alpha()
         });
 
-    json.insert("width", pen().widthF());
+    Q_ASSERT(brush().style() == Qt::SolidPattern);
+    QColor fill_color = brush().color();
+    json.insert("fill-color", QJsonArray{
+            fill_color.red(),
+            fill_color.green(),
+            fill_color.blue(),
+            fill_color.alpha()
+        });
 
     return true;
 }
