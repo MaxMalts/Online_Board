@@ -55,11 +55,11 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
 
         read_manager.addSocket(socket);
         connect(&read_manager,
-                SIGNAL(packageReceived(QTcpSocket*, const QJsonObject,
-                                       const QByteArray)),
+                SIGNAL(packageReceived(QTcpSocket*, const QJsonObject&,
+                                       const QByteArray&)),
                 this,
-                SLOT(onPackageReceived(QTcpSocket*, const QJsonObject,
-                                       const QByteArray)));
+                SLOT(onPackageReceived(QTcpSocket*, const QJsonObject&,
+                                       const QByteArray&)));
 
         connect(this, SIGNAL(cInitClient(const Serializer&)),
                 this, SLOT(onInitClient(const Serializer&)));
