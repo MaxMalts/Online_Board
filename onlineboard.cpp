@@ -10,6 +10,7 @@
 #include <QSizePolicy>
 #include <QColor>
 #include <QColorDialog>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "onlineboard.h"
@@ -238,4 +239,18 @@ void OnlineBoard::onColorButtonClicked()
 void OnlineBoard::onUndoTriggered()
 {
     canvas->undo();
+}
+
+void OnlineBoard::onClearTriggered()
+{
+    QMessageBox confirm_dialog;
+    confirm_dialog.setText("Clear board?");
+    confirm_dialog.setInformativeText("This action can't be undone!");
+    confirm_dialog.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    confirm_dialog.setDefaultButton(QMessageBox::No);
+    confirm_dialog.setFixedWidth(1000);
+
+    if (confirm_dialog.exec() == QMessageBox::Yes) {
+        canvas->clear();
+    }
 }

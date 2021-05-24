@@ -72,6 +72,7 @@ public:
     void scale(qreal factor);
 
     void undo();
+    void clear();
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -91,6 +92,7 @@ private slots:
     void onLayerReceived(const Serializer& argument);
     void onLayerConfirmed(const Serializer& argument);
     void onDeleteLayer(const Serializer& argument);
+    void onClearBoard();
 
 private:
     enum ItemDataInd {

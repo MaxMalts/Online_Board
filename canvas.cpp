@@ -34,6 +34,8 @@ Canvas::Canvas(QSize size, QWidget* parent)
             this, SLOT(onLayerConfirmed(const Serializer&)));
     connect(ServerApi::getInstance(), SIGNAL(cDeleteLayer(const Serializer&)),
             this, SLOT(onDeleteLayer(const Serializer&)));
+    connect(ServerApi::getInstance(), SIGNAL(cClearBoard(const Serializer&)),
+            this, SLOT(onClearBoard()));
 }
 
 void Canvas::setupTools(QLayout* props_container)
@@ -183,6 +185,11 @@ void Canvas::onDeleteLayer(const Serializer& argument)
     Q_ASSERT(ret);
 }
 
+void Canvas::onClearBoard()
+{
+    gscene.clear();
+}
+
 //void Canvas::addItem(ItemType type, QGraphicsItem* item)
 //{
 //    Q_ASSERT(item != nullptr);
@@ -284,6 +291,12 @@ void Canvas::scale(qreal factor)
 void Canvas::undo()
 {
     ServerApi::sUndo();
+}
+
+void Canvas::clear()
+{
+    gscene.clear();
+    ServerApi::sClearBoard();
 }
 
 void Canvas::sendItem(QGraphicsItem* item)

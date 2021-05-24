@@ -109,6 +109,11 @@ void ServerApi::sUndo()
     instance->sendMethod("s_undo");
 }
 
+void ServerApi::sClearBoard()
+{
+    instance->sendMethod("s_clear_board");
+}
+
 QTcpSocket::SocketError ServerApi::lastError()
 {
     return instance->socket->error();

@@ -45,6 +45,7 @@ private slots:
 
     void onColorButtonClicked();
     void onUndoTriggered();
+    void onClearTriggered();
 
 private:
     void InitTools();

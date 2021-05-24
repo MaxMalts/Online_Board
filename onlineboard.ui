@@ -879,6 +879,7 @@ QMenuBar::item:pressed  {
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionClear"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="cursor">
@@ -1011,6 +1012,11 @@ QMenuBar::item:pressed  {
    </property>
    <property name="text">
     <string>Hand</string>
+   </property>
+  </action>
+  <action name="actionClear">
+   <property name="text">
+    <string>Clear</string>
    </property>
   </action>
  </widget>
@@ -1167,8 +1173,8 @@ QMenuBar::item:pressed  {
    <slot>onColorButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>200</y>
+     <x>85</x>
+     <y>191</y>
     </hint>
     <hint type="destinationlabel">
      <x>251</x>
@@ -1224,6 +1230,22 @@ QMenuBar::item:pressed  {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionClear</sender>
+   <signal>triggered()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onClearTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onToolButtonTriggered(QAction*)</slot>
@@ -1231,6 +1253,7 @@ QMenuBar::item:pressed  {
   <slot>onToolActionTriggered()</slot>
   <slot>onColorButtonClicked()</slot>
   <slot>onUndoTriggered()</slot>
+  <slot>onClearTriggered()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

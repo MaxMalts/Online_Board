@@ -46,6 +46,7 @@ public:
     static void sAddLayer(const Serializer& argument);
     static void sDeleteLayer(const Serializer& argument);
     static void sUndo();
+    static void sClearBoard();
 
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
@@ -58,6 +59,7 @@ signals:
     void cFinishBoardInit(const Serializer& argument);
     void cConfirmAddLayer(const Serializer& argument);
     void cDeleteLayer(const Serializer& argument);
+    void cClearBoard(const Serializer& argument);
 
     void connected();
     void disconnected();
@@ -90,7 +92,8 @@ private:
         { "c_add_layer", &ServerApi::cAddLayer },
         { "c_finish_board_init", &ServerApi::cFinishBoardInit },
         { "c_confirm_add_layer", &ServerApi::cConfirmAddLayer },
-        { "c_delete_layer", &ServerApi::cDeleteLayer }
+        { "c_delete_layer", &ServerApi::cDeleteLayer },
+        { "c_clear_board", &ServerApi::cClearBoard },
     };
 };
 
