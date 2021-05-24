@@ -880,6 +880,7 @@ QMenuBar::item:pressed  {
      <string>File</string>
     </property>
     <addaction name="actionClear"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="cursor">
@@ -937,9 +938,16 @@ QMenuBar::item:pressed  {
     <addaction name="actionhelp"/>
     <addaction name="actionabout"/>
    </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
+    <addaction name="actionFullscreen"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuTools"/>
+   <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -1017,6 +1025,25 @@ QMenuBar::item:pressed  {
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
    </property>
   </action>
  </widget>
@@ -1246,6 +1273,38 @@ QMenuBar::item:pressed  {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFullscreen</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>OnlineBoard</receiver>
+   <slot>onFullscreenTriggered(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onToolButtonTriggered(QAction*)</slot>
@@ -1254,6 +1313,7 @@ QMenuBar::item:pressed  {
   <slot>onColorButtonClicked()</slot>
   <slot>onUndoTriggered()</slot>
   <slot>onClearTriggered()</slot>
+  <slot>onFullscreenTriggered(bool)</slot>
  </slots>
  <buttongroups>
   <buttongroup name="toolsGroup"/>

@@ -22,9 +22,9 @@
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {
-    setEnabled(false);  // waiting for board initialization
-
+    setWindowState(Qt::WindowFullScreen);
     ui->setupUi(this);
+    centralWidget()->setEnabled(false);  // waiting for board initialization
 
     canvas = new Canvas(QSize(0, 0), centralWidget());
     canvas->setupTools(ui->toolsPropsContainer->layout());
@@ -103,12 +103,21 @@ void OnlineBoard::resizeEvent(QResizeEvent*)
     canvas->resize(canvas_size);
 }
 
+void OnlineBoard::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape &&
+        ui->actionFullscreen->isChecked()) {
+
+        ui->actionFullscreen->trigger();
+    }
+}
+
 void OnlineBoard::onServerDisconnected()
 {
     statusBar()->setStyleSheet("color: red;");
     statusBar()->showMessage("Disconnected from server: " +
                              ServerApi::lastErrorStr() + " Reconnecting...");
-    setEnabled(false);
+    centralWidget()->setEnabled(false);
 
     qDebug() << "Disconnected from server: " << ServerApi::lastError();
 }
@@ -123,7 +132,7 @@ void OnlineBoard::onServerConnected()
 void OnlineBoard::onFinishBoardInit()
 {
     qDebug() << "Board initialized.";
-    setEnabled(true);
+    centralWidget()->setEnabled(true);
 }
 
 OnlineBoard::~OnlineBoard()
@@ -252,5 +261,14 @@ void OnlineBoard::onClearTriggered()
 
     if (confirm_dialog.exec() == QMessageBox::Yes) {
         canvas->clear();
+    }
+}
+
+void OnlineBoard::onFullscreenTriggered(bool checked)
+{
+    if (checked) {
+        setWindowState(windowState().setFlag(Qt::WindowFullScreen, true));
+    } else {
+        setWindowState(windowState().setFlag(Qt::WindowFullScreen, false));
     }
 }

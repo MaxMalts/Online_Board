@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QShowEvent>
 #include <QResizeEvent>
+#include <QKeyEvent>
 #include <QAction>
 #include <QActionGroup>
 #include <QToolButton>
@@ -31,6 +32,7 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent*) override;
+    void keyPressEvent(QKeyEvent* event);
 
 private slots:
     void onServerDisconnected();
@@ -46,6 +48,7 @@ private slots:
     void onColorButtonClicked();
     void onUndoTriggered();
     void onClearTriggered();
+    void onFullscreenTriggered(bool checked);
 
 private:
     void InitTools();
