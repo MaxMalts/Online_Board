@@ -8,6 +8,7 @@
 #include <QString>
 
 #include "serializers.h"
+#include "packagereadmanager.h"
 
 
 class ServerApi : public QObject
@@ -60,7 +61,8 @@ signals:
     void disconnected();
 
 private slots:
-    void onReadyRead();
+    void onPackageReceived(QTcpSocket* socket, const QJsonObject& header,
+                           const QByteArray& argument);
     void onInitClient(const Serializer& argument);
     void onDisconnected();
     void onReconnectTimer();
@@ -76,6 +78,7 @@ private:
     static ServerApi* instance;
 
     QTcpSocket* socket = nullptr;
+    PackageReadManager read_manager;
     ClientProps props;
 
     QTimer reconnectTimer;

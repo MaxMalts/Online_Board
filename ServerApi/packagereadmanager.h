@@ -2,6 +2,7 @@
 #define COMMUNICATIONMANAGER_H
 
 #include <QObject>
+#include <QJsonObject>
 #include <QTcpSocket>
 #include <QMap>
 #include <stdint.h>
@@ -16,7 +17,7 @@ public:
     void removeSocket(QTcpSocket* socket);
 
 signals:
-    void packageReceived(QTcpSocket* socket, const QByteArray& header,
+    void packageReceived(QTcpSocket* socket, const QJsonObject& header,
                          const QByteArray& argument);
 
 private slots:
@@ -38,7 +39,7 @@ private:
         ReadStatus status = nothing_read;
 
         uint64_t header_size = 0;
-        QByteArray header;
+        QJsonObject header;
 
         int arg_size = 0;
         QByteArray argument;

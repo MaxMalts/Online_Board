@@ -49,9 +49,17 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
 {
     if (instance == nullptr) {
         Q_ASSERT(socket == nullptr);
+
         socket = new QTcpSocket(this);
-        connect(socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+
+        read_manager.addSocket(socket);
+        connect(&read_manager,
+                SIGNAL(packageReceived(QTcpSocket*, const QJsonObject,
+                                       const QByteArray)),
+                this,
+                SLOT(onPackageReceived(QTcpSocket*, const QJsonObject,
+                                       const QByteArray)));
 
         connect(this, SIGNAL(cInitClient(const Serializer&)),
                 this, SLOT(onInitClient(const Serializer&)));
@@ -117,35 +125,22 @@ void ServerApi::onInitClient(const Serializer& argument)
     Q_ASSERT(props.client_id > 0);
 }
 
-void ServerApi::onReadyRead()
+void ServerApi::onPackageReceived(QTcpSocket* socket,
+                                  const QJsonObject& header,
+                                  const QByteArray& argument)
 {
-    uint64_t header_size = 0;
-    while (socket->read(reinterpret_cast<char*>(&header_size), sizeof(header_size)) ==
-           sizeof(header_size)) {
-        Q_ASSERT(header_size > 0);
-
-        QByteArray data = socket->read(header_size);
-        Q_ASSERT(static_cast<uint64_t>(data.size()) == header_size);
-        qDebug() << "Data received from server:";
-        qDebug().noquote() << QString::fromUtf8(data);
-
-        QJsonObject header = QJsonDocument::fromJson(data).object();
-        int arg_size = header["argument_size"].toInt();
-        Q_ASSERT(arg_size > 0);
-
-        data = socket->read(arg_size);
-        Q_ASSERT(data.size() == arg_size);
-        qDebug().noquote().nospace() << QString::fromUtf8(data);
+    Q_ASSERT(socket != nullptr);
+    Q_ASSERT(!header.isEmpty());
+    Q_ASSERT(argument.size() > 0);
 
 #ifdef JSON_SERIALIZER
-        JsonSerializer serial_arg(data);
+    JsonSerializer serial_arg(argument);
 #else
-        static_assert(false, "No serializer defined.");
+    static_assert(false, "No serializer defined.");
 #endif
 
-        Q_ASSERT(str_to_signal.contains(header["method"].toString()));
-        emit (this->*str_to_signal[header["method"].toString()])(serial_arg);
-    }
+    Q_ASSERT(str_to_signal.contains(header.value("method").toString()));
+    emit (this->*str_to_signal[header.value("method").toString()])(serial_arg);
 }
 
 void ServerApi::onDisconnected()

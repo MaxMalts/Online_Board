@@ -70,14 +70,13 @@ void PackageReadManager::handleHeaderSizeRead(ReadState& state)
     if (state.socket->bytesAvailable() >=
         static_cast<qint64>(state.header_size)) {
 
-        state.header = state.socket->read(state.header_size);
-        Q_ASSERT(static_cast<uint64_t>(state.header.size()) ==
-                 state.header_size);
+        QByteArray header_raw = state.socket->read(state.header_size);
+        Q_ASSERT(static_cast<uint64_t>(header_raw.size()) == state.header_size);
         qDebug() << "Data received from server:";
-        qDebug().noquote() << QString::fromUtf8(state.header);
+        qDebug().noquote() << QString::fromUtf8(header_raw);
 
-        QJsonObject header = QJsonDocument::fromJson(state.header).object();
-        state.arg_size = header.value("argument_size").toInt();
+        state.header = QJsonDocument::fromJson(header_raw).object();
+        state.arg_size = state.header.value("argument_size").toInt();
         Q_ASSERT(state.arg_size > 0);
 
         state.status = header_read;
