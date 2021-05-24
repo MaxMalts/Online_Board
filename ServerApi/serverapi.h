@@ -50,6 +50,8 @@ public:
     static QTcpSocket::SocketError lastError();
     static QString lastErrorStr();
 
+    ~ServerApi();
+
 signals:
     void cInitClient(const Serializer& argument);
     void cAddLayer(const Serializer& argument);

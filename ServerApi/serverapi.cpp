@@ -119,6 +119,12 @@ QString ServerApi::lastErrorStr()
     return instance->socket->errorString();
 }
 
+ServerApi::~ServerApi()
+{
+    read_manager.removeSocket(socket);
+    socket->close();
+}
+
 void ServerApi::onInitClient(const Serializer& argument)
 {
     argument.deserialize(props);
