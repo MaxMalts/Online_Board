@@ -16,13 +16,15 @@ class ServerApi : public QObject
     Q_OBJECT
 
 private:
-    static struct ServerConfig
+    struct ServerConfig
     {
-        const QString ip_address = "localhost";
-        const quint16 port = 5555;
-        const int connect_timeout = 10000;
-        const int reconnect_interval = 1000;
-    } config;
+        void initFromConfigFile();
+
+        QString server_ip = "localhost";
+        quint16 server_port = 5555;
+        int connect_timeout_ms = 10000;
+        int reconnect_interval_ms = 1000;
+    };
 
     struct ClientProps : public Serializable {
     public:
@@ -72,6 +74,8 @@ private slots:
     void onReconnectTimer();
 
 private:
+    void readConfigFile();
+
 #ifdef JSON_SERIALIZER
     bool sendMethod(const QString& method,
                     const Serializer& argument = JsonSerializer(QJsonObject()));
@@ -81,6 +85,7 @@ private:
 
     static ServerApi* instance;
 
+    ServerConfig config;
     QTcpSocket* socket = nullptr;
     PackageReadManager read_manager;
     ClientProps props;

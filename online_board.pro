@@ -66,7 +66,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DEFINES += JSON_SERIALIZER
 
 DISTFILES += \
-    Data/img/tools/line.png
+    Data/img/tools/line.png \
+    server_config.json
 
 RESOURCES += \
     resources.qrc

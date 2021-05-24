@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QEventLoop>
 #include <QString>
+#include <QFile>
 #include <QDebug>
 #include <stdint.h>
 
@@ -40,15 +41,55 @@ bool ServerApi::ClientProps::deserialize(const QJsonObject& json)
 }
 
 
+/* ServerConfig */
+
+void ServerApi::ServerConfig::initFromConfigFile()
+{
+    const QString config_file_name = "server_config.json";
+
+    QFile config_file(config_file_name);
+    if (!config_file.open(QIODevice::ReadOnly)) {
+        qDebug() << "Can not open" << config_file_name << "file:" <<
+                    config_file.errorString();
+        return;
+    }
+
+    QJsonObject config_json = QJsonDocument::fromJson(config_file.readAll()).object();
+
+    config_file.close();
+
+    QJsonValue cur_value = config_json.value("server_ip");
+    if (cur_value.isString()) {
+        server_ip = cur_value.toString();
+    }
+
+    cur_value = config_json.value("server_port");
+    if (cur_value.isDouble()) {
+        server_port = cur_value.toInt();
+    }
+
+    cur_value = config_json.value("connect_timeout_ms");
+    if (cur_value.isDouble()) {
+        connect_timeout_ms = cur_value.toInt();
+    }
+
+    cur_value = config_json.value("reconnect_interval_ms");
+    if (cur_value.isDouble()) {
+        reconnect_interval_ms = cur_value.toInt();
+    }
+}
+
+
 /* ServerApi */
 
-ServerApi::ServerConfig ServerApi::config;
 ServerApi* ServerApi::instance = nullptr;
 
 ServerApi::ServerApi(QObject* parent) : QObject(parent)
 {
     if (instance == nullptr) {
         Q_ASSERT(socket == nullptr);
+
+        config.initFromConfigFile();
 
         socket = new QTcpSocket(this);
         connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
@@ -64,7 +105,7 @@ ServerApi::ServerApi(QObject* parent) : QObject(parent)
         connect(this, SIGNAL(cInitClient(const Serializer&)),
                 this, SLOT(onInitClient(const Serializer&)));
 
-        reconnectTimer.setInterval(config.reconnect_interval);
+        reconnectTimer.setInterval(config.reconnect_interval_ms);
         connect(&reconnectTimer, SIGNAL(timeout()), this, SLOT(onReconnectTimer()));
 
         instance = this;
@@ -78,9 +119,12 @@ ServerApi* ServerApi::getInstance()
 
 bool ServerApi::connectToServer()
 {
-    instance->socket->connectToHost(config.ip_address, config.port);
-    if (!instance->socket->waitForConnected(config.connect_timeout) ||
-        !waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout)) {
+    ServerConfig& config = instance->config;
+    QTcpSocket* socket = instance->socket;
+
+    socket->connectToHost(config.server_ip, config.server_port);
+    if (!socket->waitForConnected(config.connect_timeout_ms) ||
+        !waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout_ms)) {
 
         qDebug() << "Connection failed:" << lastError();
 
