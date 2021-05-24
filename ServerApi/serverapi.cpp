@@ -185,9 +185,9 @@ bool ServerApi::sendMethod(const QString& method, const Serializer& argument)
     uint64_t header_size = header_data.size();
 
     QByteArray package;
-    package.reserve(sizeof(header_size) + header_size + 1 + arg_data_size);
+    package.reserve(sizeof(header_size) + header_size + arg_data_size);
     package += QByteArray(reinterpret_cast<char*>(&header_size), sizeof(header_size)) +
-            '\n' + header_data + arg_data;
+                          header_data + arg_data;
 
     if (socket->write(package) == package.size()) {
         qDebug() << "Data sent to server:";
