@@ -1,6 +1,5 @@
 #include "serverapi.h"
 
-#include <stdint.h>
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -9,6 +8,7 @@
 #include <QEventLoop>
 #include <QString>
 #include <QDebug>
+#include <stdint.h>
 
 #include "common.h"
 #include "serializers.h"
@@ -116,7 +116,6 @@ void ServerApi::onInitClient(const Serializer& argument)
     argument.deserialize(props);
     Q_ASSERT(props.client_id > 0);
 }
-
 
 void ServerApi::onReadyRead()
 {

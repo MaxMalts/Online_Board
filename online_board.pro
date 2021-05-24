@@ -19,6 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     ServerApi/addlayerargs.cpp \
     ServerApi/confirmaddlayerargs.cpp \
+    ServerApi/packagereadmanager.cpp \
     ServerApi/serverapi.cpp \
     Tools/ellipse.cpp \
     Tools/hand.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     ServerApi/addlayerargs.h \
     ServerApi/confirmaddlayerargs.h \
     ServerApi/deletelayerargs.h \
+    ServerApi/packagereadmanager.h \
     ServerApi/serverapi.h \
     Tools/ellipse.h \
     Tools/hand.h \
