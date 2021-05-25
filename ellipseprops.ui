@@ -51,7 +51,9 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QLabel {
+	font-size: 11pt;
+}</string>
      </property>
      <property name="text">
       <string>stroke width:</string>
@@ -142,6 +144,11 @@ QSlider::sub-page {
    </item>
    <item>
     <widget class="QLabel" name="strokeColorLabel">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	font-size: 11pt;
+}</string>
+     </property>
      <property name="text">
       <string>stroke color:</string>
      </property>
@@ -230,6 +237,11 @@ QSlider::sub-page {
    </item>
    <item>
     <widget class="QLabel" name="fillColorLabel">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	font-size: 11pt;
+}</string>
+     </property>
      <property name="text">
       <string>fill color:</string>
      </property>

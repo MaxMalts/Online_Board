@@ -64,7 +64,7 @@
       </property>
       <property name="styleSheet">
        <string notr="true">QWidget#toolsPropsContainer {
-	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #4e634b, stop:0.1 #5d7859);
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #5a7356, stop:0.1 #6e8f6a);
 	border-top: 1px solid #3e4f3d;
 }</string>
       </property>
@@ -845,7 +845,7 @@ QToolButton::menu-indicator {
    </property>
    <property name="styleSheet">
     <string notr="true">QMenuBar {
-	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #84a681, stop:1 #698c65);
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #8db389, stop:1 #73996e);
 }
 
 QMenuBar::item {
