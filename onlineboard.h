@@ -62,6 +62,6 @@ private:
     QActionGroup* tools_actions;
     BiMap<Canvas::ToolType, QAction*> tool_type_to_action;
 
-    Canvas* canvas;
+    Canvas* canvas = nullptr;
 };
 #endif // MAINWINDOW_H

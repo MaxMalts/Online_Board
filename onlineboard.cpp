@@ -22,7 +22,6 @@
 OnlineBoard::OnlineBoard(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::OnlineBoard)
 {
-    setWindowState(Qt::WindowFullScreen);
     ui->setupUi(this);
     centralWidget()->setEnabled(false);  // waiting for board initialization
 
@@ -53,6 +52,8 @@ OnlineBoard::OnlineBoard(QWidget* parent)
         statusBar()->setStyleSheet("");
         statusBar()->showMessage("Connected to server.", 3000);
     }
+
+    setWindowState(windowState().setFlag(Qt::WindowFullScreen, true));
 }
 
 void OnlineBoard::InitTools()
@@ -100,7 +101,8 @@ void OnlineBoard::resizeEvent(QResizeEvent*)
                       size().height() - statusBar()->height() -
                       menuBar()->height() + 1);
 
-    canvas->resize(canvas_size);
+    if (canvas != nullptr)
+        canvas->resize(canvas_size);
 }
 
 void OnlineBoard::keyPressEvent(QKeyEvent* event)

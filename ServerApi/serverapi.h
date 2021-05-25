@@ -22,7 +22,7 @@ private:
 
         QString server_ip = "localhost";
         quint16 server_port = 5555;
-        int connect_timeout_ms = 10000;
+        int connect_timeout_ms = 1000;
         int reconnect_interval_ms = 1000;
     };
 

@@ -123,7 +123,10 @@ bool ServerApi::connectToServer()
     QTcpSocket* socket = instance->socket;
 
     socket->connectToHost(config.server_ip, config.server_port);
-    if (!socket->waitForConnected(config.connect_timeout_ms) ||
+    bool connected = waitForSignal(static_cast<QAbstractSocket*>(socket),
+                                   &QAbstractSocket::connected,
+                                   config.connect_timeout_ms);
+    if (!connected ||
         !waitForSignal(instance, &ServerApi::cInitClient, config.connect_timeout_ms)) {
 
         qDebug() << "Connection failed:" << lastError();
