@@ -1,6 +1,6 @@
 # Online Board
 
-This is a board that you can share with others. Everything you draw or change will be visible to other users of the application.
+This is a board that you can share with others. Everything you draw or change will be visible to other users of the application. This program is a client so it needs a server to be run. You can visit the server repository by [this link](https://github.com/egor79k/blackboard_server).
 
 ## Build and deploy
 
