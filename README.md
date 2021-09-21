@@ -13,7 +13,7 @@ After you built the program, you can deploy it. First delete all unnecessary fil
 First locate the "windeployqt.exe" file somewhere inside Qt installation directory. It is usually in "bin" subdirectory of C++ compiler directory, for example "C:\Qt\Qt5.12.11\5.12.11\msvc2017_64\bin". Then go to the build directory of the project and delete all files created by Qt on build except the .exe file. After this in command prompt run the following command:
 
 ```
-<path_to_windeployqt>/windeployqt <path_to_build_directory> --quick --no-translations .
+<path_to_windeployqt>/windeployqt <path_to_built_executable> --quick --no-translations .
 ```
 
 After this you can run the .exe file.
